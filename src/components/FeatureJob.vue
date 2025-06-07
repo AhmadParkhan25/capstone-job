@@ -56,7 +56,7 @@
         :to="{ name: 'role-login' }"
         class="block"
       >
-        <div class="px-5 py-4 rounded-lg bg-[#b8caecda] outline outline-blue-800 h-full hover:shadow-lg hover:outline-blue-900 transition-all">
+        <div class="px-5 py-4 rounded-lg bg-[#D5DEEF] outline outline-blue-800 h-full hover:shadow-lg hover:outline-blue-900 transition-all">
           <div>
             <h1 class="font-bold text-2xl mb-2 truncate" :title="job.title">{{ job.title }}</h1>
             <div class="flex gap-x-4 mb-4 items-center">
