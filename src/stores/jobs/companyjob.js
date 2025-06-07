@@ -22,37 +22,34 @@ export const JobsCompany = defineStore("jobs", () => {
       params: {
         page: 1,
         limit: 25,
-      }
-    }
+      },
+    };
 
     try {
       // Ambil halaman pertama untuk mendapatkan data dan total halaman
       const firstResponse = await apiClient.get("/jobs", config);
       const { jobs, totalPages } = firstResponse.data.data;
-  
+
       // Jumlahkan total_apply pada halaman pertama
-      totalApplications += jobs.reduce(
-        (sum, job) => sum + job.total_apply,
-        0
-      );
-  
+      totalApplications += jobs.reduce((sum, job) => sum + job.total_apply, 0);
+
       // Jika ada lebih dari 1 halaman, lakukan loop untuk mengambil tiap halaman
       for (let page = 2; page <= totalPages; page++) {
-        config.params.page = page
-        const response = await apiClient.get(`/jobs`, {config});
+        config.params.page = page;
+        const response = await apiClient.get(`/jobs`, { config });
         const { jobs } = response.data.data;
-  
+
         // Akumulasikan total_apply dari setiap job di halaman tersebut
         totalApplications += jobs.reduce(
           (sum, job) => sum + job.total_apply,
           0
         );
       }
-  
-      console.log("Total aplikasi:", totalApplications);
+
+      console.log("Count Applications:", totalApplications);
       totalApplicantCompnay.value = totalApplications;
     } catch (error) {
-      console.error("Terjadi kesalahan saat mengambil data jobs:", error);
+      console.error("An Error Occured When Retrieving Jobs Data", error);
     }
   }
 
@@ -70,7 +67,9 @@ export const JobsCompany = defineStore("jobs", () => {
     try {
       const token = authStore.tokenCompany;
       if (!token) {
-        throw new Error("Token otentikasi tidak ditemukan. Harap login kembali.");
+        throw new Error(
+          "Authentication token not found. Please login again."
+        );
       }
 
       while (hasMorePages) {
@@ -98,7 +97,10 @@ export const JobsCompany = defineStore("jobs", () => {
                 hasMorePages = false;
               }
             }
-          } else if (response.data.data && Array.isArray(response.data.data.jobs)) {
+          } else if (
+            response.data.data &&
+            Array.isArray(response.data.data.jobs)
+          ) {
             fetchedData = response.data.data.jobs;
             const paginationInfo = response.data.data;
             if (paginationInfo.currentPage && paginationInfo.totalPages) {
@@ -110,7 +112,7 @@ export const JobsCompany = defineStore("jobs", () => {
             }
           } else {
             hasMorePages = false;
-            throw new Error("Format data pekerjaan dari server tidak sesuai.");
+            throw new Error("The format of job data from the server does not match.");
           }
 
           if (fetchedData && fetchedData.length > 0) {
@@ -121,13 +123,19 @@ export const JobsCompany = defineStore("jobs", () => {
             currentPage++;
           }
         } else {
-          throw new Error(response.data.message || `Gagal mengambil halaman ${currentPage} pekerjaan.`);
+          throw new Error(
+            response.data.message ||
+              `failed To Retrieve Page ${currentPage} Jobs.`
+          );
         }
       }
 
       allCompanyJobs.value = allFetchedJobs;
     } catch (err) {
-      error.value = err.response?.data?.message || err.message || "Terjadi kesalahan yang tidak diketahui.";
+      error.value =
+        err.response?.data?.message ||
+        err.message ||
+        "Unknow Error Occurred";
       allCompanyJobs.value = [];
       if (err.response && err.response.status === 401) {
         authStore.logout();
@@ -148,7 +156,7 @@ export const JobsCompany = defineStore("jobs", () => {
 
     try {
       const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token otentikasi tidak ditemukan.");
+      if (!token) throw new Error("Token Otentification Not Found.");
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
       // ▼▼▼ MODIFIKASI DILAKUKAN DI SINI ▼▼▼
@@ -160,7 +168,7 @@ export const JobsCompany = defineStore("jobs", () => {
         salary_max: String(jobData.salary_max), // Konversi salary_max ke String
       };
       // ▲▲▲ AKHIR MODIFIKASI ▲▲▲
-      
+
       // Kirim 'payload' yang sudah dikonversi ke API, bukan 'jobData' asli
       const response = await apiClient.post("/jobs", payload, config);
 
@@ -169,7 +177,7 @@ export const JobsCompany = defineStore("jobs", () => {
           toast: true,
           position: "top-end",
           icon: "success",
-          title: "Berhasil Membuat job",
+          title: "Success Created Job",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -180,17 +188,20 @@ export const JobsCompany = defineStore("jobs", () => {
         }
         router.push("/job-list");
       } else {
-        throw new Error(response.data.message || "Gagal membuat posting pekerjaan.");
+        throw new Error(
+          response.data.message || "Failed Create Job"
+        );
       }
     } catch (err) {
       // Cek secara spesifik untuk error 'Profil Belum Lengkap' (status 404)
       if (err.response && err.response.status === 404) {
-        error.value = "Anda harus melengkapi profil perusahaan terlebih dahulu.";
+        error.value =
+          "You Must First Complete A Company Profile";
         Swal.fire({
           icon: "warning",
-          title: "Profil Belum Lengkap",
-          text: "Anda harus melengkapi profil perusahaan untuk dapat memposting pekerjaan.",
-          confirmButtonText: "Lengkapi Profil",
+          title: "Incomplete Profile",
+          text: "You must complete a company profile to be able to post jobs.",
+          confirmButtonText: "Complete Profile",
         }).then((result) => {
           if (result.isConfirmed) {
             router.push({ name: "profile-company" });
@@ -198,8 +209,11 @@ export const JobsCompany = defineStore("jobs", () => {
         });
       } else {
         // Jika bukan error 404, jalankan logika error umum yang sudah ada
-        error.value = err.response?.data?.message || err.message || "Kesalahan membuat pekerjaan.";
-        Swal.fire("Gagal!", error.value, "error");
+        error.value =
+          err.response?.data?.message ||
+          err.message ||
+          "Mistake Make Work";
+        Swal.fire("Failed!", error.value, "error");
 
         // Cek untuk error 401 (Unauthorized) untuk logout
         if (err.response && err.response.status === 401) {
@@ -222,19 +236,24 @@ export const JobsCompany = defineStore("jobs", () => {
     jobDetail.value = null;
     try {
       const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token otentikasi tidak ditemukan.");
+      if (!token) throw new Error("Token Otentification Not Found.");
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response = await apiClient.get(`/jobs/${id}`, config);
 
       if (response.status === 200 && response.data.status === "success") {
         jobDetail.value = response.data.data;
       } else {
-        throw new Error(response.data.message || "Gagal mengambil detail pekerjaan.");
+        throw new Error(
+          response.data.message || "Failed To Take Work Details."
+        );
       }
     } catch (err) {
-      error.value = err.response?.data?.message || err.message || "Kesalahan mengambil detail.";
+      error.value =
+        err.response?.data?.message ||
+        err.message ||
+        "Mistake Taking Details";
       if (err.response && err.response.status === 404) {
-        error.value = `Pekerjaan dengan ID ${id} tidak ditemukan.`;
+        error.value = `Job With ID ${id} Not Found.`;
       }
       if (err.response && err.response.status === 401) {
         authStore.logout();
@@ -255,19 +274,20 @@ export const JobsCompany = defineStore("jobs", () => {
     error.value = null;
     try {
       const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token otentikasi tidak ditemukan.");
-      
+      if (!token) throw new Error("Token Otentification Not Found.");
+
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      
+
       const payload = {
         ...jobData,
         salary_min: String(jobData.salary_min),
         salary_max: String(jobData.salary_max),
       };
-      
+
       const response = await apiClient.put(`/jobs/${id}`, payload, config);
 
-      if (response.status === 200 || response.status === 201) { // Menerima 200 OK atau 201 Created
+      if (response.status === 200 || response.status === 201) {
+        // Menerima 200 OK atau 201 Created
         Swal.fire({
           toast: true,
           position: "top-end",
@@ -277,9 +297,14 @@ export const JobsCompany = defineStore("jobs", () => {
           timer: 3000,
         });
         if (response.data.data && response.data.data.id) {
-          const index = allCompanyJobs.value.findIndex((job) => job.id === response.data.data.id);
+          const index = allCompanyJobs.value.findIndex(
+            (job) => job.id === response.data.data.id
+          );
           if (index !== -1) {
-            allCompanyJobs.value[index] = { ...allCompanyJobs.value[index], ...response.data.data };
+            allCompanyJobs.value[index] = {
+              ...allCompanyJobs.value[index],
+              ...response.data.data,
+            };
           }
           if (jobDetail.value && jobDetail.value.id === response.data.data.id) {
             jobDetail.value = response.data.data;
@@ -289,10 +314,15 @@ export const JobsCompany = defineStore("jobs", () => {
         }
         return true;
       } else {
-        throw new Error(response.data.message || "Gagal memperbarui posting pekerjaan.");
+        throw new Error(
+          response.data.message || "Failed Updating Posting Job."
+        );
       }
     } catch (err) {
-      error.value = err.response?.data?.message || err.message || "Kesalahan memperbarui pekerjaan.";
+      error.value =
+        err.response?.data?.message ||
+        err.message ||
+        "Mistake Updating Job.";
       Swal.fire("Gagal!", error.value, "error");
       if (err.response && err.response.status === 401) {
         authStore.logout();
@@ -304,25 +334,27 @@ export const JobsCompany = defineStore("jobs", () => {
     }
   }
 
-  /**
-   * Fungsi helper untuk mengubah status pekerjaan (aktif/nonaktif).
-   */
+ 
   async function changeJobStatus(id, statusEndpoint, newStatus, actionText) {
     isLoading.value = true;
     error.value = null;
     try {
       const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token otentikasi tidak ditemukan.");
+      if (!token) throw new Error("Token Otentification Not Found.");
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
-      const response = await apiClient.put(`/jobs/${id}/${statusEndpoint}`, {}, config);
+      const response = await apiClient.put(
+        `/jobs/${id}/${statusEndpoint}`,
+        {},
+        config
+      );
 
       if (response.status === 200 && response.data.status === "success") {
         Swal.fire({
           toast: true,
           position: "top-end",
           icon: "success",
-          title: `Pekerjaan Berhasil Di${actionText}`,
+          title: `Successful Work In ${actionText}`,
           showConfirmButton: false,
           timer: 3000,
         });
@@ -335,11 +367,16 @@ export const JobsCompany = defineStore("jobs", () => {
           jobDetail.value.is_active = newStatus === "active";
         }
       } else {
-        throw new Error(response.data.message || `Gagal ${actionText} pekerjaan.`);
+        throw new Error(
+          response.data.message || `failed ${actionText} Job.`
+        );
       }
     } catch (err) {
-      error.value = err.response?.data?.message || err.message || `Kesalahan saat ${actionText} pekerjaan.`;
-      Swal.fire("Gagal!", error.value, "error");
+      error.value =
+        err.response?.data?.message ||
+        err.message ||
+        `Failed At ${actionText} Job.`;
+      Swal.fire("Failed!", error.value, "error");
 
       if (err.response && err.response.status === 401) {
         authStore.logout();
@@ -351,11 +388,11 @@ export const JobsCompany = defineStore("jobs", () => {
   }
 
   async function deactivateJob(id) {
-    await changeJobStatus(id, "status-deactive", "deactive", "nonaktifkan");
+    await changeJobStatus(id, "status-deactive", "deactive", "Deactivated");
   }
 
   async function activateJob(id) {
-    await changeJobStatus(id, "status-active", "active", "aktifkan");
+    await changeJobStatus(id, "status-active", "active", "Activated");
   }
 
   /**
@@ -367,22 +404,27 @@ export const JobsCompany = defineStore("jobs", () => {
     error.value = null;
     try {
       const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token otentikasi tidak ditemukan.");
+      if (!token) throw new Error("Token Otentification Not Found.");
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response = await apiClient.delete(`/jobs/${id}`, config);
 
       if (response.status === 200 && response.data.status === "success") {
-        Swal.fire("Berhasil!", "Pekerjaan berhasil dihapus.", "success");
-        allCompanyJobs.value = allCompanyJobs.value.filter((job) => job.id !== id);
+        Swal.fire("Success!", "Job Deleted Successfully.", "success");
+        allCompanyJobs.value = allCompanyJobs.value.filter(
+          (job) => job.id !== id
+        );
         if (jobDetail.value && jobDetail.value.id === id) {
           jobDetail.value = null;
           router.push("/job-list");
         }
       } else {
-        throw new Error(response.data.message || "Gagal menghapus pekerjaan.");
+        throw new Error(response.data.message || "Failed Deleted Job.");
       }
     } catch (err) {
-      error.value = err.response?.data?.message || err.message || "Kesalahan menghapus pekerjaan.";
+      error.value =
+        err.response?.data?.message ||
+        err.message ||
+        "Mistake Delete Job.";
       Swal.fire("Gagal!", error.value, "error");
       if (err.response && err.response.status === 401) {
         authStore.logout();
@@ -406,6 +448,6 @@ export const JobsCompany = defineStore("jobs", () => {
     deactivateJob,
     activateJob,
     deleteJobPost,
-    fetchTotalApplications
+    fetchTotalApplications,
   };
 });

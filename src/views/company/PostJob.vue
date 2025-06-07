@@ -15,7 +15,7 @@
               id="title"
               v-model="jobForm.title"
               class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-              placeholder="Misal: FullStack Developer"
+              placeholder="Example: FullStack Developer"
             />
           </div>
 
@@ -31,7 +31,7 @@
                 :class="{ 'select-placeholder': jobForm.job_type === '' }"
               >
                 <option value="" disabled selected>
-                  Pilih Tipe Pekerjaan...
+                  Chose Type Job...
                 </option>
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
@@ -48,7 +48,7 @@
                 id="location"
                 v-model="jobForm.location"
                 class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                placeholder="Misal: Jakarta Timur"
+                placeholder="Example: Jakarta Timur"
               />
             </div>
           </div>
@@ -70,7 +70,7 @@
                   v-model="jobForm.salary_min"
                   min="0"
                   class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                  placeholder="Misal: 4000000"
+                  placeholder="Example: 4000000"
                 />
               </div>
               <div class="flex flex-col gap-y-1 w-full">
@@ -85,7 +85,7 @@
                   v-model="jobForm.salary_max"
                   min="0"
                   class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                  placeholder="Misal: 6000000"
+                  placeholder="Example: 6000000"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@
               id="description"
               v-model="jobForm.description"
               class="bg-white h-24 sm:h-38 pt-1 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-              placeholder="Jelaskan tanggung jawab, kualifikasi, dll."
+              placeholder="Description Responsibility"
             ></textarea>
           </div>
           <div class="pt-4 sm:pt-6">

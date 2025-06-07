@@ -241,7 +241,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watchEffect } from "vue";
 import { Icon } from "@iconify/vue";
 import { AuthUserStorage } from "@/stores/auth/userAuth";
 import Swal from "sweetalert2";
@@ -347,18 +347,25 @@ const handleClickOutside = (event) => {
   }
 };
 
+watchEffect(async () => {
+  // Cek jika pengguna sudah login tapi data profilnya belum ada
+  if (isLoggedIn.value) {
+    if (isUser.value && !userProfile.value) {
+      console.log("Fetching user profile...");
+      await userStore.fetchUserProfile();
+    }
+    if (isCompany.value && !companyProfile.value) {
+      console.log("Fetching company profile...");
+      await companyStore.fetchProfileCompany();
+    }
+  }
+});
+
 // Fetch profile data on component mount
 onMounted(async () => {
   document.addEventListener("click", handleClickOutside);
-  if (isLoggedIn.value && isUser.value && !userProfile.value) {
-    await userStore.fetchUserProfile();
-  }
-  if (isLoggedIn.value && isCompany.value && !companyProfile.value) {
-    await companyStore.fetchProfileCompany();
-  }
+  
 });
-console.log("profile", userProfile.value);
-console.log("profile", companyProfile.value);
 
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);

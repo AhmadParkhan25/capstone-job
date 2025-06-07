@@ -44,7 +44,7 @@
         ></path>
       </svg>
       <p class="text-blue-800 font-semibold text-lg mt-2">
-        Memuat daftar pekerjaan...
+        Loading List Jobs...
       </p>
     </div>
 
@@ -52,9 +52,7 @@
       v-else-if="jobsStore.error"
       class="text-center py-8 bg-red-50 rounded-md shadow-sm"
     >
-      <p class="text-red-600 font-semibold text-lg">
-        Anda belum menambahkan pekerjaan
-      </p>
+      <p class="text-red-600 font-semibold text-lg">You haven't added work</p>
     </div>
 
     <div
@@ -64,10 +62,10 @@
       class="text-center py-8 bg-yellow-50 rounded-md shadow-sm"
     >
       <p class="text-yellow-700 font-semibold text-lg">
-        Belum ada pekerjaan yang diposting.
+        No jobs have been posted yet
       </p>
       <p v-if="!searchQuery" class="text-yellow-600 mt-2">
-        Mulai posting pekerjaan pertama Anda!
+        Start your first job posting!
       </p>
     </div>
 
@@ -76,7 +74,7 @@
       class="text-center py-8 bg-yellow-50 rounded-md shadow-sm"
     >
       <p class="text-yellow-700 font-semibold text-lg">
-        Tidak ada pekerjaan yang cocok dengan pencarian Anda.
+        There is no job that matches your search.
       </p>
     </div>
 
@@ -320,10 +318,8 @@ const jobsStore = JobsCompany();
 const searchQuery = ref("");
 
 const currentPageForPagination = ref(1);
-const itemsPerPageForPagination = ref(10); // Atur jumlah item per halaman
+const itemsPerPageForPagination = ref(10); 
 
-// Computed properties (filteredJobs, totalPagesForPagination, displayedJobs, visiblePageNumbers)
-// tetap sama seperti kode Anda sebelumnya. Saya akan singkat di sini untuk fokus pada perubahan.
 const filteredJobs = computed(() => {
   if (!jobsStore.allCompanyJobs) return [];
   if (!searchQuery.value) {
@@ -380,28 +376,21 @@ function changePage(page) {
   }
 }
 
-// Fungsi untuk memuat data pekerjaan
 const loadJobs = async () => {
   try {
-    // Panggil metode yang ADA di store Anda: fetchAllCompanyJobsOnce()
-    // Ini akan mengambil semua data pekerjaan dari awal setiap kali dipanggil.
     console.log("Component: Calling fetchAllCompanyJobsOnce from loadJobs"); // Untuk debugging
     await jobsStore.fetchAllCompanyJobsOnce();
     console.log(
       "Component: fetchAllCompanyJobsOnce completed. Jobs count:",
       jobsStore.allCompanyJobs?.length
-    ); // Untuk debugging
+    ); 
   } catch (error) {
     console.error("Component: Error in loadJobs:", error);
-    // Penanganan error spesifik komponen bisa ditambahkan di sini jika perlu,
-    // meskipun store Anda juga menangani error.
   }
 };
 
-// Panggil fungsi untuk mengambil daftar pekerjaan saat komponen dimuat
 onMounted(loadJobs);
 
-// Panggil juga saat komponen diaktifkan kembali (jika menggunakan <keep-alive>)
 onActivated(loadJobs);
 
 watch(searchQuery, () => {
@@ -438,9 +427,8 @@ watch(
 );
 
 /**
- * Mengubah angka gaji menjadi format ringkas (juta/miliar) atau Rupiah standar.
- * @param {number | string} value Angka yang akan diformat.
- * @returns {string} String yang sudah diformat, contoh: "Rp 1,5 Juta".
+ * @param {number | string} value 
+ * @returns {string} 
  */
 const formatGajiRingkas = (value) => {
   const numberValue = Number(value);
@@ -449,19 +437,16 @@ const formatGajiRingkas = (value) => {
     return "N/A";
   }
 
-  // Jika angka 1 Miliar atau lebih
   if (numberValue >= 1000000000) {
     const formatted = (numberValue / 1000000000).toFixed(1).replace(".0", "");
     return `Rp ${formatted} Miliar`;
   }
 
-  // Jika angka 1 Juta atau lebih
   if (numberValue >= 1000000) {
     const formatted = (numberValue / 1000000).toFixed(1).replace(".0", "");
     return `Rp ${formatted} Juta`;
   }
 
-  // Jika di bawah 1 Juta, gunakan format Rupiah biasa
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",

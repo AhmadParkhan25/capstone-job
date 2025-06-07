@@ -48,12 +48,12 @@
             <th
               class="min-w-[200px] py-2 md:py-3 rounded-l-lg font-bold text-gray-600 text-left pl-4 md:pl-20"
             >
-              Pekerjaan
+              Jobs
             </th>
-            <th class="min-w-[150px] py-2 md:py-3 font-bold text-gray-600">Lamaran</th>
+            <th class="min-w-[150px] py-2 md:py-3 font-bold text-gray-600">Applications</th>
             <th class="min-w-[150px] py-2 md:py-3 font-bold text-gray-600">Status</th>
             <th class="min-w-[180px] py-2 md:py-3 rounded-r-lg font-bold text-gray-600">
-              Aksi
+              Action
             </th>
           </tr>
         </thead>
@@ -100,7 +100,7 @@
                 class="mr-1"
                 style="color: #606060"
               />
-              {{ job.total_apply || 0 }} lamaran
+              {{ job.total_apply || 0 }} Applications
             </td>
             <td class="py-4 text-xs md:text-sm">
               <div class="flex items-center justify-center">
@@ -113,7 +113,7 @@
                     class="mr-1"
                   />
                   <p class="text-green-500 font-bold text-md">
-                    Aktif
+                    Activate
                   </p>
                 </template>
                 <template v-else>
@@ -125,7 +125,7 @@
                     class="mr-1"
                   />
                   <p class="text-red-500 font-bold text-md">
-                    Tidak Aktif
+                    Deactive
                   </p>
                 </template>
               </div>
@@ -134,7 +134,7 @@
               <router-link
                 :to="{ name: 'job-detail', params: { id: job.id } }" class="font-base px-3 py-1 rounded-lg text-white bg-[#0c1f61d3] hover:bg-[#091a52]"
               >
-                Lihat Detail
+                See Detail
               </router-link>
             </td>
           </tr>

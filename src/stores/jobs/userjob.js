@@ -98,7 +98,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           toast: true,
           position: "top-end",
           icon: "error",
-          title: "Gagal memuat daftar pekerjaan",
+          title: "Failed Loading List Job",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -123,7 +123,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           currentJobDetail.value = responseData.data;
         } else {
           errorJobDetail.value = new Error(
-            responseData.message || "Gagal mengambil detail pekerjaan."
+            responseData.message || "Failed Get Detail Job."
           );
           // Swal.fire({ toast: true, position: "top-end", icon: "error", title: responseData.message || "Gagal mengambil detail pekerjaan", showConfirmButton: false, timer: 3000 });
         }
@@ -162,7 +162,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           return response.data;
         } else {
           const errorMessage =
-            response.data.message || "Gagal mengirim lamaran.";
+            response.data.message || "Failed Sending Apply.";
           applyJobError.value = new Error(errorMessage);
           Swal.fire({
             toast: true,
@@ -178,7 +178,7 @@ export const useActiveJobRecommendationsStore = defineStore(
         const errorMessage =
           error.response?.data?.message ||
           error.message ||
-          "Terjadi kesalahan saat mengirim lamaran.";
+          "An error occurred when sending the application.";
         applyJobError.value = error;
         Swal.fire({
           toast: true,
@@ -232,7 +232,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           currentUserAppliedPage.value = 1;
         } else {
           const errorMessage =
-            response.data.message || "Gagal memuat daftar lamaran pekerjaan.";
+            response.data.message || "Failed Loading List Apply Jobs.";
           errorUserAppliedJobs.value = new Error(errorMessage);
           userAppliedJobs.value = [];
           // Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });
@@ -272,7 +272,7 @@ export const useActiveJobRecommendationsStore = defineStore(
         } else {
           const errorMessage =
             response.data.message ||
-            "Gagal mengambil detail lamaran pekerjaan.";
+            "Failed Get Detail Apply Job.";
           errorApplicationDetail.value = new Error(errorMessage);
           // Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });
         }
@@ -280,7 +280,7 @@ export const useActiveJobRecommendationsStore = defineStore(
       } catch (error) {
         const errorMessage =
           error.response?.data?.message ||
-          `Gagal mengambil detail lamaran: ${error.message || "Server Error"}`;
+          `Failed Get Detail Apply: ${error.message || "Server Error"}`;
         errorApplicationDetail.value = error;
         // Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });
         throw error;
@@ -331,7 +331,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           return response.data;
         } else {
           // Kasus jika status HTTP sukses (2xx) tapi payload berisi error
-          const errorMessage = response.data.message || "Gagal menambahkan ke favorit.";
+          const errorMessage = response.data.message || "Failed Add To Favorite.";
           createFavoriteError.value = new Error(errorMessage);
   
           if (errorMessage === "Job already favorited") {
@@ -340,7 +340,7 @@ export const useActiveJobRecommendationsStore = defineStore(
               toast: true,
               position: "top-end",
               icon: 'success', // Ganti ikon menjadi success/ceklist
-              title: "Pekerjaan ini sudah ada di favorit Anda.", // Pesan yang lebih sesuai
+              title: "This job is already in your favorites.", // Pesan yang lebih sesuai
               showConfirmButton: false,
               timer: 2500,
             });
@@ -367,7 +367,7 @@ export const useActiveJobRecommendationsStore = defineStore(
             toast: true,
             position: "top-end",
             icon: 'success', // GANTI IKON MENJADI CEKLIS/SUCCESS
-            title: "Pekerjaan ini sudah ada di favorit Anda.", // Pesan yang lebih sesuai
+            title: "This job is already in your favorites.", // Pesan yang lebih sesuai
             showConfirmButton: false,
             timer: 2500, 
           });
@@ -510,7 +510,7 @@ export const useActiveJobRecommendationsStore = defineStore(
     
           return response.data;
         } else {
-          const errorMessage = response.data.message || "Gagal menghapus dari favorit.";
+          const errorMessage = response.data.message || "Failed Deleted At Favorite.";
           deleteFavoriteError.value = new Error(errorMessage);
           Swal.fire({ /* ... error Swal ... */ });
           // Jika backend secara spesifik mengatakan "Favorite not found" (yang tidak akan terjadi jika findUnique menggunakan ID favorit)
@@ -518,7 +518,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           throw deleteFavoriteError.value;
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || "Gagal menghapus dari favorit.";
+        const errorMessage = error.response?.data?.message || error.message || "Failde Deleted At Favorite.";
         deleteFavoriteError.value = error;
         // Jika error 404 "Favorite not found" dari backend, berarti ID favoritnya salah
         if (errorMessage === "Favorite not found" || (error.response && error.response.status === 404)) {
