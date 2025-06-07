@@ -79,7 +79,7 @@
           <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b md:border-b-0 md:border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Salary</p>
             <p class="text-green-500 font-medium text-xs md:text-base">
-              {{ formatSalary(applicationDetail.salary_min, applicationDetail.salary_max) }}
+              {{ formatGajiRingkas(applicationDetail.salary_min) }} - {{ formatGajiRingkas(applicationDetail.salary_max) }}
             </p>
           </div>
           <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b md:border-b-0 md:border-r border-slate-300">
@@ -166,7 +166,32 @@ const isCurrentJobFavorited = computed(() => {
   return jobStore.userFavoriteJobIds.has(parseInt(applicationDetail.value.job_id));
 });
 
+const formatGajiRingkas = (value) => {
+  const numberValue = Number(value);
 
+  if (isNaN(numberValue) || value === null || value === "") {
+    return "N/A";
+  }
+
+  // Jika angka 1 Miliar atau lebih
+  if (numberValue >= 1000000000) {
+    const formatted = (numberValue / 1000000000).toFixed(1).replace(".0", "");
+    return `Rp ${formatted.replace(".", ",")} Miliar`;
+  }
+
+  // Jika angka 1 Juta atau lebih
+  if (numberValue >= 1000000) {
+    const formatted = (numberValue / 1000000).toFixed(1).replace(".0", "");
+    return `Rp ${formatted.replace(".", ",")} Juta`;
+  }
+
+  // Jika di bawah 1 Juta, gunakan format Rupiah biasa
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(numberValue);
+};
 const handleImageError = (event) => {
   event.target.style.display = 'none'; 
   isLogoError.value = true; 

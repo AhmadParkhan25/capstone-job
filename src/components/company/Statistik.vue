@@ -45,17 +45,21 @@
 import { JobsCompany } from '@/stores/jobs/companyjob'; // Pastikan path ini benar
 import { ref, computed, onMounted } from 'vue';
 import { useCompanyApplicationStore } from '@/stores/jobs/companyaplication';
+import { useAuthCompanyStore } from '@/stores/auth/companyAuth';
 
 const jobsStore = JobsCompany();
 const isLoadingData = ref(true);
+const authCompanyStore = useAuthCompanyStore();
 const candidates = useCompanyApplicationStore()
 
 const totalCandidates = computed(() => {
-  if(!candidates.jobApplicants) {
-    return 0;
-  }
+  return jobsStore.totalApplicantCompnay
 
-  return candidates.jobApplicants.length
+  // if(!candidates.jobApplicants) {
+  //   return 0;
+  // }
+
+  // return candidates.jobApplicants.length
 })
 // Computed property untuk total pekerjaan yang berstatus "active" (Open Jobs)
 const totalOpenJobs = computed(() => {
@@ -65,15 +69,16 @@ const totalOpenJobs = computed(() => {
   return jobsStore.allCompanyJobs.filter(job => job.is_active === 'active').length;
 });
 
-// Jika Anda juga ingin menampilkan total semua pekerjaan yang pernah dibuat:
-// const totalCreatedJobs = computed(() => {
-//   if (!jobsStore.allCompanyJobs) return 0;
-//   return jobsStore.allCompanyJobs.length;
-// });
 
 onMounted(async () => {
   isLoadingData.value = true;
   try {
+    // await candidates.countApplicant(authCompanyStore.tokenCompany)
+
+    console.log('counting');
+    // other way counting
+    await jobsStore.fetchTotalApplications()
+
     // Hanya fetch jika data di store kosong dan tidak sedang dalam proses loading dari store
     if (jobsStore.allCompanyJobs.length === 0 && !jobsStore.isLoading) {
       await jobsStore.fetchAllCompanyJobsOnce();

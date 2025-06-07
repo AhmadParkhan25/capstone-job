@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import Swal from "sweetalert2";
 
 export const useCompanyApplicationStore = defineStore(
-  "companyApplications",
+  "Applications",
   () => {
     // State untuk daftar pelamar per pekerjaan
     const jobApplicants = ref([]);
@@ -274,6 +274,23 @@ export const useCompanyApplicationStore = defineStore(
     };
     // --- Akhir Action BARU untuk CV Preview ---
 
+    async function countApplicant(token) {
+      try {
+        console.log("fetch");
+
+        const response = await apiClient.get(`/jobs/count`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        console.log(response?.data?.total);
+
+        jobApplicants.value = new Array(response?.data?.total)
+      } catch (error) {
+        console.error(error?.getMessage ?? error)
+        alert(error?.getMessage ?? error)
+      }
+    }
+
     return {
       jobApplicants,
       isLoadingApplicants,
@@ -297,6 +314,8 @@ export const useCompanyApplicationStore = defineStore(
       errorCvPreview,
       fetchCvPreviewByApplicationId,
       // --- Akhir State dan Action BARU di-return ---
+
+      countApplicant,
     };
   }
 );

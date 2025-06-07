@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'; // Opsional: untuk notifikasi error
 /**
  * Store untuk mengelola data pekerjaan yang dapat diakses publik (tanpa otentikasi).
  */
-export const jobNoAuth = defineStore('jobs', () => {
+export const jobNoAuth = defineStore('jobs-no-auth', () => {
 
   // =================================================================
   // STATE

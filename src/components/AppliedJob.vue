@@ -91,12 +91,7 @@
                     <span>{{ application.location || "N/A" }}</span>
                   </div>
                   <p class="text-gray-700 text-xs md:text-sm mt-1">
-                    {{
-                      formatSalary(
-                        application.salary_min,
-                        application.salary_max
-                      )
-                    }}
+                    {{ formatGajiRingkas(application.salary_min) }} - {{ formatGajiRingkas(application.salary_max) }}
                   </p>
                 </div>
               </div>
@@ -221,6 +216,32 @@ const displayedAppliedJobs = computed(() => jobStore.userAppliedJobs);
 const isLoading = computed(() => jobStore.loadingUserAppliedJobs);
 const error = computed(() => jobStore.errorUserAppliedJobs);
 
+const formatGajiRingkas = (value) => {
+  const numberValue = Number(value);
+
+  if (isNaN(numberValue) || value === null || value === "") {
+    return "N/A";
+  }
+
+  // Jika angka 1 Miliar atau lebih
+  if (numberValue >= 1000000000) {
+    const formatted = (numberValue / 1000000000).toFixed(1).replace(".0", "");
+    return `Rp ${formatted.replace(".", ",")} Miliar`;
+  }
+
+  // Jika angka 1 Juta atau lebih
+  if (numberValue >= 1000000) {
+    const formatted = (numberValue / 1000000).toFixed(1).replace(".0", "");
+    return `Rp ${formatted.replace(".", ",")} Juta`;
+  }
+
+  // Jika di bawah 1 Juta, gunakan format Rupiah biasa
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(numberValue);
+};
 const formatDate = (dateString) => {
   if (!dateString) return "N/A";
   const options = {

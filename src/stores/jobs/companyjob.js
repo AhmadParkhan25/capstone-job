@@ -9,8 +9,52 @@ export const JobsCompany = defineStore("jobs", () => {
   const isLoading = ref(false);
   const error = ref(null);
   const allCompanyJobs = ref([]);
+  const totalApplicantCompnay = ref(0);
   const jobDetail = ref(null);
   const authStore = useAuthCompanyStore();
+
+  // count all applicant
+  async function fetchTotalApplications() {
+    let totalApplications = 0;
+    const token = authStore.tokenCompany;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        page: 1,
+        limit: 25,
+      }
+    }
+
+    try {
+      // Ambil halaman pertama untuk mendapatkan data dan total halaman
+      const firstResponse = await apiClient.get("/jobs", config);
+      const { jobs, totalPages } = firstResponse.data.data;
+  
+      // Jumlahkan total_apply pada halaman pertama
+      totalApplications += jobs.reduce(
+        (sum, job) => sum + job.total_apply,
+        0
+      );
+  
+      // Jika ada lebih dari 1 halaman, lakukan loop untuk mengambil tiap halaman
+      for (let page = 2; page <= totalPages; page++) {
+        config.params.page = page
+        const response = await apiClient.get(`/jobs`, {config});
+        const { jobs } = response.data.data;
+  
+        // Akumulasikan total_apply dari setiap job di halaman tersebut
+        totalApplications += jobs.reduce(
+          (sum, job) => sum + job.total_apply,
+          0
+        );
+      }
+  
+      console.log("Total aplikasi:", totalApplications);
+      totalApplicantCompnay.value = totalApplications;
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mengambil data jobs:", error);
+    }
+  }
 
   /**
    * Mengambil semua pekerjaan yang dimiliki perusahaan dengan paginasi.
@@ -354,6 +398,7 @@ export const JobsCompany = defineStore("jobs", () => {
     error,
     allCompanyJobs,
     jobDetail,
+    totalApplicantCompnay,
     fetchAllCompanyJobsOnce,
     createJobPost,
     fetchJobDetail,
@@ -361,5 +406,6 @@ export const JobsCompany = defineStore("jobs", () => {
     deactivateJob,
     activateJob,
     deleteJobPost,
+    fetchTotalApplications
   };
 });
