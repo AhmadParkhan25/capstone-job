@@ -50,7 +50,7 @@
             </div>
 
             <button
-              class="text-white bg-blue-950/80 font-semibold h-10 lg:w-28 lg:rounded-lg xl:h-10 rounded-lg"
+              class="text-white bg-blue-950/80 font-semibold h-10 lg:w-28 lg:rounded-lg xl:h-10 rounded-lg cursor-pointer"
             >
               Find Job
             </button>

@@ -120,7 +120,7 @@
                   />
                   <div>
                     <p class="font-semibold text-sm md:text-base">
-                      {{ job.title }}
+                      {{formatTitle( job.title) }}
                     </p>
                     <div
                       class="flex items-center text-gray-600 text-xs md:text-sm font-medium"
@@ -132,7 +132,7 @@
                         class="mr-1"
                         style="color: #718096"
                       />
-                      {{ job.location }}
+                      {{ formatTitle(job.location) }}
                     </div>
                     <p
                       class="text-gray-700 text-xs md:text-sm mt-1 font-medium"
@@ -153,7 +153,7 @@
                   class="mr-1"
                   style="color: #606060"
                 />
-                {{ job.total_apply || 0 }} applications
+                {{ job.total_apply || 0 }} Applications
               </td>
               <td class="py-4 text-xs md:text-sm">
                 <div class="flex items-center justify-center font-semibold">
@@ -166,7 +166,7 @@
                       class="mr-1"
                     />
                     <p class="text-green-500 font-bold text-md">
-                      {{ job.is_active }}
+                      {{ formatTitle(job.is_active) }}
                     </p>
                   </template>
                   <template v-else-if="job.is_active === 'deactive'">
@@ -333,6 +333,14 @@ const filteredJobs = computed(() => {
   );
 });
 
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 const totalPagesForPagination = computed(() => {
   if (!filteredJobs.value) return 0;
   return Math.ceil(filteredJobs.value.length / itemsPerPageForPagination.value);
@@ -425,6 +433,7 @@ watch(
   },
   { immediate: false }
 );
+
 
 /**
  * @param {number | string} value 

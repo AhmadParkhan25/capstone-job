@@ -37,9 +37,9 @@
             <span v-if="isLogoError || !applicationDetail.company_logo" class="text-slate-500 text-sm">No Logo</span>
           </div>
           <div>
-            <p class="font-bold text-base md:text-xl">{{ applicationDetail.title }}</p>
+            <p class="font-bold text-base md:text-xl">{{ formatTitle(applicationDetail.title) }}</p>
             <p class="font-medium text-gray-600 text-xs md:text-base">
-              {{ applicationDetail.company_name || "Company Name N/A" }}
+              {{ formatTitle(applicationDetail.company_name) || "Company Name N/A" }}
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@
           </div>
           <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b md:border-b-0 md:border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Location</p>
-            <p class="text-gray-600 font-medium text-xs md:text-base">{{ applicationDetail.location || "N/A" }}</p>
+            <p class="text-gray-600 font-medium text-xs md:text-base">{{ formatTitle(applicationDetail.location) || "N/A" }}</p>
           </div>
           <div class="px-4 py-3 md:px-10 md:py-8 w-full">
             <p class="font-semibold text-xl md:text-3xl">Type</p>
@@ -152,6 +152,13 @@ const isLogoError = ref(false);
 
 // Mengambil ID LAMARAN dari parameter route
 const currentApplicationId = computed(() => route.params.id);
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 // Menggunakan state dari store untuk detail LAMARAN
 const applicationDetail = computed(() => jobStore.currentApplicationDetail);

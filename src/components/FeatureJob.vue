@@ -58,7 +58,7 @@
       >
         <div class="px-5 py-4 rounded-lg bg-[#F1F4FA] outline outline-blue-800 h-full hover:shadow-lg hover:outline-blue-900 transition-all">
           <div>
-            <h1 class="font-bold text-2xl mb-2 truncate" :title="job.title">{{ job.title }}</h1>
+            <h1 class="font-bold text-2xl mb-2 truncate" >{{ formatTitle(job.title) }}</h1>
             <div class="flex gap-x-4 mb-4 items-center">
               <p class="text-blue-800 text-xs font-bold bg-blue-200 px-2 py-1 rounded">{{ job.job_type }}</p>
               <p class="text-xs text-gray-600 font-bold truncate">
@@ -76,7 +76,7 @@
                 <span v-else class="text-xs text-gray-500">No Logo</span>
               </div>
               <p class="md:pt-4 lg:pt-5 pt-3 text-md text-blue-900 font-medium truncate" :title="job.company_name">
-                {{ job.company_name }}
+                {{ formatTitle(job.company_name) }}
               </p>
             </div>
           </div>
@@ -105,6 +105,12 @@ const { featuredJobs, isLoadingFeatured, errorFeatured } = storeToRefs(jobStore)
 // Base URL untuk gambar (sesuaikan dengan alamat backend Anda)
 const baseImageUrl = 'https://jobrise.hotelmarisrangkas.com/public/'; 
 
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 // Panggil action untuk mengambil data saat komponen pertama kali dimuat
 onMounted(() => {
   // Cek jika data belum ada di store sebelum memanggil API, untuk efisiensi

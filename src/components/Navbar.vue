@@ -1,6 +1,6 @@
 <template>
   {{ console.log("tampil", companyProfile) }}
-  <nav class="bg-[#D5DEEF] flex justify-between px-2 md:px-5 z-40 sticky top-0">
+  <nav class="bg-[#D5DEEF] flex justify-between px-2 md:px-4 md:py-1.5 z-40 sticky top-0">
     <!-- Logo and main navigation -->
     <div class="flex gap-x-1 md:gap-x-4">
       <!-- Mobile menu button (hidden) -->

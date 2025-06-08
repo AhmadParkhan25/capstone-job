@@ -25,7 +25,7 @@
               v-model="jobForm.title"
               required
               class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-              placeholder="Misal: FullStack Developer"
+              placeholder="Example: FullStack Developer"
             />
           </div>
 
@@ -38,8 +38,8 @@
                 required
                 class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base"
               >
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
+                <option value="Full Time">Full-Time</option>
+                <option value="Part Time">Part-Time</option>
                 <option value="Contract">Kontrak</option>
                 <option value="Internship">Magang</option>
               </select>
@@ -52,7 +52,7 @@
                 v-model="jobForm.location"
                 required
                 class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                placeholder="Misal: Jakarta Timur"
+                placeholder="Example: Jakarta Timur"
               />
             </div>
           </div>
@@ -68,7 +68,7 @@
                   v-model="jobForm.salary_min"
                   required
                   class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                  placeholder="Misal: 4 juta"
+                  placeholder="Example: 4000000"
                 />
               </div>
               <div class="flex flex-col gap-y-1 w-full">
@@ -79,7 +79,7 @@
                   v-model="jobForm.salary_max"
                   required
                   class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-                  placeholder="Misal: 6 juta"
+                  placeholder="Example: 5000000"
                 />
               </div>
             </div>
@@ -91,7 +91,7 @@
               v-model="jobForm.description"
               required
               class="bg-white h-24 sm:h-38 rounded-sm outline outline-blue-800 text-sm sm:text-base px-2"
-              placeholder="Jelaskan tanggung jawab, kualifikasi, dll."
+              placeholder="Please Explain Description, etc."
             ></textarea>
           </div>
           <div class="pt-4 sm:pt-6">
@@ -137,7 +137,7 @@ const jobForm = ref({
   salary_min: '',
   salary_max: '',
   location: '',
-  job_type: 'Full-Time',
+  job_type: '',
 });
 
 onMounted(() => {
@@ -146,6 +146,15 @@ onMounted(() => {
 
 watch(() => jobsStore.jobDetail, (newDetail) => {
   if (newDetail) {
+    console.log("Data 'job_type' dari API:", newDetail.job_type);
+    console.log("Tipe data dari API:", typeof newDetail.job_type);
+
+    const optionValues = ["Full-Time", "Part-Time", "Contract", "Internship"];
+    console.log("Nilai yang ada di <option> HTML:", optionValues);
+    console.log(
+      "Apakah ada yang cocok? ",
+      optionValues.includes(newDetail.job_type)
+    );
     jobForm.value = {
       title: newDetail.title,
       description: newDetail.description,

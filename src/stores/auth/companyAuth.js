@@ -207,7 +207,7 @@ export const useAuthCompanyStore = defineStore("authCompany", () => {
 
       return currentCompany.value; // Mengembalikan currentCompany yang sudah diperbarui
     } catch (error) {
-      console.error("Gagal mengambil data user:", error);
+      console.error("Failed Get Data User:", error);
 
       // Jika token tidak valid/expired, lakukan logout
       if (error.response?.status === 401) {
@@ -305,12 +305,12 @@ export const useAuthCompanyStore = defineStore("authCompany", () => {
       });
       companyProfile.value = data.data;
       // Log untuk debugging: lihat data.data dari backend
-      console.log("Data profil dari API (/profile-company):", data.data);
-      console.log("email_verified dari API:", data.data?.email_verified);
+      console.log("Data Profile At API (/profile-company):", data.data);
+      console.log("email_verified At API:", data.data?.email_verified);
       await getCompanyByAuth();
       return data.data;
     } catch (error) {
-      console.error("Gagal mengambil profil perusahaan:", error);
+      console.error("Failed Get Profile Company:", error);
       profileFetchError.value =
         error.response?.data?.message ||
         error.message ||
@@ -387,8 +387,6 @@ export const useAuthCompanyStore = defineStore("authCompany", () => {
         showConfirmButton: false,
         timer: 3000,
       });
-      // Setelah verifikasi berhasil, update status di currentCompany
-      // Tambahkan email_verified ke currentCompany jika berhasil
       if (currentCompany.value) {
         currentCompany.value = {
           ...currentCompany.value,

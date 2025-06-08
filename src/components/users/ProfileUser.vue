@@ -88,6 +88,7 @@
           type="text"
           class="z w-full rounded-lg py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Url Your Profile"
         />
       </div>
 
@@ -101,6 +102,7 @@
           type="text"
           class="z w-full rounded-lg py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your Portofolio"
         />
       </div>
     </div>
@@ -112,6 +114,7 @@
           id="username"
           v-model="profileForm.username"
           type="text"
+          placeholder="Input Your Username"
           class="rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :class="{
             'bg-gray-100':
@@ -128,7 +131,7 @@
 
       <div>
         <label for="full_name" class="font-semibold text-lg"
-          >Nama Lengkap</label
+          >Full Name</label
         >
         <input
           id="full_name"
@@ -136,50 +139,55 @@
           type="text"
           class="z rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your Full Name"
         />
       </div>
 
       <div>
-        <label for="phone" class="font-semibold text-lg">Telepon</label>
+        <label for="phone" class="font-semibold text-lg">Phone</label>
         <input
           id="phone"
           v-model="profileForm.phone"
           type="text"
           class="z rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your Number Handphone"
         />
       </div>
 
       <div>
-        <label for="age" class="font-semibold text-lg">Usia</label>
+        <label for="age" class="font-semibold text-lg">Age</label>
         <input
           id="age"
           v-model="profileForm.age"
           type="text"
           class="z rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your Age"
         />
       </div>
 
       <div>
-        <label for="address" class="font-semibold text-lg">Alamat</label>
+        <label for="address" class="font-semibold text-lg">Address</label>
         <input
           id="address"
           v-model="profileForm.address"
           type="text"
           class="z rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your Address"
         />
       </div>
 
       <div>
-        <label for="city" class="font-semibold text-lg">Kota</label>
+        <label for="city" class="font-semibold text-lg">City</label>
         <input
           id="city"
           v-model="profileForm.city"
           type="text"
           class="z rounded-lg w-full py-2 px-3 outline outline-blue-900 text-center"
           :disabled="!isEditing"
+          placeholder="Input Your City"
         />
       </div>
 
@@ -189,7 +197,7 @@
           id="bio"
           v-model="profileForm.bio"
           rows="5"
-          placeholder="isilah bio yang bagus untuk bagian cv anda juga"
+          placeholder="Fill In a Good Bio For Your CV Section as Well."
           class="z w-full rounded-lg py-2 px-3 outline outline-blue-900 resize-none text-left"
           :disabled="!isEditing"
         ></textarea>

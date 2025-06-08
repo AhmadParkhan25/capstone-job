@@ -21,21 +21,21 @@
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       ></path>
     </svg>
-    <p class="mt-2 text-gray-600">Memuat pekerjaan terbaru...</p>
+    <p class="mt-2 text-gray-600">Loadind Job latest...</p>
   </div>
 
   <!-- Tampilkan pesan error jika terjadi kegagalan fetch -->
   <div v-else-if="jobsStore.error" class="text-center py-8 bg-red-50 rounded-md shadow-sm">
     <p class="text-red-600 font-semibold text-lg">
-      Gagal memuat data
+      Failed To Load Data
     </p>
-    <p class="text-red-500 mt-2">{{ jobsStore.error }}</p>
+    <p class="text-red-500 mt-2">You must fill in the Company Profile first.</p>
   </div>
 
   <!-- Tampilkan jika tidak ada data pekerjaan sama sekali -->
   <div v-else-if="!displayedJobs.length" class="text-center py-8 bg-yellow-50 rounded-md shadow-sm">
     <p class="text-yellow-700 font-semibold text-lg">
-      Belum ada pekerjaan yang diposting.
+      No Jobs Have Been Posted Yet.
     </p>
   </div>
 
@@ -72,7 +72,7 @@
                 />
                 <div>
                   <p class="font-semibold text-sm md:text-base">
-                    {{ job.title }}
+                    {{formatTitle( job.title )}}
                   </p>
                   <div
                     class="flex items-center text-gray-600 text-xs md:text-sm font-semibold"
@@ -84,7 +84,7 @@
                       class="mr-1"
                       style="color: #718096"
                     />
-                    {{ job.location }}
+                    {{ formatTitle(job.location) }}
                   </div>
                   <p class="text-gray-700 text-xs md:text-sm font-semibold mt-1">
                     {{ formatGajiRingkas(job.salary_min) }} - {{ formatGajiRingkas(job.salary_max) }}
@@ -165,6 +165,14 @@ const displayedJobs = computed(() => {
   // Tampilkan 4 pekerjaan terbaru (asumsi data dari API sudah urut)
   return jobsStore.allCompanyJobs.slice(0, 4);
 });
+
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 const formatGajiRingkas = (value) => {
   const numberValue = Number(value);

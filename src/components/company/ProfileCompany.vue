@@ -108,6 +108,7 @@
               v-model="profileData.company_name"
               class="pl-2 md:pl-3 bg-blue-400/10 rounded-sm outline outline-blue-900 h-7 md:h-8 text-sm w-full disabled:bg-gray-200/50 disabled:cursor-not-allowed"
               :disabled="!isEditing"
+              placeholder="Your Company"
             />
           </div>
           <div class="flex flex-col gap-y-2">
@@ -120,6 +121,7 @@
               v-model="profileData.website"
               class="pl-2 md:pl-3 bg-blue-400/10 rounded-sm outline outline-blue-900 h-7 md:h-8 text-sm w-full disabled:bg-gray-200/50 disabled:cursor-not-allowed"
               :disabled="!isEditing"
+              placeholder="Your Website"
             />
           </div>
           <div class="flex flex-col gap-y-2">
@@ -132,6 +134,7 @@
               v-model="profileData.industry"
               class="pl-2 md:pl-3 bg-blue-400/10 rounded-sm outline outline-blue-900 h-7 md:h-8 text-sm w-full disabled:bg-gray-200/50 disabled:cursor-not-allowed"
               :disabled="!isEditing"
+              placeholder="Please Input Industry"
             />
           </div>
           <div class="flex flex-col gap-y-2">
@@ -144,6 +147,7 @@
               v-model="profileData.address"
               class="pl-2 md:pl-3 bg-blue-400/10 rounded-sm outline outline-blue-900 h-7 md:h-8 text-sm w-full disabled:bg-gray-200/50 disabled:cursor-not-allowed"
               :disabled="!isEditing"
+              placeholder="Your Company Adderess"
             />
           </div>
           <div class="flex flex-col gap-y-2 col-span-1 md:col-span-2">
@@ -155,6 +159,7 @@
               v-model="profileData.description"
               class="pl-2 md:pl-3 bg-blue-400/10 pt-2 rounded-sm outline outline-blue-900 h-24 md:h-32 w-full text-sm disabled:bg-gray-200/50 disabled:cursor-not-allowed"
               :disabled="!isEditing"
+              placeholder="Please Explain Your Company"
             ></textarea>
           </div>
           <div class="flex gap-x-2 justify-end col-span-1 md:col-span-2">
@@ -199,7 +204,7 @@
       <form @submit.prevent="handleVerifyOtp">
         <div class="flex flex-col gap-y-2">
           <label for="otp" class="font-medium text-sm md:text-base">
-            Masukkan kode OTP <span class="text-red-600">*</span>
+            Input Code OTP <span class="text-red-600">*</span>
           </label>
           <input
             type="text"
@@ -218,13 +223,13 @@
             class="bg-gray-400 text-white w-full rounded-sm py-1 text-sm cursor-pointer"
             @click="showOtpPopup = false"
           >
-            Batal
+            Cancel
           </button>
           <button
             type="submit"
             class="bg-blue-950/90 text-white w-full rounded-sm py-1 text-sm cursor-pointer"
           >
-            Verifikasi Kode OTP
+            Verification Code OTP
           </button>
         </div>
       </form>
@@ -309,8 +314,8 @@ const saveProfile = async () => {
     if (!profileData.value[field] || profileData.value[field].trim() === "") {
       Swal.fire({
         icon: "error",
-        title: "Input Tidak Lengkap",
-        text: `Harap isi kolom "${requiredFields[field]}" terlebih dahulu.`,
+        title: "Input Not Complete",
+        text: `Please Complete All Coloum `,
       });
       return; // Stop execution
     }
@@ -320,8 +325,8 @@ const saveProfile = async () => {
   if (!companyProfile.value?.id && !logoFile.value) {
       Swal.fire({
         icon: 'warning',
-        title: 'Logo Dibutuhkan',
-        text: 'Harap unggah logo perusahaan untuk membuat profil.',
+        title: 'Need Image',
+        text: 'Please Upload Your Picture For Completed Profile',
       });
       return; // Stop execution
   }
@@ -341,14 +346,14 @@ const saveProfile = async () => {
   try {
     if (companyProfile.value?.id && isEditing.value) {
       await authCompanyStore.updateProfileCompany(formData);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title: "Profile updated successfully!",
-        timer: 3000,
-        showConfirmButton: false,
-      });
+      // Swal.fire({
+      //   toast: true,
+      //   position: "top-end",
+      //   icon: "success",
+      //   title: "Profile updated successfully!",
+      //   timer: 3000,
+      //   showConfirmButton: false,
+      // });
       isEditing.value = false;
     } else if (!companyProfile.value?.id) {
       await authCompanyStore.createProfileCompany(formData);
@@ -405,8 +410,8 @@ const handleVerifyOtp = async () => {
   if (!otpCode.value || otpCode.value.trim() === "") {
     Swal.fire({
       icon: "error",
-      title: "Kode OTP Kosong",
-      text: "Harap masukkan kode OTP yang telah Anda terima.",
+      title: "Code OTP Empty",
+      text: "Please enter the OTP code that was sent.",
     });
     return;
   }

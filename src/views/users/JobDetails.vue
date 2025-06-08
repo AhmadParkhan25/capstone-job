@@ -77,9 +77,9 @@
             >
           </div>
           <div class="flex flex-col gap-y-3">
-            <p class="font-bold text-md md:text-xl">{{ jobDetail.title }}</p>
+            <p class="font-bold text-md md:text-xl">{{ formatTitle(jobDetail.title) }}</p>
             <p class="font-bold text-gray-400 text-xs md:text-sm">
-              {{ jobDetail.company_name }}
+              {{ formatTitle(jobDetail.company_name) }}
             </p>
           </div>
         </div>
@@ -181,7 +181,7 @@
             <p class="font-semibold text-xl md:text-3xl">Location</p>
 
             <p class="text-gray-400 font-medium text-xs md:text-base">
-              {{ jobDetail.location }}
+              {{ formatTitle(jobDetail.location) }}
             </p>
           </div>
 
@@ -248,6 +248,12 @@ const currentJobId = computed(() => {
 
 const jobDetail = computed(() => jobStore.currentJobDetail);
 
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 const loadingInitialData = ref(true);
 const pageError = ref(null);
 

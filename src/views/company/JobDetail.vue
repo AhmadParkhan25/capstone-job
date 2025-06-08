@@ -11,7 +11,7 @@
 
     <div
       v-if="jobsStore.isLoading"
-      class="absolute inset-0 bg-white/80 flex items-center justify-center z-10"
+      class="absolute inset-0 top-32 bg-white/80 flex items-center justify-center z-10"
     >
       <div
         class="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-blue-700"
@@ -34,9 +34,9 @@
             />
           </div>
           <div class="pt-1 md:pt-3">
-            <p class="font-bold text-lg md:text-xl">{{ jobsStore.jobDetail.title }}</p>
+            <p class="font-bold text-lg md:text-xl">{{ formatTitle(jobsStore.jobDetail.title) }}</p>
             <p class="font-medium text-gray-400 text-sm md:text-base">
-              {{ jobsStore.jobDetail.company_name }}
+              {{ formatTitle(jobsStore.jobDetail.company_name) }}
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="px-6 py-4 md:px-10 md:py-8 w-full border-b border-t border-r border-gray-300 flex flex-col gap-y-2">
           <p class="font-semibold text-2xl md:text-3xl">Location</p>
-          <p class="text-gray-500 font-medium text-sm md:text-base">{{ jobsStore.jobDetail.location }}</p>
+          <p class="text-gray-500 font-medium text-sm md:text-base">{{ formatTitle(jobsStore.jobDetail.location) }}</p>
         </div>
         <div class="px-6 py-4 md:px-10 md:py-8 w-full flex flex-col gap-y-2 border-l border-t border-b border-r border-gray-300 ">
           <p class="font-semibold text-2xl md:text-3xl">Type</p>
@@ -159,6 +159,13 @@ const formatGajiRingkas = (value) => {
     currency: 'IDR',
     minimumFractionDigits: 0,
   }).format(numberValue);
+};
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 
 const toggleDropdown = () => {

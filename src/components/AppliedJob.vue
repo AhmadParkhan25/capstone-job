@@ -76,7 +76,7 @@
                 />
                 <div>
                   <p class="font-semibold text-sm md:text-base">
-                    {{ application.title }}
+                    {{ formatTitle(application.title) }}
                   </p>
                   <div
                     class="flex items-center text-gray-600 text-xs md:text-sm mt-1"
@@ -88,7 +88,7 @@
                       class="mr-1 flex-shrink-0"
                       style="color: #718096"
                     />
-                    <span>{{ application.location || "N/A" }}</span>
+                    <span>{{ formatTitle(application.location) || "N/A" }}</span>
                   </div>
                   <p class="text-gray-700 text-xs md:text-sm mt-1">
                     {{ formatGajiRingkas(application.salary_min) }} - {{ formatGajiRingkas(application.salary_max) }}
@@ -145,7 +145,7 @@
                   height="18"
                   class="mr-1.5"
                 />
-                <span>{{ application.status || "N/A" }}</span>
+                <span>{{ formatTitle(application.status) || "N/A" }}</span>
               </div>
             </td>
             <td class="py-4 text-xs md:text-sm">
@@ -211,6 +211,13 @@ const authStore = AuthUserStorage();
 
 const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/"); // Sesuaikan jika URL API Anda berbeda
 
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 // Menggunakan state dari store untuk data, loading, dan error
 const displayedAppliedJobs = computed(() => jobStore.userAppliedJobs);
 const isLoading = computed(() => jobStore.loadingUserAppliedJobs);

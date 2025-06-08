@@ -103,7 +103,7 @@
             <h1
               class="font-bold text-lg md:text-xl text-center md:text-left mb-2 leading-tight truncate"
             >
-              {{ job.title }}
+              {{ formatTitle(job.title) }}
             </h1>
             <div class="flex flex-wrap gap-x-4 mb-4">
               <p
@@ -138,7 +138,7 @@
               <p
                 class="text-sm md:text-base text-blue-900 font-medium truncate"
               >
-                {{ job.company_name }}
+                {{ formatTitle(job.company_name) }}
               </p>
             </div>
             <div class="flex justify-end mt-3">
@@ -184,7 +184,7 @@
       </template>
       <!-- No data message -->
       <div v-else class="col-span-full text-center py-10 text-gray-600">
-        Tidak ada data pekerjaan
+        Tidak ada data pekerjaa, Coba Refresh Lagi
       </div>
     </div>
 
@@ -410,6 +410,13 @@ const search = ref({
   title: "",
   location: "",
 });
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 const currentPage = ref(1);
 const jobsPerPage = 12;

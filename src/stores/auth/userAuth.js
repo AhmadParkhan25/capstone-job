@@ -265,9 +265,9 @@ const fetchUserProfile = async () => {
       if (router.currentRoute.value.name !== 'profile') {
         Swal.fire({
           icon: 'warning',
-          title: 'Profil Tidak Ditemukan',
-          text: 'Sepertinya Anda belum melengkapi profil. Silakan lengkapi profil Anda terlebih dahulu.',
-          confirmButtonText: 'Lengkapi Profil',
+          title: 'Profile Not Found',
+          text: 'It seems that you have not completed your profile. Please complete your profile first.',
+          confirmButtonText: 'Complete The Profile',
           allowOutsideClick: false, 
         }).then((result) => {
           if (result.isConfirmed) {
