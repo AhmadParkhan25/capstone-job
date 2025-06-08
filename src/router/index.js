@@ -176,7 +176,7 @@ const router = createRouter({
       meta: { isAuth: true, roles: ["company"] }, // Only companies can access
     },
     {
-      path: "/job//edit/:id", // Corrected to "application" if it's a typo, but kept as "aplication" based on your input
+      path: "/job/edit/:id", // Corrected to "application" if it's a typo, but kept as "aplication" based on your input
       name: "job-edit",
       component: JobEdit, // Assuming Cv is used here, as in your original code
       meta: { isAuth: true, roles: ["company"] }, // Only companies can access

@@ -79,7 +79,7 @@
                   <p
                     class="font-bold text-sm md:text-lg hover:text-blue-700 transition-colors truncate"
                   >
-                    {{ favJobItem.title }}
+                    {{ formatTitle(favJobItem.title) }}
                   </p>
                 </router-link>
 
@@ -94,7 +94,7 @@
                     style="color: #718096"
                   />
                   <span class="truncate">{{
-                    favJobItem.location || "N/A"
+                    formatTitle(favJobItem.location) || "N/A"
                   }}</span>
                 </div>
                 <p
@@ -214,6 +214,13 @@ const authStore = AuthUserStorage();
 
 const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/");
 const logoErrors = ref({});
+
+const formatTitle = (title) => {
+  return title
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 const displayedFavoriteJobs = computed(() => jobStore.userFavoriteJobs);
 const isLoading = computed(() => jobStore.loadingUserFavoriteJobs);

@@ -62,45 +62,103 @@ export const AuthUserStorage = defineStore("auth", () => {
   };
 
   const LoginUser = async (inputData) => {
+    // Variabel untuk menyimpan token sementara, tidak langsung disimpan ke state.
+    let temporaryToken = null;
+  
     try {
       const { email, password } = inputData;
-      const { data } = await apiClient.post("/login", {
+      
+      // LANGKAH 1: Panggil /login HANYA untuk mendapatkan token.
+      console.log("Langkah 1: Memanggil /login untuk mendapatkan token...");
+      const loginResponse = await apiClient.post("/login", {
         email,
         password,
       });
-      tokenUser.value = data.token;
+  
+      temporaryToken = loginResponse.data.token;
+      if (!temporaryToken) {
+        // Jika karena suatu alasan token tidak ada, gagalkan proses.
+        throw new Error("Login failed: No token received.");
+      }
+      console.log("Langkah 1: Token sementara berhasil didapatkan.");
+  
+      // LANGKAH 2: Panggil /user-auth menggunakan token sementara untuk verifikasi role.
+      console.log("Langkah 2: Memanggil /user-auth untuk verifikasi role...");
+      const authResponse = await apiClient.get("/user-auth", {
+        headers: { Authorization: `Bearer ${temporaryToken}` },
+      });
+  
+      const correctUserData = authResponse.data.data;
+      console.log("Langkah 2: Data pengguna yang benar diterima:", correctUserData);
+  
+  
+      // LANGKAH 3: Lakukan pengecekan role menggunakan data yang BENAR dari /user-auth.
+      if (correctUserData?.role === 'company') {
+        console.log("Langkah 3: Ditemukan role 'company'. Login dibatalkan.");
+        // Jika ini akun perusahaan, lempar error untuk membatalkan login.
+        throw new Error("Company accounts cannot log in on this page.");
+      }
+      console.log("Langkah 3: Role valid. Login akan dilanjutkan.");
+  
+      // LANGKAH 4: Jika role valid, SEKARANG baru kita finalisasi proses login.
+      // Simpan token dan data user yang benar ke state dan localStorage.
+      tokenUser.value = temporaryToken;
+      currentUser.value = correctUserData;
       localStorage.setItem("token", JSON.stringify(tokenUser.value));
-
-      // Setelah login berhasil, fetch data user lengkap
-      await getUserByAuth();
-
+      localStorage.setItem("user", JSON.stringify(currentUser.value));
+  
       Swal.fire({
         toast: true,
         position: "top-end",
         icon: "success",
-        title: "Login Success",
+        title: "Login Success!",
         showConfirmButton: false,
         timer: 2000,
       });
-      router.push("/dashboard"); // Atau halaman dashboard sesuai kebutuhan
+  
+      router.push("/dashboard");
       return true;
+  
     } catch (error) {
-      // Hapus token dan user dari localStorage jika login gagal
+      // Blok catch ini akan menangani semua kegagalan, termasuk role yang salah.
       localStorage.removeItem("token");
-      localStorage.removeItem("user"); // Reset state
+      localStorage.removeItem("user");
       currentUser.value = null;
       tokenUser.value = null;
-
+  
+      // --- PERUBAHAN DIMULAI DI SINI ---
+  
+      let alertTitle = "Login Failed";
+      let alertText = error.response?.data?.message || error.message || "An unknown error occurred.";
+  
+      // Cek status error dari respons API
+      if (error.response?.status === 404) {
+          // Status 404 biasanya berarti "Not Found" atau email tidak terdaftar.
+          alertText = "Your account is not registered. Please sign up first.";
+      } else if (error.message.includes("Company accounts cannot log in")) {
+          // Menangani error khusus jika akun perusahaan mencoba login
+          alertTitle = "Access Denied";
+          alertText = "This is a company account. Please use the company login page.";
+      } else if (error.response?.status === 401) {
+          // Status 401 biasanya berarti "Unauthorized" atau password salah.
+          alertText = "Invalid email or password. Please try again.";
+      }
+  
+      // Tampilkan alert menggunakan pesan yang sudah disesuaikan
       Swal.fire({
         toast: true,
         position: "top-end",
         icon: "error",
-        title: "Login Failed",
+        title: alertTitle,
+        text: alertText,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 4000, // Waktu sedikit lebih lama agar pesan bisa dibaca
       });
+      
+      // --- AKHIR PERUBAHAN ---
+      
       throw error;
-    }
+  }
   };
 
   const getUserByAuth = async () => {

@@ -357,8 +357,8 @@ export const useActiveJobRecommendationsStore = defineStore(
           throw createFavoriteError.value;
         }
       } catch (error) {
-        console.error(`STORE: Error saat createFavoriteJob untuk ID ${numericJobId}:`, error.response ? error.response.data : error.message);
-        const errorMessage = error.response?.data?.message || error.message || "Gagal menambahkan ke favorit.";
+        console.error(`STORE: Error when creating favorite job for ID ${numericJobId}:`, error.response ? error.response.data : error.message);
+        const errorMessage = error.response?.data?.message || error.message || "Failed to add to favorites.";
         createFavoriteError.value = error;
   
         if (errorMessage === "Job already favorited") {
@@ -399,7 +399,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           params: { page: params.page, limit: params.limit },
         });
     
-        console.log("STORE: Respons API untuk user favorite jobs:", JSON.parse(JSON.stringify(response.data)));
+        console.log("STORE: API response for user favorite jobs:", JSON.parse(JSON.stringify(response.data)));
     
         if (response.data && response.data.status === "success" && response.data.data) {
           const responseData = response.data.data;
@@ -427,7 +427,7 @@ export const useActiveJobRecommendationsStore = defineStore(
           currentFavoritePage.value = 1;
           console.log("STORE: No favorite jobs found for the user.");
         } else {
-          const errorMessage = response.data.message || "Gagal memuat daftar pekerjaan favorit.";
+          const errorMessage = response.data.message || "Failed to load favorite job list.";
           errorUserFavoriteJobs.value = new Error(errorMessage);
           userFavoriteJobs.value = []; 
           Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });

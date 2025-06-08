@@ -21,15 +21,14 @@
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       ></path>
     </svg>
-    <p class="mt-2 text-gray-600">Loadind Job latest...</p>
+    <p class="mt-2 text-gray-600">Loading Job latest...</p>
   </div>
 
   <!-- Tampilkan pesan error jika terjadi kegagalan fetch -->
   <div v-else-if="jobsStore.error" class="text-center py-8 bg-red-50 rounded-md shadow-sm">
     <p class="text-red-600 font-semibold text-lg">
-      Failed To Load Data
+      Data Empty
     </p>
-    <p class="text-red-500 mt-2">You must fill in the Company Profile first.</p>
   </div>
 
   <!-- Tampilkan jika tidak ada data pekerjaan sama sekali -->

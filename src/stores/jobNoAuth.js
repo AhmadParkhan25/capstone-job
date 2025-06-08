@@ -61,7 +61,7 @@ export const jobNoAuth = defineStore('jobs-no-auth', () => {
 
     } catch (error) {
       // 4. Tangani jika terjadi error saat panggilan API
-      const errorMessage = error.response?.data?.message || 'Gagal memuat data pekerjaan.';
+      const errorMessage = error.response?.data?.message || 'Failed to load job data.';
       errorFeatured.value = error; // Simpan objek error lengkap
       featuredJobs.value = []; // Kosongkan data jika terjadi error
 

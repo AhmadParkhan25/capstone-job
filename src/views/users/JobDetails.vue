@@ -362,7 +362,7 @@ const initializePageData = async () => {
   hasAppliedThisSession.value = false;
 
   if (!currentJobId.value) {
-    pageError.value = { message: "Job ID tidak ditemukan di URL." };
+    pageError.value = { message: "Job ID not found in the URL." };
     loadingInitialData.value = false;
     return;
   }
@@ -393,7 +393,7 @@ const initializePageData = async () => {
     }
   } catch (e) {
     // Blok catch ini sekarang HANYA untuk menangani kegagalan data kritis.
-    console.error("Gagal memuat data detail pekerjaan:", e);
+    console.error("Failed to load job detail data:", e);
     pageError.value = e;
   } finally {
     // Hentikan loading utama setelah data kritis selesai,
@@ -406,11 +406,11 @@ const initializePageData = async () => {
 
 const toggleFavoriteHandler = async () => {
   if (!authStore.tokenUser) {
-    Swal.fire("Akses Ditolak", "Silakan login untuk mengubah favorit.", "warning");
+    Swal.fire("Access Denied", "Please log in to change favorites.", "warning");
     return;
   }
   if (!jobDetail.value || !currentJobId.value) {
-    Swal.fire("Error", "Detail pekerjaan tidak tersedia.", "error");
+    Swal.fire("Error", "Job details are not available.", "error");
     return;
   }
 
@@ -430,7 +430,7 @@ const toggleFavoriteHandler = async () => {
       await jobStore.createFavoriteJob(jobId, authStore.tokenUser);
     }
   } catch (error) {
-    console.error("Gagal mengubah status favorit di komponen:", error);
+    console.error("Failed to change favorite status in the component:", error);
     // SweetAlert untuk error sudah ditangani di dalam store,
     // jadi tidak perlu ditambahkan di sini kecuali untuk kasus khusus.
   } finally {
@@ -443,13 +443,13 @@ const toggleFavoriteHandler = async () => {
 const handleApplyNow = async () => {
   if (!authStore.tokenUser) {
     Swal.fire({
-      title: "Anda Belum Login",
-      text: "Silakan login terlebih dahulu untuk melamar pekerjaan.",
+      title: "You Haven't Logged In",
+      text: "Please log in first to apply for the job.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Login Sekarang",
+      confirmButtonText: "Login Now",
     }).then((result) => {
       if (result.isConfirmed) {
         router.push({ name: "login-user" });
@@ -461,7 +461,7 @@ const handleApplyNow = async () => {
   if (!jobDetail.value || !currentJobId.value) {
     Swal.fire(
       "Error",
-      "Detail pekerjaan tidak ditemukan untuk dilamar.",
+      "Job details not found to apply..",
       "error"
     );
     return;
@@ -473,15 +473,15 @@ const handleApplyNow = async () => {
   ) {
     // Pastikan properti ini ada di API Anda
     Swal.fire(
-      "Lowongan Ditutup",
-      "Maaf, lowongan pekerjaan ini sudah tidak aktif.",
+      "Job Opening Closed",
+      "Sorry, this job vacancy is no longer active.",
       "info"
     );
     return;
   } // Cek sekali lagi jika sudah pernah melamar (double check, karena isEffectivelyApplied sudah ada)
 
   if (isEffectivelyApplied.value) {
-    Swal.fire("Informasi", "Anda sudah pernah melamar pekerjaan ini.", "info");
+    Swal.fire("Informasi", "You have already applied for this job.", "info");
     return;
   }
 
@@ -515,13 +515,13 @@ const handleApplyNow = async () => {
     if (
       error.response &&
       error.response.data &&
-      error.response.data.message === "Harus isi Profile terlebih dahulu"
+      error.response.data.message === "You must fill in the profile first."
     ) {
       Swal.fire({
-        title: "Profil Belum Lengkap",
-        text: "Silakan lengkapi profil Anda terlebih dahulu untuk melamar pekerjaan.",
+        title: "Profile Not Complete",
+        text: "Please complete your profile first in order to apply for the job.",
         icon: "info",
-        confirmButtonText: "Lengkapi Profil",
+        confirmButtonText: "Complete Profile",
       }).then((result) => {
         if (result.isConfirmed) {
           router.push({ name: "user-profile-edit" });

@@ -68,7 +68,7 @@
             class="bg-blue-950/90 text-white text-xs md:text-sm px-2 md:px-3 rounded-sm cursor-pointer h-6 md:h-auto"
             type="button"
           >
-            Verifikasi
+            verify
           </button>
         </div>
         <input
@@ -109,7 +109,7 @@
 
     <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label for="username" class="font-semibold text-lg">Username</label>
+        <label for="username" class="font-semibold text-lg">Username <span class="text-red-600" v-if="!authUserStore.userProfile?.username">*</span></label>
         <input
           id="username"
           v-model="profileForm.username"
@@ -239,10 +239,10 @@
     <div
       class="rounded-md shadow z py-6 md:py-10 px-6 md:px-8 w-98 sm:w-md"
     >
-      <form @submit.prevent="handleVerifyOtp">
+      <form @submit.prevent="handleVerifyOtp" class="p-10 rounded-lg bg-[#D5DEEF] ">
         <div class="flex flex-col gap-y-2">
           <label for="otp" class="font-medium text-sm md:text-base">
-            Masukkan kode OTP <span class="text-red-600">*</span>
+            Enter Code OTP <span class="text-red-600">*</span>
           </label>
           <input
             type="text"
@@ -261,13 +261,13 @@
             class="bg-gray-400 text-white w-full rounded-sm py-1 text-sm cursor-pointer"
             @click="showOtpPopup = false"
           >
-            Batal
+            Cancel
           </button>
           <button
             type="submit"
             class="bg-blue-950/90 text-white w-full rounded-sm py-1 text-sm cursor-pointer"
           >
-            Verifikasi Kode OTP
+            Verify Code OTP
           </button>
         </div>
       </form>
@@ -355,7 +355,7 @@ onMounted(async () => {
     await authUserStore.fetchUserProfile();
     initializeProfileForm(userProfile.value);
   } catch (error) {
-    console.error("Gagal mengambil profil di onMounted:", error);
+    console.error("Failed Get Profile in onMounted:", error);
     initializeProfileForm(null);
   } finally {
     loadingProfile.value = false;
@@ -390,8 +390,8 @@ const handleSubmit = async () => {
   if (isCreatingProfile && !isNewImageSelected) {
     Swal.fire({
       icon: "warning",
-      title: "Gambar Profil Dibutuhkan",
-      text: "Mohon unggah gambar profil Anda untuk membuat profil.",
+      title: "Please Input Your Image",
+      text: "Please Upload Your Image For Completed Profile",
       confirmButtonText: "Oke",
     });
     return;
@@ -400,8 +400,8 @@ const handleSubmit = async () => {
   if (!isCreatingProfile && isEditing.value && !isNewImageSelected && !hasPreviouslySavedImage) {
     Swal.fire({
       icon: "warning",
-      title: "Gambar Profil Dibutuhkan",
-      text: "Mohon unggah gambar profil Anda.",
+      title: "Please Input Your Image",
+      text: "Please Upload Your Image",
       confirmButtonText: "Oke",
     });
     return;
@@ -450,8 +450,8 @@ const handleSubmit = async () => {
   } catch (error) {
     // Penanganan error di komponen tetap ada, untuk menampilkan alert yang lebih menonjol jika diperlukan
     // atau untuk menangani error yang mungkin tidak dilempar ulang oleh store dengan cara tertentu.
-    console.error("Gagal menyimpan profil (dari komponen):", error);
-    let errorMessage = "Terjadi kesalahan saat menyimpan profil.";
+    console.error("faled Save Profile (at Component):", error);
+    let errorMessage = "An error occurred while saving the profile.";
     if (error.response && error.response.data) {
         if (typeof error.response.data.message === 'string') {
             errorMessage = error.response.data.message;
@@ -460,7 +460,7 @@ const handleSubmit = async () => {
         }
         const lowerCaseError = errorMessage.toLowerCase();
         if (lowerCaseError.includes("username") && (lowerCaseError.includes("taken") || lowerCaseError.includes("exists") || lowerCaseError.includes("sudah ada") || lowerCaseError.includes("digunakan"))) {
-            errorMessage = "Username sudah digunakan. Mohon pilih username lain.";
+            errorMessage = "Username has already been used. Please choose another username.";
         }
     } else if (error.message && !error.response) { // Error dari store yang mungkin tidak punya error.response
       errorMessage = error.message;
@@ -469,8 +469,8 @@ const handleSubmit = async () => {
 
     Swal.fire({
       icon: "error",
-      title: "Gagal Menyimpan",
-      text: errorMessage,
+      title: "Failed Saving",
+      text: "Please Completed Username And Image Don't Empty",
       confirmButtonText: "Oke",
     });
   }finally {
@@ -483,7 +483,7 @@ const handleVerifyOtpRequest = async () => {
     await authUserStore.sendVerificationOTP();
     showOtpPopup.value = true;
   } catch (error) {
-    console.error("Gagal mengirim OTP:", error);
+    console.error("Failed Sending OTP:", error);
     // Asumsi store sudah menangani alert errornya
   }
 };
@@ -492,8 +492,8 @@ const handleVerifyOtp = async () => {
   if (!otpCode.value) {
     Swal.fire({
       icon: "warning",
-      title: "OTP Diperlukan",
-      text: "Mohon masukkan kode OTP.",
+      title: "OTP Required",
+      text: "Please enter the OTP code.",
       confirmButtonText: "Oke",
     });
     return;
@@ -504,7 +504,7 @@ const handleVerifyOtp = async () => {
     otpCode.value = "";
      // Asumsi store sudah menangani alert suksesnya dan update currentUser
   } catch (error) {
-    console.error("Gagal memverifikasi OTP:", error);
+    console.error("Failed to verify OTP:", error);
     // Asumsi store sudah menangani alert errornya
   }
 };

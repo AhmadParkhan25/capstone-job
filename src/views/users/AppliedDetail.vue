@@ -252,11 +252,11 @@ const initializeApplicationPageData = async () => {
 
 const toggleFavoriteHandler = async () => {
   if (!authStore.tokenUser) {
-    Swal.fire('Akses Ditolak', 'Silakan login untuk mengubah favorit.', 'warning');
+    Swal.fire('Access Denied, Please log in to change favorites.', 'warning');
     return;
   }
   if (!applicationDetail.value || !applicationDetail.value.job_id) {
-    Swal.fire('Error', 'Informasi pekerjaan tidak ditemukan untuk difavoritkan.', 'error');
+    Swal.fire('Error', 'Job information not found to be favorited.', 'error');
     return;
   }
 
@@ -266,14 +266,14 @@ const toggleFavoriteHandler = async () => {
     try {
       await jobStore.deleteFavoriteJob(jobIdToToggle, authStore.tokenUser);
     } catch (error) {
-      console.error("Gagal menghapus favorit di komponen:", error);
+      console.error("Failed to remove favorite in the component:", error);
     }
   } else {
     try {
       await jobStore.createFavoriteJob(jobIdToToggle, authStore.tokenUser);
     } catch (error)
      {
-      console.error("Gagal menambahkan favorit di komponen:", error);
+      console.error("Failed to add favorite in the component:", error);
        if (error.response && error.response.data && error.response.data.message === "Job already favorited") {
          if (!jobStore.userFavoriteJobIds.has(jobIdToToggle) && authStore.tokenUser) {
             await jobStore.fetchUserFavoriteJobs(authStore.tokenUser, { page: 1, limit: 1000 });

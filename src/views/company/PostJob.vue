@@ -35,8 +35,8 @@
                 </option>
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
-                <option value="Contract">Kontrak</option>
-                <option value="Internship">Magang</option>
+                <option value="Contract">Contract</option>
+                <option value="Internship">Internship</option>
               </select>
             </div>
             <div class="flex flex-col gap-y-1 w-full">
@@ -180,8 +180,8 @@ const handleSubmit = async () => {
     if (!jobForm.value[field] || String(jobForm.value[field]).trim() === "") {
       Swal.fire({
         icon: "error",
-        title: "Input Tidak Lengkap",
-        text: `Harap lengkapi semua data`,
+        title: "Input Incomplete",
+        text: `Please complete all the data.`,
       });
       return; // Hentikan fungsi jika ada yang kosong
     }

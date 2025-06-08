@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import Swal from "sweetalert2";
 
 export const useCompanyApplicationStore = defineStore(
-  "Applications",
+  "companyApplications",
   () => {
     // State untuk daftar pelamar per pekerjaan
     const jobApplicants = ref([]);
@@ -49,13 +49,13 @@ export const useCompanyApplicationStore = defineStore(
         } else if (response.data && response.data.status === "success" && response.data.data.length === 0) {
           jobApplicants.value = [];
         } else {
-          const errorMessage = response.data?.message || "Failed to load the applicant list.";
+          const errorMessage = response.data?.message || "Failed Load Data Applicants.";
           errorApplicants.value = new Error(errorMessage);
           jobApplicants.value = [];
         }
         return response.data;
       } catch (error) {
-        const errorMessage = error.response?.data?.message || "An error occurred while loading the applicant.";
+        const errorMessage = error.response?.data?.message || "Failed Load List Applicant.";
         errorApplicants.value = error;
         jobApplicants.value = [];
         Swal.fire({
@@ -83,7 +83,7 @@ export const useCompanyApplicationStore = defineStore(
 
       const validStatuses = ["Accepted", "Screening", "Rejected"];
       if (!validStatuses.includes(status)) {
-        const validationError = "Invalid status. Must be one of: Accepted, Screening, Rejected.";
+        const validationError = "Status Not Valid, Like As: Accepted, Screening, Rejected.";
         errorUpdatingStatus.value = new Error(validationError);
         Swal.fire({ toast: true, position: "top-end", icon: "error", title: validationError, showConfirmButton: false, timer: 3000 });
         isUpdatingStatus.value = false;
@@ -108,7 +108,7 @@ export const useCompanyApplicationStore = defineStore(
             toast: true,
             position: "top-end",
             icon: "success",
-            title: `Application status successfully changed to ${response.data.data.status}`,
+            title: `Status Applicant Success Change ${response.data.data.status}`,
             showConfirmButton: false,
             timer: 2000,
           });
@@ -117,14 +117,14 @@ export const useCompanyApplicationStore = defineStore(
             jobApplicants.value[index].status = response.data.data.status;
           }
         } else {
-          const errorMessage = response.data?.message || "Failed to update the application status.";
+          const errorMessage = response.data?.message || "Failed Update Status Applicant.";
           errorUpdatingStatus.value = new Error(errorMessage);
           Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });
           throw errorUpdatingStatus.value;
         }
         return response.data;
       } catch (error) {
-        const errorMessage = error.response?.data?.message || "An error occurred while updating the status.";
+        const errorMessage = error.response?.data?.message || "Failed Update At Status.";
         errorUpdatingStatus.value = error;
          Swal.fire({
           toast: true,
@@ -140,7 +140,10 @@ export const useCompanyApplicationStore = defineStore(
       }
     };
 
-    
+    /**
+     * Menghapus semua lamaran pengguna berdasarkan Job ID (untuk Perusahaan).
+     * DELETE /application/jobs/:id
+     */
     const deleteAllApplicationsByJobId = async (jobId, token) => {
       isDeletingApplications.value = true;
       errorDeletingApplications.value = null;
@@ -157,7 +160,7 @@ export const useCompanyApplicationStore = defineStore(
             toast: true,
             position: "top-end",
             icon: "success",
-            title: response.data.message || `${response.data.data.count} The Application Was Successfully Deleted.`,
+            title: response.data.message || `${response.data.data.count} Applicant Deleted Successfully .`,
             showConfirmButton: false,
             timer: 2500,
           });
@@ -165,7 +168,7 @@ export const useCompanyApplicationStore = defineStore(
             jobApplicants.value = [];
           }
         } else if (response.data && response.data.status === "error" && response.status === 404) {
-          const errorMessage = response.data.message || `No Application Founf For Job ID ${jobId}.`;
+          const errorMessage = response.data.message || `Not Found ${jobId}.`;
           deletionResult.value = response.data;
           Swal.fire({
             toast: true,
@@ -176,7 +179,7 @@ export const useCompanyApplicationStore = defineStore(
             timer: 3000,
           });
         } else {
-          const errorMessage = response.data?.message || "Failed Delete Application.";
+          const errorMessage = response.data?.message || "Failed Deleted Applicants.";
           errorDeletingApplications.value = new Error(errorMessage);
            Swal.fire({ toast: true, position: "top-end", icon: "error", title: errorMessage, showConfirmButton: false, timer: 3000 });
           throw errorDeletingApplications.value;
@@ -231,7 +234,7 @@ export const useCompanyApplicationStore = defineStore(
           currentCvPreview.value = response.data.data;
         } else if (response.data && response.data.status === "error" && response.status === 404) {
           // Backend mengembalikan 404 jika aplikasi atau CV tidak ditemukan
-          const errorMessage = response.data.message || "No CV or application data found.";
+          const errorMessage = response.data.message || "CV data or application not found.";
           errorCvPreview.value = new Error(errorMessage);
           // Swal.fire({ toast: true, position: "top-end", icon: "info", title: errorMessage, showConfirmButton: false, timer: 3000 });
         }
@@ -242,7 +245,7 @@ export const useCompanyApplicationStore = defineStore(
         }
         return response.data; // Selalu kembalikan respons data dari API
       } catch (error) {
-        const errorMessage = error.response?.data?.message || "Terjadi kesalahan saat memuat CV.";
+        const errorMessage = error.response?.data?.message || "An error occurred while loading the CV..";
         errorCvPreview.value = error; // Simpan objek error lengkap
         currentCvPreview.value = null;
         if (error.response && error.response.status === 404) {
@@ -271,23 +274,6 @@ export const useCompanyApplicationStore = defineStore(
     };
     // --- Akhir Action BARU untuk CV Preview ---
 
-    async function countApplicant(token) {
-      try {
-        console.log("fetch");
-
-        const response = await apiClient.get(`/jobs/count`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        console.log(response?.data?.total);
-
-        jobApplicants.value = new Array(response?.data?.total)
-      } catch (error) {
-        console.error(error?.getMessage ?? error)
-        alert(error?.getMessage ?? error)
-      }
-    }
-
     return {
       jobApplicants,
       isLoadingApplicants,
@@ -311,8 +297,6 @@ export const useCompanyApplicationStore = defineStore(
       errorCvPreview,
       fetchCvPreviewByApplicationId,
       // --- Akhir State dan Action BARU di-return ---
-
-      countApplicant,
     };
   }
 );

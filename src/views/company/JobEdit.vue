@@ -3,7 +3,7 @@
     <h1 class="font-bold text-xl sm:text-2xl py-4">Edit Job Posting</h1>
     <div class="bg-[#D5DEEF] w-full px-4 py-4 sm:px-8 sm:py-6 rounded-md shadow-xs">
       <div v-if="jobsStore.isLoading" class="text-center py-8">
-        <p class="text-blue-800 font-semibold text-lg">Memuat data pekerjaan...</p>
+        <p class="text-blue-800 font-semibold text-lg">Loading Data Job...</p>
         <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mt-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -38,10 +38,10 @@
                 required
                 class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base"
               >
-                <option value="Full Time">Full-Time</option>
-                <option value="Part Time">Part-Time</option>
-                <option value="Contract">Kontrak</option>
-                <option value="Internship">Magang</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Contract">Contract</option>
+                <option value="Internship">Internship</option>
               </select>
             </div>
             <div class="flex flex-col gap-y-1 w-full">
@@ -115,7 +115,7 @@
         </form>
       </div>
       <div v-else class="text-center py-8 text-gray-600">
-        <p class="font-semibold text-lg">Pekerjaan tidak ditemukan atau tidak dapat dimuat.</p>
+        <p class="font-semibold text-lg">Job not found or cannot be loaded.</p>
       </div>
     </div>
   </div>
@@ -146,13 +146,13 @@ onMounted(() => {
 
 watch(() => jobsStore.jobDetail, (newDetail) => {
   if (newDetail) {
-    console.log("Data 'job_type' dari API:", newDetail.job_type);
-    console.log("Tipe data dari API:", typeof newDetail.job_type);
+    console.log("The 'job_type' data from the API:", newDetail.job_type);
+    console.log("Data type from the API:", typeof newDetail.job_type);
 
     const optionValues = ["Full-Time", "Part-Time", "Contract", "Internship"];
-    console.log("Nilai yang ada di <option> HTML:", optionValues);
+    console.log("The value that is in <option> HTML:", optionValues);
     console.log(
-      "Apakah ada yang cocok? ",
+      "Is there anything suitable? ",
       optionValues.includes(newDetail.job_type)
     );
     jobForm.value = {
@@ -162,6 +162,7 @@ watch(() => jobsStore.jobDetail, (newDetail) => {
       salary_max: newDetail.salary_max,
       location: newDetail.location,
       job_type: newDetail.job_type,
+      is_active : newDetail.is_active
     };
   }
 }, { immediate: true });
@@ -171,7 +172,7 @@ const handleSubmit = async () => {
 
   if (isSuccess) {
     router.push({ 
-      name: 'job-list', 
+      name: 'job-detail', 
       params: { id: jobId.value } 
     });
   }

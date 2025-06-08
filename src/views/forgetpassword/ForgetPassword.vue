@@ -60,7 +60,7 @@ const handleForgotPassword = async () => {
       await authUserStore.SendForgotPassword(email.value);
     }
   } catch (error) {
-    console.error("Gagal mengirim link reset password:", error);
+    console.error("Failed to send password reset link:", error);
   } finally {
     loading.value = false;
   }
@@ -74,7 +74,7 @@ onMounted(() => {
 <template>
   <div class="m-auto place-items-center min-h-[80dvh] flex justify-center">
     <div class="w-max bg-[#D5DEEF] p-16 rounded-md">
-      <h2 class="text-2xl font-semibold mb-4">Lupa Kata Sandi</h2>
+      <h2 class="text-2xl font-semibold mb-4">Forget Password</h2>
       <form
         @submit.prevent="handleForgotPassword"
         class="flex flex-col gap-y-4"

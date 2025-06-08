@@ -1,11 +1,11 @@
 <template>
   <div class="m-auto place-items-center min-h-[80dvh] flex justify-center">
     <div class="w-max bg-[#D5DEEF] p-16 rounded-md">
-      <h2 class="text-2xl font-semibold mb-4">Reset Kata Sandi</h2>
+      <h2 class="text-2xl font-semibold mb-4">Reset Password</h2>
       <form @submit.prevent="handleResetPassword" class="flex flex-col gap-y-4">
         <div class="flex flex-col">
           <label for="password" class="font-medium">
-            Password Baru <span class="text-red-600">*</span>
+            New Password <span class="text-red-600">*</span>
           </label>
           <input
             type="password"
@@ -23,7 +23,7 @@
         </div>
         <div class="flex flex-col">
           <label for="confirm_password" class="font-medium">
-            Konfirmasi Password <span class="text-red-600">*</span>
+            Confirm Password <span class="text-red-600">*</span>
           </label>
           <input
             type="password"
@@ -45,8 +45,8 @@
             :disabled="loading || errors.password || errors.confirm_password || password !== confirmPassword"
             class="bg-blue-950/80 text-white py-2 rounded-md w-full font-semibold text-xl"
           >
-            <span v-if="loading">Menyimpan...</span>
-            <span v-else>Simpan</span>
+            <span v-if="loading">Saving...</span>
+            <span v-else>Save</span>
           </button>
         </div>
       </form>
@@ -153,13 +153,13 @@ const handleResetPassword = async () => {
         toast: true,
         position: "top-end",
         icon: "error",
-        title: "Gagal mengatur ulang kata sandi.",
+        title: "Failed to reset the password.",
         showConfirmButton: false,
         timer: 3000,
       });
     }
   } catch (error) {
-    console.error("Gagal reset password:", error);
+    console.error("Failed to reset password:", error);
   } finally {
     loading.value = false;
   }
@@ -174,12 +174,12 @@ onMounted(async () => {
       await verificationFunction(token.value);
       console.log("Token valid.");
     } catch (error) {
-      console.error("Token tidak valid:", error);
+      console.error("Token is not valid:", error);
       Swal.fire({
         toast: true,
         position: "top-end",
         icon: "error",
-        title: "Token tidak valid atau kadaluarsa!",
+        title: "Token is invalid or expired!",
         showConfirmButton: false,
         timer: 3000,
       });
@@ -193,7 +193,7 @@ onMounted(async () => {
       toast: true,
       position: "top-end",
       icon: "warning",
-      title: "Token reset tidak ditemukan!",
+      title: "Token reset not found!",
       showConfirmButton: false,
       timer: 3000,
     });

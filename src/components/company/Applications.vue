@@ -91,7 +91,7 @@
                     companyAppStore.currentlyUpdatingAppId === applicant.id
                   "
                   :class="getStatusColorClass(applicant.status)"
-                  class="appearance-none px-4 py-2 rounded-md font-medium text-sm focus:outline-none focus:border-transparent cursor-pointer w-full pr-10"
+                  class="appearance-none px-4 py-2 rounded-md font-medium text-sm focus:outline-none focus:border-transparent cursor-pointer w-full "
                 >
                   <option value="Screening">Screening</option>
                   <option value="Accepted">Accepted</option>
@@ -124,123 +124,148 @@
     </div>
 
     <div
-      v-if="showCvModal && companyAppStore.currentCvPreview"
-      class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50"
+  v-if="showCvModal && companyAppStore.currentCvPreview"
+  class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50"
+>
+  <div
+    class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col"
+  >
+    <div
+      class="sticky top-0 bg-white p-4 border-b border-gray-200 flex justify-between items-center z-10 flex-shrink-0"
     >
-      <div
-        class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col"
+      <h3 class="text-xl font-bold">CV Preview</h3>
+      <button
+        @click="showCvModal = false"
+        class="text-gray-500 hover:text-gray-800"
       >
-        <div
-          class="sticky top-0 bg-white p-4 border-b border-gray-200 flex justify-between items-center z-10 flex-shrink-0"
-        >
-          <h3 class="text-xl font-bold md:pl-76 lg:pl-92 xl:pl-98 ">CV Preview</h3>
-          <button
-            @click="showCvModal = false"
-            class="text-gray-500 hover:text-gray-800"
-          >
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          
-        </div>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
 
-        <div class="overflow-y-auto">
-          <div
-            ref="cvContent"
-            id="cv-content-area"
-            class="p-6 md:p-8"
-            v-if="cv"
-          >
-            <header class="text-center mb-8">
-              <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
-                {{ cv.full_name }}
-              </h1>
-              <div
-                class="mt-2 text-sm text-gray-600 flex justify-center items-center gap-x-4 flex-wrap"
-              >
-                <a
-                  v-if="cv.email"
-                  :href="`mailto:${cv.email}`"
-                  class="hover:underline"
-                  >{{ cv.email }}</a
-                >
-                <span v-if="cv.email && cv.phone" class="hidden md:inline"
-                  >|</span
-                >
-                <span v-if="cv.phone">{{ cv.phone }}</span>
-                <span
-                  v-if="cv.phone && (cv.linkedin || cv.portofolio_url)"
-                  class="hidden md:inline"
-                  >|</span
-                >
-                <a
-                  v-if="cv.linkedin"
-                  :href="cv.linkedin"
-                  target="_blank"
-                  class="text-blue-600 hover:underline"
-                  >LinkedIn</a
-                >
-                <span
-                  v-if="cv.linkedin && cv.portofolio_url"
-                  class="hidden md:inline"
-                  >|</span
-                >
-                <a
-                  v-if="cv.portofolio_url"
-                  :href="cv.portofolio_url"
-                  target="_blank"
-                  class="text-blue-600 hover:underline"
-                  >Portfolio</a
-                >
-              </div>
-            </header>
-            <main class="space-y-8">
-              <section v-if="cv.bio">
-                <h2
-                  class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3"
-                >
-                  PROFESSIONAL SUMMARY
-                </h2>
-                <p class="text-gray-700 leading-relaxed">{{ cv.bio }}</p>
-              </section>
-              <section v-if="cv.experiences && cv.experiences.length > 0">
-                <h2
-                  class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3"
-                >
-                  WORK EXPERIENCE
-                </h2>
-                <div class="space-y-6">
-                  <div v-for="exp in cv.experiences" :key="exp.id">
-                    <div class="flex justify-between items-baseline flex-wrap">
-                      <h3 class="text-md font-semibold text-gray-900">
-                        {{ exp.title }}
-                      </h3>
-                      <p class="text-sm text-gray-500">
-                        {{ formatDate(exp.start_date) }} -
-                        {{ formatDate(exp.end_date) || "Present" }}
-                      </p>
-                    </div>
-                    <p class="text-md text-gray-600">{{ exp.company_name }}</p>
-                    <p class="mt-2 text-gray-700">{{ exp.description }}</p>
-                  </div>
-                </div>
-              </section>
-            </main>
+    <div class="overflow-y-auto">
+      <div
+        ref="cvContent"
+        id="cv-content-area"
+        class="p-6 md:p-8"
+        v-if="cv"
+      >
+        <header class="text-center mb-8">
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
+            {{ cv.full_name }}
+          </h1>
+          <div class="mt-2 text-sm text-gray-600 flex justify-center items-center gap-x-3 md:gap-x-4 flex-wrap">
+            <a v-if="cv.email" :href="`mailto:${cv.email}`" class="hover:underline">{{ cv.email }}</a>
+            <span v-if="cv.email && cv.phone" class="hidden md:inline">|</span>
+            <span v-if="cv.phone">{{ cv.phone }}</span>
+            <span v-if="cv.phone && cv.city" class="hidden md:inline">|</span>
+             <span v-if="cv.city" class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="h-4 w-4"><path fill="currentColor" d="M12 12q.825 0 1.413-.588T14 10q0-.825-.588-1.413T12 8q-.825 0-1.413.588T10 10q0 .825.588 1.413T12 12m0 7.5q2.5-2.25 4.25-4.375T18 12.15q0-2.225-1.588-3.813T12 6.75q-2.825 0-4.413 1.588T6 12.15q0 1.925 1.75 4.05T12 19.5"/></svg>
+                {{ cv.city }}
+             </span>
+            <span v-if="cv.city && (cv.linkedin || cv.portofolio_url)" class="hidden md:inline">|</span>
+            <a v-if="cv.linkedin" :href="cv.linkedin" target="_blank" class="text-blue-600 hover:underline">LinkedIn</a>
+            <span v-if="cv.linkedin && cv.portofolio_url" class="hidden md:inline">|</span>
+            <a v-if="cv.portofolio_url" :href="cv.portofolio_url" target="_blank" class="text-blue-600 hover:underline">Portfolio</a>
           </div>
-        </div>
+        </header>
+
+        <main class="space-y-8">
+          <section v-if="cv.bio">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              PROFESSIONAL SUMMARY
+            </h2>
+            <p class="text-gray-700 leading-relaxed">{{ cv.bio }}</p>
+          </section>
+
+          <section v-if="cv.experiences && cv.experiences.length > 0">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              WORK EXPERIENCE
+            </h2>
+            <div class="space-y-6">
+              <div v-for="exp in cv.experiences" :key="exp.id">
+                <div class="flex justify-between items-baseline flex-wrap">
+                  <h3 class="text-md font-semibold text-gray-900">{{ exp.title }}</h3>
+                  <p class="text-sm text-gray-500">
+                    {{ formatDate(exp.start_date) }} - {{ exp.end_date ? formatDate(exp.end_date) : "Present" }}
+                  </p>
+                </div>
+                <p class="text-md text-gray-600">{{ exp.company_name }}</p>
+                <p class="mt-2 text-gray-700">{{ exp.description }}</p>
+              </div>
+            </div>
+          </section>
+
+          <section v-if="cv.educations && cv.educations.length > 0">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              EDUCATION
+            </h2>
+            <div class="space-y-6">
+              <div v-for="edu in cv.educations" :key="edu.id">
+                <div class="flex justify-between items-baseline flex-wrap">
+                  <h3 class="text-md font-semibold text-gray-900">{{ edu.name_school }}</h3>
+                  <p class="text-sm text-gray-500">
+                    {{ formatDate(edu.start_date) }} - {{ edu.end_date ? formatDate(edu.end_date) : "Present" }}
+                  </p>
+                </div>
+                <p class="text-md text-gray-600">{{ edu.major }}</p>
+                <p v-if="edu.gpa" class="text-sm text-gray-500 mt-1">GPA: {{ edu.gpa }}</p>
+                <p v-if="edu.description" class="mt-2 text-gray-700">{{ edu.description }}</p>
+              </div>
+            </div>
+          </section>
+
+          <section v-if="cv.skills && cv.skills.length > 0">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              SKILLS
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              <span v-for="skill in cv.skills" :key="skill.id" class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full">
+                {{ skill.name }}
+                <span v-if="skill.level" class="font-normal opacity-75"> ({{ skill.level }})</span>
+              </span>
+            </div>
+          </section>
+          
+          <section v-if="cv.projects && cv.projects.length > 0">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              PROJECTS
+            </h2>
+            <div class="space-y-6">
+              <div v-for="project in cv.projects" :key="project.id">
+                <div class="flex justify-between items-baseline flex-wrap">
+                   <h3 class="text-md font-semibold text-gray-900">
+                     <a v-if="project.link_url && project.link_url !== '...'" :href="project.link_url" target="_blank" class="text-blue-600 hover:underline">{{ project.title }}</a>
+                     <span v-else>{{ project.title }}</span>
+                  </h3>
+                   <p class="text-sm text-gray-500">
+                    {{ formatDate(project.start_date) }} - {{ project.end_date ? formatDate(project.end_date) : "Ongoing" }}
+                  </p>
+                </div>
+                <p v-if="project.description" class="mt-2 text-gray-700">{{ project.description }}</p>
+              </div>
+            </div>
+          </section>
+
+          <section v-if="cv.certifications && cv.certifications.length > 0">
+            <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
+              CERTIFICATIONS
+            </h2>
+            <div class="space-y-6">
+              <div v-for="cert in cv.certifications" :key="cert.id">
+                <h3 class="text-md font-semibold text-gray-900">{{ cert.name }}</h3>
+                <p class="text-md text-gray-600">{{ cert.issued_by }} - {{ cert.year }}</p>
+                <p v-if="cert.id_credential_url" class="text-sm text-gray-500 mt-1">Credential ID: {{ cert.id_credential_url }}</p>
+                <p v-if="cert.description" class="mt-2 text-gray-700">{{ cert.description }}</p>
+              </div>
+            </div>
+          </section>
+        </main>
       </div>
     </div>
+  </div>
+</div>
   </div>
 </template>
 
@@ -404,14 +429,14 @@ const handleDeleteCurrentJobApplications = async () => {
     return;
   }
   Swal.fire({
-    title: "Apakah Anda yakin?",
-    text: `Anda akan menghapus semua lamaran. Tindakan ini tidak dapat dibatalkan.`,
+    title: "Are You Sure?",
+    text: `You will delete all applications. This action cannot be undone.`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     cancelButtonColor: "#3085d6",
-    confirmButtonText: "Ya, hapus semua lamaran!",
-    cancelButtonText: "Batal",
+    confirmButtonText: "Yes, delete all applications.!",
+    cancelButtonText: "Cancel",
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {

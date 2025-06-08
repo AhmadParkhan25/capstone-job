@@ -269,70 +269,93 @@ export const JobsCompany = defineStore("jobs", () => {
    * @param {string|number} id ID pekerjaan.
    * @param {Object} jobData Data pekerjaan yang akan diupdate.
    */
-  async function updateJobPost(id, jobData) {
-    isLoading.value = true;
-    error.value = null;
-    try {
-      const token = authStore.tokenCompany;
-      if (!token) throw new Error("Token Otentification Not Found.");
+  // Di dalam file store Pinia Anda (misalnya: companyjob.js)
 
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+  // Di dalam file store Pinia Anda (misalnya: companyjob.js)
 
-      const payload = {
-        ...jobData,
-        salary_min: String(jobData.salary_min),
-        salary_max: String(jobData.salary_max),
-      };
+async function updateJobPost(id, jobData) {
+  isLoading.value = true;
+  error.value = null;
 
-      const response = await apiClient.put(`/jobs/${id}`, payload, config);
-
-      if (response.status === 200 || response.status === 201) {
-        // Menerima 200 OK atau 201 Created
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title: "Job Updating Successfully",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        if (response.data.data && response.data.data.id) {
-          const index = allCompanyJobs.value.findIndex(
-            (job) => job.id === response.data.data.id
-          );
-          if (index !== -1) {
-            allCompanyJobs.value[index] = {
-              ...allCompanyJobs.value[index],
-              ...response.data.data,
-            };
-          }
-          if (jobDetail.value && jobDetail.value.id === response.data.data.id) {
-            jobDetail.value = response.data.data;
-          }
-        } else {
-          await fetchAllCompanyJobsOnce();
-        }
-        return true;
-      } else {
-        throw new Error(
-          response.data.message || "Failed Updating Posting Job."
-        );
-      }
-    } catch (err) {
-      error.value =
-        err.response?.data?.message ||
-        err.message ||
-        "Mistake Updating Job.";
-      Swal.fire("Gagal!", error.value, "error");
-      if (err.response && err.response.status === 401) {
-        authStore.logout();
-        router.push("/login-company");
-      }
-      return false;
-    } finally {
-      isLoading.value = false;
+  try {
+    const token = authStore.tokenCompany;
+    if (!token) {
+      throw new Error("Authentication Token Not Found.");
     }
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    // LANGKAH 1: Simpan status asli sebelum kita melakukan apa pun.
+    // jobData dari komponen sudah berisi status yang benar.
+    const originalStatus = jobData.is_active; 
+    console.log(`Status asli pekerjaan adalah: '${originalStatus}'`);
+
+    // LANGKAH 2: Siapkan payload HANYA untuk update konten.
+    // Kita tetap tidak mengirim 'is_active' di sini untuk menghindari konflik.
+    const contentPayload = {
+      title: jobData.title,
+      description: jobData.description,
+      salary_min: String(jobData.salary_min),
+      salary_max: String(jobData.salary_max),
+      location: jobData.location,
+      job_type: jobData.job_type,
+    };
+
+    // LANGKAH 3: Lakukan update konten. 
+    // Pada titik ini, backend akan memperbarui konten DAN me-reset status ke 'active'.
+    console.log("Mengirim pembaruan konten...", contentPayload);
+    await apiClient.put(`/jobs/${id}`, contentPayload, config);
+    console.log("Pembaruan konten berhasil. Status di server mungkin sekarang 'active'.");
+
+    // LANGKAH 4 (WORKAROUND): "Perbaiki" statusnya kembali ke nilai asli.
+    // Jika status aslinya 'deactive', kita panggil endpoint deactive.
+    if (originalStatus === 'deactive') {
+      console.log("Status asli adalah 'deactive', mengirim perintah untuk menonaktifkan kembali...");
+      // Panggil endpoint yang sudah ada untuk menonaktifkan.
+      await apiClient.put(`/jobs/${id}/status-deactive`, {}, config);
+      console.log("Status berhasil dikembalikan ke 'deactive'.");
+    } 
+    // Jika status aslinya 'active', kita tidak perlu melakukan apa-apa,
+    // karena backend sudah me-resetnya ke 'active'.
+
+    // Proses berhasil, tampilkan notifikasi dan navigasi.
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Job updated successfully!",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    
+    // Navigasi ke halaman detail
+    router.push({ name: 'job-detail', params: { id: id } });
+
+    // Muat ulang data di background
+    await fetchAllCompanyJobsOnce();
+
+    return true;
+
+  } catch (err) {
+    // ... (error handling tidak berubah)
+    error.value = err.response?.data?.message || err.message || "An error occurred during the update process.";
+    Swal.fire({
+      icon: "error",
+      title: "Update Failed",
+      text: error.value,
+    });
+    if (err.response && err.response.status === 401) {
+      authStore.logout();
+      router.push("/login-company");
+    }
+    return false;
+
+  } finally {
+    isLoading.value = false;
   }
+}
 
  
   async function changeJobStatus(id, statusEndpoint, newStatus, actionText) {
@@ -342,42 +365,43 @@ export const JobsCompany = defineStore("jobs", () => {
       const token = authStore.tokenCompany;
       if (!token) throw new Error("Token Otentification Not Found.");
       const config = { headers: { Authorization: `Bearer ${token}` } };
-
+  
       const response = await apiClient.put(
         `/jobs/${id}/${statusEndpoint}`,
         {},
         config
       );
-
+  
       if (response.status === 200 && response.data.status === "success") {
+        
         Swal.fire({
           toast: true,
           position: "top-end",
           icon: "success",
-          title: `Successful Work In ${actionText}`,
+          title: `Job Successfully ${actionText}`,
           showConfirmButton: false,
           timer: 3000,
         });
-
+  
         const index = allCompanyJobs.value.findIndex((job) => job.id === id);
         if (index !== -1) {
-          allCompanyJobs.value[index].is_active = newStatus === "active";
+          allCompanyJobs.value[index].is_active = newStatus; // Simpan string "active" atau "deactive"
         }
         if (jobDetail.value && jobDetail.value.id === id) {
-          jobDetail.value.is_active = newStatus === "active";
+          jobDetail.value.is_active = newStatus; // Simpan string "active" atau "deactive"
         }
       } else {
         throw new Error(
-          response.data.message || `failed ${actionText} Job.`
+          response.data.message || `failed ${actionText} job.`
         );
       }
     } catch (err) {
       error.value =
         err.response?.data?.message ||
         err.message ||
-        `Failed At ${actionText} Job.`;
-      Swal.fire("Failed!", error.value, "error");
-
+        `Failed ${actionText} Job.`;
+      Swal.fire("Faild!", error.value, "error");
+  
       if (err.response && err.response.status === 401) {
         authStore.logout();
         router.push("/login-company");

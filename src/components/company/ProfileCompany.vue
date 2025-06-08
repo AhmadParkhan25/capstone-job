@@ -201,7 +201,7 @@
     <div
       class="rounded-md shadow bg-gray-300 py-6 md:py-10 px-6 md:px-8 w-98 sm:w-md"
     >
-      <form @submit.prevent="handleVerifyOtp">
+      <form @submit.prevent="handleVerifyOtp" class="bg-[#D5DEEF] p-10 rounded-lg">
         <div class="flex flex-col gap-y-2">
           <label for="otp" class="font-medium text-sm md:text-base">
             Input Code OTP <span class="text-red-600">*</span>

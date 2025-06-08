@@ -56,7 +56,7 @@
               ]"
               :disabled="jobsStore.isLoading"
             >
-              <span clas>{{ selectedStatus === 'active' ? 'Active' : 'Inactive' }}</span>
+              <span clas>{{ selectedStatus === 'active' ? 'Active' : 'Deactive' }}</span>
               <!-- ▼▼▼ IKON TELAH DIPERBARUI ▼▼▼ -->
               <Icon icon="iconoir:nav-arrow-down-solid" width="20" height="20" class="ml-1" />
               <!-- ▲▲▲ AKHIR PERUBAHAN ▲▲▲ -->
@@ -72,7 +72,7 @@
               <button
                 @click="selectStatus('deactive')"
                 class="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-red-600"
-              >Inactive</button>
+              >Deactive</button>
             </div>
           </div>
         </div>

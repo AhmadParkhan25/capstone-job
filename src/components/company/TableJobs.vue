@@ -178,11 +178,11 @@
                       class="mr-1"
                     />
                     <p class="text-red-500 font-bold text-md">
-                      {{ job.is_active }}
+                      {{ formatTitle(job.is_active) }}
                     </p>
                   </template>
                   <template v-else>
-                    {{ job.is_active }}
+                    {{ formatTitle(job.is_active) }}
                   </template>
                 </div>
               </td>

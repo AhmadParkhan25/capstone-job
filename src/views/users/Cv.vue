@@ -1,12 +1,12 @@
 <template>
   <div class="px-4 py-2 md:px-10 md:py-4">
     <div class="flex flex-col md:flex-row justify-between items-center mb-3">
-      <h1 class="font-bold text-xl md:text-2xl md:pl-54 lg:pl-38 xl:pl-48 2xl:pl-[500px]">
+      <h1 class="font-bold text-xl md:text-2xl md:pl-62 lg:pl-34 xl:pl-58 2xl:pl-[500px]">
         Curriculum Vitae
       </h1>
       <h1
         v-if="!isMobile"
-        class="font-bold text-xl md:text-2xl mb-3 md:pr-28 lg:pr-46 xl:pr-70 2xl:pr-[570px] md:hidden lg:block"
+        class="font-bold text-xl md:text-2xl mb-3  lg:pr-46 xl:pr-64 2xl:pr-[570px] md:hidden lg:block"
       >
         Preview
       </h1>
@@ -14,934 +14,374 @@
 
     <div class="flex flex-col lg:flex-row md:gap-y-10 gap-x-10">
       <div class="w-full">
-        <div
-          class="flex justify-between pb-2 px-2 md:pb-4 md:px-4"
-          v-if="step === 'education'"
-        >
+        <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-if="step === 'education'">
           <div></div>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">
-            Education
-          </h2>
-          <button
-            class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="nextStep"
-          >
+          <h2 class="font-semibold text-lg md:text-xl text-center grow">Education</h2>
+          <button class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="nextStep">
             Next
           </button>
         </div>
-        <div
-          class="flex justify-between pb-2 px-2 md:pb-4 md:px-4"
-          v-else-if="step === 'project'"
-        >
-          <button
-            class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="prevStep"
-          >
+        <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-else-if="step === 'project'">
+          <button class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="prevStep">
             Back
           </button>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">
-            Project
-          </h2>
-          <button
-            class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="nextStep"
-          >
+          <h2 class="font-semibold text-lg md:text-xl text-center grow">Project</h2>
+          <button class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="nextStep">
             Next
           </button>
         </div>
-        <div
-          class="flex justify-between pb-2 px-2 md:pb-4 md:px-4"
-          v-else-if="step === 'experience'"
-        >
-          <button
-            class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="prevStep"
-          >
+        <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-else-if="step === 'experience'">
+          <button class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="prevStep">
             Back
           </button>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">
-            Experiences
-          </h2>
-          <button
-            class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="nextStep"
-          >
+          <h2 class="font-semibold text-lg md:text-xl text-center grow">Experiences</h2>
+          <button class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="nextStep">
             Next
           </button>
         </div>
-        <div
-          class="flex justify-between pb-2 px-2 md:pb-4 md:px-4"
-          v-else-if="step === 'skills'"
-        >
-          <button
-            class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="prevStep"
-          >
+        <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-else-if="step === 'skills'">
+          <button class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="prevStep">
             Back
           </button>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">
-            Skills
-          </h2>
-          <button
-            class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="nextStep"
-          >
+          <h2 class="font-semibold text-lg md:text-xl text-center grow">Skills</h2>
+          <button class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="nextStep">
             Next
           </button>
         </div>
-        <div
-          class="flex justify-between pb-2 px-2 md:pb-4 md:px-4"
-          v-else-if="step === 'certifications'"
-        >
-          <button
-            class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer"
-            @click="prevStep"
-          >
+        <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-else-if="step === 'certifications'">
+          <button class="bg-gray-500/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="prevStep">
             Back
           </button>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">
-            Certifications
-          </h2>
-          <!-- <button
-            class="bg-blue-400/90 text-white px-2 py-1 flex gap-x-1 rounded-md text-sm cursor-pointer"
-            @click="downloadCv"
-          >
-            <Icon
-              icon="bytesize:download"
-              width="24"
-              height="24"
-              style="color: #ffff"
-            />
-            <p>Download</p>
-          </button> -->
-        </div>
+          <h2 class="font-semibold text-lg md:text-xl text-center grow">Certifications</h2>
+          </div>
 
-        <div
-          class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3"
-          v-if="step === 'education'"
-        >
-          <form
-            @submit.prevent="saveEducation"
-            class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2"
-          >
+        <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-if="step === 'education'">
+          <form @submit.prevent="saveEducation" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >School / University</label
-              >
-              <input
-                v-model="currentEducation.name_school"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">School / University <span class="text-red-600">*</span></label>
+              <input v-model="currentEducation.name_school" type="text" placeholder="e.g., State University of New York" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Major</label
-              >
-              <input
-                v-model="currentEducation.major"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Major <span class="text-red-600">*</span></label>
+              <input v-model="currentEducation.major" type="text" placeholder="e.g., Computer Science" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >GPA</label
-              >
-              <input
-                v-model="currentEducation.gpa"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">GPA</label>
+              <input v-model="currentEducation.gpa" type="text" placeholder="e.g., 3.8 or N/A" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Start Date</label
-              >
-              <input
-                v-model="currentEducation.start_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Start Date <span class="text-red-600">*</span></label>
+              <input v-model="currentEducation.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >End Date</label
-              >
-              <input
-                v-model="currentEducation.end_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">End Date</label>
+              <input v-model="currentEducation.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Description</label
-              >
-              <textarea
-                v-model="currentEducation.description"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"
-              ></textarea>
+              <label class="font-normal text-black text-sm md:text-base">Description</label>
+              <textarea v-model="currentEducation.description" placeholder="e.g., Relevant coursework, achievements..." class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
-              <button
-                v-if="currentEducation.id"
-                type="button"
-                class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-                @click="cancelEdit"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-              >
-                {{ currentEducation.id ? "Update" : "Save" }}
-              </button>
+              <button v-if="currentEducation.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelEdit">Cancel</button>
+              <button type="submit" class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer">{{ currentEducation.id ? "Update" : "Save" }}</button>
             </div>
           </form>
         </div>
 
-        <div
-          class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3"
-          v-else-if="step === 'project'"
-        >
-          <form
-            @submit.prevent="saveProject"
-            class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2"
-          >
+        <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-else-if="step === 'project'">
+          <form @submit.prevent="saveProject" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Title</label
-              >
-              <input
-                v-model="currentProject.title"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Title <span class="text-red-600">*</span></label>
+              <input v-model="currentProject.title" type="text" placeholder="e.g., Personal Portfolio Website" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Project Link</label
-              >
-              <input
-                v-model="currentProject.link"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Project Link</label>
+              <input v-model="currentProject.link" type="text" placeholder="e.g., https://my-project.com" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Start Date</label
-              >
-              <input
-                v-model="currentProject.start_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Start Date <span class="text-red-600">*</span></label>
+              <input v-model="currentProject.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >End Date</label
-              >
-              <input
-                v-model="currentProject.end_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">End Date</label>
+              <input v-model="currentProject.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Description</label
-              >
-              <textarea
-                v-model="currentProject.description"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"
-              ></textarea>
+              <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
+              <textarea v-model="currentProject.description" placeholder="e.g., Describe the project, technology used, and your role." class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
-              <button
-                v-if="currentProject.id"
-                type="button"
-                class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-                @click="cancelProjectEdit"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-              >
-                {{ currentProject.id ? "Update" : "Save" }}
-              </button>
+              <button v-if="currentProject.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelProjectEdit">Cancel</button>
+              <button type="submit" class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer">{{ currentProject.id ? "Update" : "Save" }}</button>
             </div>
           </form>
         </div>
 
-        <div
-          class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3"
-          v-else-if="step === 'experience'"
-        >
-          <form
-            @submit.prevent="saveExperience"
-            class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2"
-          >
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Title</label
-              >
-              <input
-                v-model="currentExperience.title"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Company</label
-              >
-              <input
-                v-model="currentExperience.company"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+        <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-else-if="step === 'experience'">
+            <form @submit.prevent="saveExperience" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
+                <div class="flex flex-col col-span-2">
+                    <label class="font-normal text-black text-sm md:text-base">Title <span class="text-red-600">*</span></label>
+                    <input v-model="currentExperience.title" type="text" placeholder="e.g., Software Engineer" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+                </div>
+                <div class="flex flex-col col-span-2">
+                    <label class="font-normal text-black text-sm md:text-base">Company <span class="text-red-600">*</span></label>
+                    <input v-model="currentExperience.company" type="text" placeholder="e.g., Google" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-normal text-black text-sm md:text-base">Start Date <span class="text-red-600">*</span></label>
+                    <input v-model="currentExperience.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-normal text-black text-sm md:text-base">End Date</label>
+                    <input v-model="currentExperience.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+                </div>
+                <div class="flex flex-col col-span-2">
+                    <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
+                    <textarea v-model="currentExperience.description" placeholder="e.g., Describe your key responsibilities and achievements." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"></textarea>
+                </div>
+                <div class="col-span-2 flex justify-end gap-x-2">
+                    <button v-if="currentExperience.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelExperienceEdit">Cancel</button>
+                    <button type="submit" class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer">{{ currentExperience.id ? "Update" : "Save" }}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-else-if="step === 'skills'">
+          <form @submit.prevent="saveSkill" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
+            <div class="flex flex-col">
+              <label class="font-normal text-black text-sm md:text-base">Name <span class="text-red-600">*</span></label>
+              <input v-model="currentSkill.name" type="text" placeholder="e.g., JavaScript" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Start Date</label
-              >
-              <input
-                v-model="currentExperience.start_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >End Date</label
-              >
-              <input
-                v-model="currentExperience.end_date"
-                type="date"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Description</label
-              >
-              <textarea
-                v-model="currentExperience.description"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"
-              ></textarea>
+              <label class="font-normal text-black text-sm md:text-base">Level <span class="text-red-600">*</span></label>
+              <input v-model="currentSkill.level" type="text" placeholder="e.g., Advanced, Intermediate" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
-              <button
-                v-if="currentExperience.id"
-                type="button"
-                class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-                @click="cancelExperienceEdit"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-              >
-                {{ currentExperience.id ? "Update" : "Save" }}
-              </button>
+              <button v-if="currentSkill.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelSkillEdit">Cancel</button>
+              <button type="submit" class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer">{{ currentSkill.id ? "Update" : "Save" }}</button>
             </div>
           </form>
         </div>
 
-        <div
-          class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3"
-          v-else-if="step === 'skills'"
-        >
-          <form
-            @submit.prevent="saveSkill"
-            class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2"
-          >
-            <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Name</label
-              >
-              <input
-                v-model="currentSkill.name"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+        <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-else-if="step === 'certifications'">
+          <form @submit.prevent="saveCertification" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
+            <div class="flex flex-col col-span-2">
+              <label class="font-normal text-black text-sm md:text-base">Name <span class="text-red-600">*</span></label>
+              <input v-model="currentCertification.name" type="text" placeholder="e.g., AWS Certified Cloud Practitioner" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Level</label
-              >
-              <input
-                v-model="currentSkill.level"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
+              <label class="font-normal text-black text-sm md:text-base">Year <span class="text-red-600">*</span></label>
+              <input v-model="currentCertification.year" type="text" placeholder="e.g., 2024" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+            </div>
+            <div class="flex flex-col">
+              <label class="font-normal text-black text-sm md:text-base">Issued By <span class="text-red-600">*</span></label>
+              <input v-model="currentCertification.issueBy" type="text" placeholder="e.g., Amazon Web Services" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+            </div>
+            <div class="flex flex-col col-span-2">
+              <label class="font-normal text-black text-sm md:text-base">ID Credential / URL</label>
+              <input v-model="currentCertification.credentialId" type="text" placeholder="Credential ID or verification URL" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
+            </div>
+            <div class="flex flex-col col-span-2">
+              <label class="font-normal text-black text-sm md:text-base">Description</label>
+              <textarea v-model="currentCertification.description" placeholder="Brief description of the certification." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
-              <button
-                v-if="currentSkill.id"
-                type="button"
-                class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-                @click="cancelSkillEdit"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-              >
-                {{ currentSkill.id ? "Update" : "Save" }}
-              </button>
+              <button v-if="currentCertification.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelCertificationEdit">Cancel</button>
+              <button type="submit" class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer">{{ currentCertification.id ? "Update" : "Save" }}</button>
             </div>
           </form>
         </div>
-
-        <div
-          class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3"
-          v-else-if="step === 'certifications'"
-        >
-          <form
-            @submit.prevent="saveCertification"
-            class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2"
-          >
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Name</label
-              >
-              <input
-                v-model="currentCertification.name"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Year</label
-              >
-              <input
-                v-model="currentCertification.year"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Issued By</label
-              >
-              <input
-                v-model="currentCertification.issueBy"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >ID Credential / URL</label
-              >
-              <input
-                v-model="currentCertification.credentialId"
-                type="text"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3"
-              />
-            </div>
-            <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base"
-                >Description</label
-              >
-              <textarea
-                v-model="currentCertification.description"
-                class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"
-              ></textarea>
-            </div>
-            <div class="col-span-2 flex justify-end gap-x-2">
-              <button
-                v-if="currentCertification.id"
-                type="button"
-                class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-                @click="cancelCertificationEdit"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="bg-blue-950/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer"
-              >
-                {{ currentCertification.id ? "Update" : "Save" }}
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div
-          class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4"
-          v-if="step === 'education'"
-        >
-          <p
-            v-if="educationStore.isLoading"
-            class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
-            <Icon
-              icon="eos-icons:loading"
-              width="24"
-              height="24"
-              style="color: #5152ce"
-            />
+        
+        <div class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'education'">
+          <p v-if="educationStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
+            <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
-          <p
-            v-else-if="educationStore.error"
-            class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2"
-          >
-            Harap isi profile terlebih dahulu
+          <p v-else-if="educationStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
+            Please fill out the profile first.
           </p>
-          <div
-            v-else-if="educationStore.educations.length > 0"
-            v-for="edu in educationStore.educations"
-            :key="edu.id"
-            class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3"
-          >
+          <div v-else-if="educationStore.educations.length > 0" v-for="edu in educationStore.educations" :key="edu.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ edu.name_school }}</p>
             <p>{{ edu.major }}</p>
-            <p>
-              {{ formatDate(edu.start_date) }} - {{ formatDate(edu.end_date) }}
-            </p>
+            <p>{{ formatDate(edu.start_date) }} - {{ formatDate(edu.end_date) }}</p>
             <p>{{ edu.gpa }}</p>
             <p class="text-gray-700 text-xs">{{ edu.description }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
-              <button
-                class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer"
-                @click="editEducation(edu)"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 cursor-pointer py-1"
-                @click="deleteEducation(edu.id)"
-              >
-                Delete
-              </button>
+              <button class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer" @click="editEducation(edu)">Edit</button>
+              <button class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer" @click="deleteEducation(edu.id)">Delete</button>
             </div>
           </div>
-          <div
-            v-else
-            class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
+          <div v-else class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             No education added yet.
           </div>
         </div>
 
-        <div
-          class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4"
-          v-if="step === 'project'"
-        >
-          <p
-            v-if="projectStore.isLoading"
-            class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
-            <Icon
-              icon="eos-icons:loading"
-              width="24"
-              height="24"
-              style="color: #5152ce"
-            />
+        <div class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'project'">
+          <p v-if="projectStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
+            <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
-          <p
-            v-else-if="projectStore.error"
-            class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2"
-          >
-            Harap isi profile terlebih dahulu
+          <p v-else-if="projectStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
+            Please fill out the profile first.
           </p>
-          <div
-            v-else-if="projectStore.projects.length > 0"
-            v-for="project in projectStore.projects"
-            :key="project.id"
-            class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3"
-          >
+          <div v-else-if="projectStore.projects.length > 0" v-for="project in projectStore.projects" :key="project.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ project.title }}</p>
             <p class="text-blue-700 text-xs" v-if="project.link_url">
               <a :href="project.link_url" target="_blank">Project Link</a>
             </p>
-            <p>
-              {{ formatDate(project.start_date) }} -
-              {{ formatDate(project.end_date) }}
-            </p>
+            <p>{{ formatDate(project.start_date) }} - {{ formatDate(project.end_date) }}</p>
             <p class="text-gray-700 text-xs">{{ project.description }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
-              <button
-                class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer"
-                @click="editProject(project)"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer"
-                @click="deleteProjectFromStore(project.id)"
-              >
-                Delete
-              </button>
+              <button class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer" @click="editProject(project)">Edit</button>
+              <button class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer" @click="deleteProjectFromStore(project.id)">Delete</button>
             </div>
           </div>
-          <div
-            v-else
-            class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
+          <div v-else class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             No projects added yet.
           </div>
         </div>
 
-        <div
-          class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4"
-          v-if="step === 'experience'"
-        >
-          <p
-            v-if="experienceStore.isLoading"
-            class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
-            <Icon
-              icon="eos-icons:loading"
-              width="24"
-              height="24"
-              style="color: #5152ce"
-            />
+        <div class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'experience'">
+          <p v-if="experienceStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
+            <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
-          <p
-            v-else-if="experienceStore.error"
-            class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2"
-          >
-            Harap isi profile terlebih dahulu
+          <p v-else-if="experienceStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
+            Please fill out the profile first.
           </p>
-          <div
-            v-else-if="experienceStore.experiences.length > 0"
-            v-for="exp in experienceStore.experiences"
-            :key="exp.id"
-            class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3"
-          >
+          <div v-else-if="experienceStore.experiences.length > 0" v-for="exp in experienceStore.experiences" :key="exp.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ exp.title }}</p>
             <p>{{ exp.company_name }}</p>
-            <p>
-              {{ formatDate(exp.start_date) }} - {{ formatDate(exp.end_date) }}
-            </p>
+            <p>{{ formatDate(exp.start_date) }} - {{ formatDate(exp.end_date) }}</p>
             <p class="text-gray-700 text-xs">{{ exp.description }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
-              <button
-                class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer"
-                @click="editExperience(exp)"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer"
-                @click="deleteExperience(exp.id)"
-              >
-                Delete
-              </button>
+              <button class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer" @click="editExperience(exp)">Edit</button>
+              <button class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer" @click="deleteExperience(exp.id)">Delete</button>
             </div>
           </div>
-          <div
-            v-else
-            class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
+          <div v-else class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             No work experiences added yet.
           </div>
         </div>
 
-        <div
-          class="pt-3 grid grid-cols-1  md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4"
-          v-if="step === 'skills'"
-        >
-          <p
-            v-if="skillStore.isLoading"
-            class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
-            <Icon
-              icon="eos-icons:loading"
-              width="24"
-              height="24"
-              style="color: #5152ce"
-            />
+        <div class="pt-3 grid grid-cols-1  md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'skills'">
+          <p v-if="skillStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
+            <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
-          <p
-            v-else-if="skillStore.error"
-            class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2"
-          >
-            Harap isi profile terlebih dahulu
+          <p v-else-if="skillStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
+            Please fill out the profile first.
           </p>
-          <div
-            v-else-if="skillStore.skills.length > 0"
-            v-for="skill in skillStore.skills"
-            :key="skill.id"
-            class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3"
-          >
+          <div v-else-if="skillStore.skills.length > 0" v-for="skill in skillStore.skills" :key="skill.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ skill.name }}</p>
             <p>Level: {{ skill.level }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
-              <button
-                class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer"
-                @click="editSkill(skill)"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-blue-950/90 text-white px-2 rounded-md text-xs py-1 md:px-3 cursor-pointer"
-                @click="deleteSkillFromStore(skill.id)"
-              >
-                Delete
-              </button>
+              <button class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer" @click="editSkill(skill)">Edit</button>
+              <button class="bg-blue-950/90 text-white px-2 rounded-md text-xs py-1 md:px-3 cursor-pointer" @click="deleteSkillFromStore(skill.id)">Delete</button>
             </div>
           </div>
-          <div
-            v-else
-            class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
+          <div v-else class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             No skills added yet.
           </div>
         </div>
 
-        <div
-          class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4"
-          v-if="step === 'certifications'"
-        >
-          <p
-            v-if="certificationStore.isLoading"
-            class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
-            <Icon
-              icon="eos-icons:loading"
-              width="24"
-              height="24"
-              style="color: #5152ce"
-            />
+        <div class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'certifications'">
+          <p v-if="certificationStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
+            <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
-          <p
-            v-else-if="certificationStore.error"
-            class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2"
-          >
-            Harap isi profile terlebih dahulu
+          <p v-else-if="certificationStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
+            Please fill out the profile first.
           </p>
-          <div
-            v-else-if="displayedCertifications.length > 0"
-            v-for="cert in displayedCertifications"
-            :key="cert.id"
-            class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3"
-          >
+          <div v-else-if="displayedCertifications.length > 0" v-for="cert in displayedCertifications" :key="cert.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ cert.name }}</p>
             <p>Year: {{ cert.year }}</p>
             <p>Issued By: {{ cert.issueBy }}</p>
             <p class="text-blue-700 text-xs" v-if="cert.credentialId">
-              <a
-                :href="
-                  cert.credentialId.startsWith('http')
-                    ? cert.credentialId
-                    : `http://${cert.credentialId}`
-                "
-                target="_blank"
-                >Credential/URL</a
-              >
+              <a :href="cert.credentialId.startsWith('http') ? cert.credentialId : `http://${cert.credentialId}`" target="_blank">Credential/URL</a>
             </p>
             <p class="text-gray-700 text-xs">{{ cert.description }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
-              <button
-                class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer"
-                @click="editCertification(cert)"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer"
-                @click="deleteCertificationFromStore(cert.id)"
-              >
-                Delete
-              </button>
+              <button class="bg-blue-950/90 text-white px-3 rounded-md text-xs md:px-4 cursor-pointer" @click="editCertification(cert)">Edit</button>
+              <button class="bg-blue-950/90 text-white px-2 rounded-md text-xs md:px-3 py-1 cursor-pointer" @click="deleteCertificationFromStore(cert.id)">Delete</button>
             </div>
           </div>
-          <div
-            v-else
-            class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2"
-          >
+          <div v-else class="col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             No certifications added yet.
           </div>
         </div>
       </div>
-
-      <h1 class="text-center font-bold text-2xl hidden md:block lg:hidden">Preview</h1>
-      <div
-        v-if="!isMobile || showPreview"
-        class="bg-gray-300 w-full md:w-full p-1 mt-7 md:mt-0 md:p-2"
-        id="cv-preview-content"
+      
+      <h1
+        class="font-bold text-xl md:text-2xl  lg:hidden md:block sm:hidden mt-10 md:mt-0  text-center"
       >
-        <div
-          class="bg-white w-full h-full py-2 px-2 md:py-4 md:px-3 text-xs md:text-sm"
-        >
-          <h1 class="text-center font-bold text-lg md:text-xl">
-            {{ cvUserName }}
-          </h1>
+        Preview
+      </h1>
+      <div v-if="!isMobile || showPreview" class="bg-gray-300 w-full md:w-full p-1 mt-7 md:mt-0 md:p-2" id="cv-preview-content">
+        <div class="bg-white w-full h-full py-2 px-2 md:py-4 md:px-3 text-xs md:text-sm">
+          <h1 class="text-center font-bold text-lg md:text-xl">{{ cvUserName }}</h1>
           <div class="flex justify-center py-2 gap-x-1 md:gap-x-3">
             <p>{{ cvUserPhone }}</p>
             <div class="w-0.5 h-4 bg-gray-400 md:h-6"></div>
-            <a
-              v-if="cvLinkedin"
-              :href="cvLinkedin"
-              target="_blank"
-              class="text-blue-600 hover:text-blue-800"
-              :title="cvLinkedin"
-            >
-              {{ cvLinkedinDisplayText }}
-            </a>
+            <a v-if="cvLinkedin" :href="cvLinkedin" target="_blank" class="text-blue-600 hover:text-blue-800" :title="cvLinkedin">{{ cvLinkedinDisplayText }}</a>
             <div class="w-0.5 h-4 bg-gray-400 md:h-6"></div>
             <p>{{ cvUserEmail }}</p>
           </div>
-
           <div>
             <h2 class="font-bold text-sm md:text-md">Summary</h2>
             <hr class="my-1" />
-            <p class="text-gray-500 text-xxs md:text-xs">
-              {{ cvUserBio }}
-            </p>
+            <p class="text-gray-500 text-xxs md:text-xs">{{ cvUserBio }}</p>
           </div>
-
           <div class="mt-2 md:mt-3">
             <h2 class="font-bold text-sm md:text-md">Experience</h2>
             <hr class="my-1" />
-            <p
-              v-if="experienceStore.isLoading && !displayedExperiences.length"
-              class="m-auto text-gray-500 text-xxs md:text-xs"
-            >
-              <Icon
-                icon="eos-icons:loading"
-                width="24"
-                height="24"
-                style="color: #5152ce"
-              />
+            <p v-if="experienceStore.isLoading && !displayedExperiences.length" class="m-auto text-gray-500 text-xxs md:text-xs">
+              <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
             </p>
-            <p
-              v-else-if="experienceStore.error && !displayedExperiences.length"
-              class="text-red-500 text-xxs md:text-xs"
-            >
-              Anda belum melengkapi profile.
+            <p v-else-if="experienceStore.error && !displayedExperiences.length" class="text-red-500 text-xxs md:text-xs">
+              You have not completed your profile..
             </p>
-            <div
-              v-else-if="displayedExperiences.length > 0"
-              v-for="exp in displayedExperiences"
-              :key="`preview-exp-${exp.id}`"
-              class="mb-1 md:mb-3"
-            >
+            <div v-else-if="displayedExperiences.length > 0" v-for="exp in displayedExperiences" :key="`preview-exp-${exp.id}`" class="mb-1 md:mb-3">
               <p class="font-bold text-xxs md:text-sm">{{ exp.title }}</p>
-              <div
-                class="flex justify-between font-semibold text-xxs md:text-sm"
-              >
+              <div class="flex justify-between font-semibold text-xxs md:text-sm">
                 <p>{{ exp.company_name }}</p>
-                <p>
-                  {{ formatDate(exp.start_date) }} -
-                  {{ formatDate(exp.end_date) }}
-                </p>
+                <p>{{ formatDate(exp.start_date) }} - {{ formatDate(exp.end_date) }}</p>
               </div>
-              <p class="text-gray-500 text-xxs md:text-xs">
-                {{ exp.description }}
-              </p>
+              <p class="text-gray-500 text-xxs md:text-xs">{{ exp.description }}</p>
             </div>
-            <div
-              v-else-if="!experienceStore.isLoading"
-              class="text-gray-500 text-xxs md:text-xs"
-            >
+            <div v-else-if="!experienceStore.isLoading" class="text-gray-500 text-xxs md:text-xs">
               No experience added.
             </div>
           </div>
-
           <div class="mt-2 md:mt-3">
             <h2 class="font-bold text-sm md:text-md">Project</h2>
             <hr class="my-1" />
-            <p
-              v-if="projectStore.isLoading && !displayedProjects.length"
-              class="m-auto text-gray-500 text-xxs md:text-xs"
-            >
-              <Icon
-                icon="eos-icons:loading"
-                width="24"
-                height="24"
-                style="color: #5152ce"
-              />
+            <p v-if="projectStore.isLoading && !displayedProjects.length" class="m-auto text-gray-500 text-xxs md:text-xs">
+              <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
             </p>
-            <p
-              v-else-if="projectStore.error && !displayedProjects.length"
-              class="text-red-500 text-xxs md:text-xs"
-            >
-              Anda belum melengkapi profile.
+            <p v-else-if="projectStore.error && !displayedProjects.length" class="text-red-500 text-xxs md:text-xs">
+              You have not completed your profile..
             </p>
-            <div
-              v-else-if="displayedProjects.length > 0"
-              v-for="project in displayedProjects"
-              :key="`preview-project-${project.id}`"
-              class="mb-1 md:mb-3"
-            >
-              <div
-                class="flex justify-between font-semibold text-xxs md:text-sm"
-              >
-                <p class="font-semibold text-xxs md:text-md">
-                  {{ project.title }}
-                </p>
-                <p>
-                  {{ formatDate(project.start_date) }} -
-                  {{ formatDate(project.end_date) }}
-                </p>
+            <div v-else-if="displayedProjects.length > 0" v-for="project in displayedProjects" :key="`preview-project-${project.id}`" class="mb-1 md:mb-3">
+              <div class="flex justify-between font-semibold text-xxs md:text-sm">
+                <p class="font-semibold text-xxs md:text-md">{{ project.title }}</p>
+                <p>{{ formatDate(project.start_date) }} - {{ formatDate(project.end_date) }}</p>
               </div>
-              <p class="text-gray-500 text-xxs md:text-xs">
-                {{ project.description }}
-              </p>
-              <p
-                class="text-blue-700 text-xxs md:text-xs"
-                v-if="project.link_url"
-              >
-                <a :href="project.link_url" target="_blank">Project Link</a>
-              </p>
+              <p class="text-gray-500 text-xxs md:text-xs">{{ project.description }}</p>
+              <p class="text-blue-700 text-xxs md:text-xs" v-if="project.link_url"><a :href="project.link_url" target="_blank">Project Link</a></p>
             </div>
-            <div
-              v-else-if="!projectStore.isLoading"
-              class="text-gray-500 text-xxs md:text-xs"
-            >
+            <div v-else-if="!projectStore.isLoading" class="text-gray-500 text-xxs md:text-xs">
               No projects added.
             </div>
           </div>
-
           <div class="mt-2 md:mt-3">
             <h2 class="font-bold text-sm md:text-md">Education</h2>
             <hr class="my-1" />
-            <p
-              v-if="educationStore.isLoading && !displayedEducations.length"
-              class="m-auto text-gray-500 text-xxs md:text-xs"
-            >
-              <Icon
-                icon="eos-icons:loading"
-                width="24"
-                height="24"
-                style="color: #5152ce"
-              />
+            <p v-if="educationStore.isLoading && !displayedEducations.length" class="m-auto text-gray-500 text-xxs md:text-xs">
+              <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
             </p>
-            <p
-              v-else-if="educationStore.error && !displayedEducations.length"
-              class="text-red-500 text-xxs md:text-xs"
-            >
-              Anda belum melengkapi profile.
+            <p v-else-if="educationStore.error && !displayedEducations.length" class="text-red-500 text-xxs md:text-xs">
+              You have not completed your profile..
             </p>
-            <div
-              v-else-if="displayedEducations.length > 0"
-              v-for="edu in displayedEducations"
-              :key="`preview-edu-${edu.id}`"
-              class="mb-1 md:mb-3"
-            >
-              <div
-                class="flex justify-between font-semibold text-xxs md:text-sm"
-              >
-                <p class="font-semibold text-xxs md:text-md">
-                  {{ edu.name_school }}
-                </p>
-                <p>
-                  {{ formatDate(edu.start_date) }} -
-                  {{ formatDate(edu.end_date) }}
-                </p>
+            <div v-else-if="displayedEducations.length > 0" v-for="edu in displayedEducations" :key="`preview-edu-${edu.id}`" class="mb-1 md:mb-3">
+              <div class="flex justify-between font-semibold text-xxs md:text-sm">
+                <p class="font-semibold text-xxs md:text-md">{{ edu.name_school }}</p>
+                <p>{{ formatDate(edu.start_date) }} - {{ formatDate(edu.end_date) }}</p>
               </div>
               <p class="text-gray-500 text-xxs md:text-xs">
                 {{ edu.major }}
@@ -949,83 +389,37 @@
                 <span v-if="edu.description">- {{ edu.description }}</span>
               </p>
             </div>
-            <div
-              v-else-if="!educationStore.isLoading"
-              class="text-gray-500 text-xxs md:text-xs"
-            >
+            <div v-else-if="!educationStore.isLoading" class="text-gray-500 text-xxs md:text-xs">
               No education added.
             </div>
           </div>
-
           <div class="mt-2 md:mt-3">
             <h2 class="font-bold text-sm md:text-md">Skills</h2>
             <hr class="my-1" />
-            <p
-              v-if="skillStore.isLoading && !displayedSkills.length"
-              class="m-auto text-gray-500 text-xxs md:text-xs"
-            >
-              <Icon
-                icon="eos-icons:loading"
-                width="24"
-                height="24"
-                style="color: #5152ce"
-              />
+            <p v-if="skillStore.isLoading && !displayedSkills.length" class="m-auto text-gray-500 text-xxs md:text-xs">
+              <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
             </p>
-            <p
-              v-else-if="skillStore.error && !displayedSkills.length"
-              class="text-red-500 text-xxs md:text-xs"
-            >
-              Anda belum melengkapi profile.
+            <p v-else-if="skillStore.error && !displayedSkills.length" class="text-red-500 text-xxs md:text-xs">
+              You have not completed your profile..
             </p>
-            <div
-              v-else-if="displayedSkills.length > 0"
-              v-for="skill in displayedSkills"
-              :key="`preview-skill-${skill.id}`"
-              class="flex justify-between mb-0.5 md:mb-1"
-            >
+            <div v-else-if="displayedSkills.length > 0" v-for="skill in displayedSkills" :key="`preview-skill-${skill.id}`" class="flex justify-between mb-0.5 md:mb-1">
               <p class="font-semibold text-xxs md:text-sm">{{ skill.name }}</p>
-              <p class="font-semibold text-xxs md:text-sm">
-                Level: {{ skill.level }}
-              </p>
+              <p class="font-semibold text-xxs md:text-sm">Level: {{ skill.level }}</p>
             </div>
-            <div
-              v-else-if="!skillStore.isLoading"
-              class="text-gray-500 text-xxs md:text-xs"
-            >
+            <div v-else-if="!skillStore.isLoading" class="text-gray-500 text-xxs md:text-xs">
               No skills added.
             </div>
           </div>
-
           <div class="mt-2 md:mt-3">
             <h2 class="font-bold text-sm md:text-md">Certifications</h2>
             <hr class="my-1" />
-            <p
-              v-if="
-                certificationStore.isLoading && !displayedCertifications.length
-              "
-              class="m-auto text-gray-500 text-xxs md:text-xs"
-            >
-              <Icon
-                icon="eos-icons:loading"
-                width="24"
-                height="24"
-                style="color: #5152ce"
-              />
+            <p v-if="certificationStore.isLoading && !displayedCertifications.length" class="m-auto text-gray-500 text-xxs md:text-xs">
+              <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
             </p>
-            <p
-              v-else-if="
-                certificationStore.error && !displayedCertifications.length
-              "
-              class="text-red-500 text-xxs md:text-xs"
-            >
-              Anda belum melengkapi profile.
+            <p v-else-if="certificationStore.error && !displayedCertifications.length" class="text-red-500 text-xxs md:text-xs">
+              You have not completed your profile..
             </p>
-            <div
-              v-else-if="displayedCertifications.length > 0"
-              v-for="cert in displayedCertifications"
-              :key="`preview-cert-${cert.id}`"
-              class="mb-1 md:mb-3"
-            >
+            <div v-else-if="displayedCertifications.length > 0" v-for="cert in displayedCertifications" :key="`preview-cert-${cert.id}`" class="mb-1 md:mb-3">
               <div class="flex justify-between">
                 <p class="font-semibold text-xxs md:text-sm">{{ cert.name }}</p>
                 <p class="font-semibold text-xxs md:text-sm">{{ cert.year }}</p>
@@ -1033,35 +427,19 @@
               <p class="text-gray-500 text-xxs md:text-xs">
                 Issued by: {{ cert.issueBy }}
                 <span v-if="cert.credentialId">
-                  (<a
-                    :href="
-                      cert.credentialId.startsWith('http')
-                        ? cert.credentialId
-                        : `http://${cert.credentialId}`
-                    "
-                    target="_blank"
-                    class="text-blue-600 hover:text-blue-800 underline"
-                    >Credential</a
-                  >)
+                  (<a :href="cert.credentialId.startsWith('http') ? cert.credentialId : `http://${cert.credentialId}`" target="_blank" class="text-blue-600 hover:text-blue-800 underline">Credential</a>)
                 </span>
                 <span v-if="cert.description"> - {{ cert.description }}</span>
               </p>
             </div>
-            <div
-              v-else-if="!certificationStore.isLoading"
-              class="text-gray-500 text-xxs md:text-xs"
-            >
+            <div v-else-if="!certificationStore.isLoading" class="text-gray-500 text-xxs md:text-xs">
               No certifications added.
             </div>
           </div>
         </div>
       </div>
     </div>
-    <button
-      v-if="isMobile"
-      @click="showPreview = !showPreview"
-      class="fixed bottom-4 left-4 bg-blue-950/90 text-white px-4 py-2 rounded-md text-sm shadow-md"
-    >
+    <button v-if="isMobile" @click="showPreview = !showPreview" class="fixed bottom-4 left-4 bg-blue-950/90 text-white px-4 py-2 rounded-md text-sm shadow-md">
       {{ showPreview ? "Hide Preview" : "Show Preview" }}
     </button>
   </div>
@@ -1178,7 +556,7 @@ onMounted(async () => {
       await authStore.getUserByAuth();
     } catch (error) {
       console.error(
-        "CV Page: Gagal mengambil data user (currentUser) saat onMounted:",
+        "CV Page: Failed to retrieve user data (currentUser) during onMounted:",
         error
       );
     }
@@ -1191,7 +569,7 @@ onMounted(async () => {
       await authStore.fetchUserProfile();
     } catch (error) {
       console.warn(
-        "CV Page: Gagal mengambil data profil detail (userProfile) saat onMounted. Profil mungkin belum dibuat.",
+        "CV Page: Failed to fetch detailed profile data (userProfile) during onMounted. The profile may not have been created yet.",
         error.response?.data?.message || error.message
       );
     }
@@ -1203,7 +581,7 @@ const cvUserName = computed(() => {
     authStore.userProfile?.full_name ||
     authStore.userProfile?.name ||
     authStore.currentUser?.name ||
-    "Nama Anda"
+    "Your name"
   );
 });
 
@@ -1264,8 +642,8 @@ const saveEducation = async () => {
   ) {
     Swal.fire({
       icon: "warning",
-      title: "Input Kosong",
-      text: "Harap isi semua inputan yang wajib diisi (Sekolah/Universitas, Jurusan, Tanggal Mulai).",
+      title: "Empty Input",
+      text: "Please fill in all mandatory inputs (School/University, Major, Start Date).",
     });
     return;
   }
@@ -1302,8 +680,8 @@ const saveEducation = async () => {
     console.error("Failed to save education:", error);
     Swal.fire({
       icon: "error",
-      title: "Gagal Menyimpan",
-      text: "Terjadi kesalahan saat menyimpan data pendidikan. Silakan coba lagi.",
+      title: "Failed to Save",
+      text: "An error occurred while saving education data. Please try again.",
     });
   }
 };

@@ -81,7 +81,7 @@
         v-else-if="isErrorJobs"
         class="col-span-full text-center py-10 text-red-600"
       >
-        Terjadi kesalahan saat memuat rekomendasi pekerjaan:
+      An error occurred while loading job recommendations:
         {{ isErrorJobs.message || "Unknown error" }}
       </div>
       <!-- Job list display -->
@@ -184,7 +184,7 @@
       </template>
       <!-- No data message -->
       <div v-else class="col-span-full text-center py-10 text-gray-600">
-        Tidak ada data pekerjaa, Coba Refresh Lagi
+        job Empty, please wait a moment
       </div>
     </div>
 
