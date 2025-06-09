@@ -314,13 +314,18 @@
       </h1>
       <div v-if="!isMobile || showPreview" class="bg-gray-300 w-full md:w-full p-1 mt-7 md:mt-0 md:p-2" id="cv-preview-content">
         <div class="bg-white w-full h-full py-2 px-2 md:py-4 md:px-3 text-xs md:text-sm">
-          <h1 class="text-center font-bold text-lg md:text-xl">{{ cvUserName }}</h1>
+          <h1 class="text-center font-bold text-lg md:text-xl">
+            <span v-if="authStore.userProfile?.full_name">{{ cvUserName }}</span>
+            <span v-else class="text-gray-500 font-medium">Please Input Your Name In Profile</span>
+          </h1>
           <div class="flex justify-center py-2 gap-x-1 md:gap-x-3">
-            <p>{{ cvUserPhone }}</p>
+            <p v-if="cvUserPhone">{{ cvUserPhone }}</p>
+            <p v-else class="text-gray-500 text-xs md:text-sm">Please Input Your Phone In Your Profile</p>
             <div class="w-0.5 h-4 bg-gray-400 md:h-6"></div>
             <a v-if="cvLinkedin" :href="cvLinkedin" target="_blank" class="text-blue-600 hover:text-blue-800" :title="cvLinkedin">{{ cvLinkedinDisplayText }}</a>
-            <div class="w-0.5 h-4 bg-gray-400 md:h-6"></div>
-            <p>{{ cvUserEmail }}</p>
+            <p v-else class="text-gray-500 text-xs md:text-sm">Please Input URL Linkedin In Your Profile</p><div class="w-0.5 h-4 bg-gray-400 md:h-6"></div>
+            <p v-if="cvUserEmail">{{ cvUserEmail }}</p>
+            <p v-else class="text-gray-500 text-xs md:text-sm">Please Input Email in Your Profile</p>
           </div>
           <div>
             <h2 class="font-bold text-sm md:text-md">Summary</h2>
@@ -455,7 +460,6 @@ import { useProjectStore } from "@/stores/cv/project";
 import { useSkillStore } from "@/stores/cv/skill";
 import { useCertificationStore } from "@/stores/cv/certification";
 import { AuthUserStorage } from "@/stores/auth/userAuth";
-import html2pdf from "html2pdf.js";
 import Swal from "sweetalert2";
 
 const authStore = AuthUserStorage();
@@ -681,7 +685,7 @@ const saveEducation = async () => {
     Swal.fire({
       icon: "error",
       title: "Failed to Save",
-      text: "An error occurred while saving education data. Please try again.",
+      text: "Please Complete All Data Education. Please try again.",
     });
   }
 };
