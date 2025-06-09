@@ -76,17 +76,17 @@
 
       <div class="">
         <div class="flex flex-col md:flex-row justify-around bg-blue-200/40 w-full text-center my-4 md:my-10 rounded-md overflow-hidden">
-          <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b md:border-b-0 md:border-r border-slate-300">
+          <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b border-l border-t border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Salary</p>
             <p class="text-green-500 font-medium text-xs md:text-base">
               {{ formatGajiRingkas(applicationDetail.salary_min) }} - {{ formatGajiRingkas(applicationDetail.salary_max) }}
             </p>
           </div>
-          <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b md:border-b-0 md:border-r border-slate-300">
+          <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b border-t border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Location</p>
             <p class="text-gray-600 font-medium text-xs md:text-base">{{ formatTitle(applicationDetail.location) || "N/A" }}</p>
           </div>
-          <div class="px-4 py-3 md:px-10 md:py-8 w-full">
+          <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b border-t border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Type</p>
             <p class="text-gray-600 font-medium text-xs md:text-base">
               {{ applicationDetail.job_type || "N/A" }}

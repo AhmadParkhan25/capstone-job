@@ -74,12 +74,12 @@
               <input v-model="currentEducation.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
+              <label class="font-normal text-black text-sm md:text-base">End Date </label>
               <input v-model="currentEducation.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
               <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
-              <textarea v-model="currentEducation.description" placeholder="e.g., Relevant coursework, achievements..." class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
+              <textarea v-model="currentEducation.description" placeholder="e.g., Relevant coursework, achievements..." class="bg-slate-100 rounded-sm pt-2 outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
               <button v-if="currentEducation.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelEdit">Cancel</button>
@@ -103,12 +103,12 @@
               <input v-model="currentProject.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
+              <label class="font-normal text-black text-sm md:text-base">End Date </label>
               <input v-model="currentProject.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
               <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
-              <textarea v-model="currentProject.description" placeholder="e.g., Describe the project, technology used, and your role." class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
+              <textarea v-model="currentProject.description" placeholder="e.g., Describe the project, technology used, and your role." class="bg-slate-100 pt-2 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
               <button v-if="currentProject.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelProjectEdit">Cancel</button>
@@ -132,12 +132,12 @@
                     <input v-model="currentExperience.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
                 </div>
                 <div class="flex flex-col">
-                    <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
+                    <label class="font-normal text-black text-sm md:text-base">End Date </label>
                     <input v-model="currentExperience.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
                 </div>
                 <div class="flex flex-col col-span-2">
                     <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
-                    <textarea v-model="currentExperience.description" placeholder="e.g., Describe your key responsibilities and achievements." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"></textarea>
+                    <textarea v-model="currentExperience.description" placeholder="e.g., Describe your key responsibilities and achievements." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 pt-2 h-16 text-sm md:h-24"></textarea>
                 </div>
                 <div class="col-span-2 flex justify-end gap-x-2">
                     <button v-if="currentExperience.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelExperienceEdit">Cancel</button>
@@ -183,7 +183,7 @@
             </div>
             <div class="flex flex-col col-span-2">
               <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
-              <textarea v-model="currentCertification.description" placeholder="Brief description of the certification." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"></textarea>
+              <textarea v-model="currentCertification.description" placeholder="Brief description of the certification." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 pt-2 text-sm md:h-24"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
               <button v-if="currentCertification.id" type="button" class="bg-gray-500/90 text-white px-4 py-0.5 rounded-md text-sm md:px-6 md:py-1 cursor-pointer" @click="cancelCertificationEdit">Cancel</button>
