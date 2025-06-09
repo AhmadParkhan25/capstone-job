@@ -36,7 +36,7 @@
                 id="job_type"
                 v-model="jobForm.job_type"
                 required
-                class="bg-white h-8 rounded-sm outline outline-blue-800 text-sm sm:text-base"
+                class="bg-white h-8 rounded-sm outline pl-1 outline-blue-800 text-sm sm:text-base"
               >
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
