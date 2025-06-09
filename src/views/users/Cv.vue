@@ -1,12 +1,12 @@
 <template>
   <div class="px-4 py-2 md:px-10 md:py-4">
     <div class="flex flex-col md:flex-row justify-between items-center mb-3">
-      <h1 class="font-bold text-xl text-center ml-6 md:ml-68 lg:ml-38 xl:ml-64 2xl:ml-[540px]">
+      <h1 class="font-bold text-xl text-center ml-6 md:ml-68 lg:ml-38 xl:ml-64 2xl:ml-[540px] cv-title ">
         Curriculum Vitae
       </h1>
       <h1
         v-if="!isMobile"
-        class="font-bold text-xl md:text-2xl mb-3 lg:pr-46 xl:pr-64 2xl:pr-[570px] md:hidden lg:block"
+        class="font-bold text-xl md:text-2xl mb-3 lg:pr-46 xl:pr-64 2xl:pr-[570px] md:hidden lg:block cv-preview-title"
       >
         Preview
       </h1>
@@ -1239,6 +1239,20 @@ const displayedCertifications = computed(() => {
 @media print {
   .md\:pl-18 {
     padding-left: 0 !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  .cv-title {
+    /* Atur margin kiri sesuai kebutuhan untuk layar 1920px */
+    /* Nilai 650px ini adalah contoh, silakan disesuaikan */
+    margin-left: 373px !important; 
+  }
+
+  .cv-preview-title {
+    /* Atur padding kanan sesuai kebutuhan untuk layar 1920px */
+    /* Nilai 680px ini adalah contoh, silakan disesuaikan */
+    padding-right: 410px !important;
   }
 }
 </style>
