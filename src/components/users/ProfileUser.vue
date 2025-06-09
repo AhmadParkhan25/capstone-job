@@ -1,11 +1,11 @@
 <template>
   <div v-if="loadingProfile" class="flex justify-center items-center h-64">
     <Icon
-        icon="eos-icons:loading"
-        width="50"
-        height="50"
-        class="text-blue-600"
-      />
+      icon="eos-icons:loading"
+      width="50"
+      height="50"
+      class="text-blue-600"
+    />
   </div>
   <form
     v-else
@@ -109,7 +109,7 @@
 
     <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label for="username" class="font-semibold text-lg">Username <span class="text-red-600" v-if="!authUserStore.userProfile?.username">*</span></label>
+        <label for="username" class="font-semibold text-lg">Username <span class="text-red-600">*</span></label>
         <input
           id="username"
           v-model="profileForm.username"
@@ -131,7 +131,7 @@
 
       <div>
         <label for="full_name" class="font-semibold text-lg"
-          >Full Name</label
+          >Full Name <span class="text-red-600">*</span></label
         >
         <input
           id="full_name"
@@ -144,7 +144,7 @@
       </div>
 
       <div>
-        <label for="phone" class="font-semibold text-lg">Phone</label>
+        <label for="phone" class="font-semibold text-lg">Phone <span class="text-red-600">*</span></label>
         <input
           id="phone"
           v-model="profileForm.phone"
@@ -156,7 +156,7 @@
       </div>
 
       <div>
-        <label for="age" class="font-semibold text-lg">Age</label>
+        <label for="age" class="font-semibold text-lg">Age <span class="text-red-600">*</span></label>
         <input
           id="age"
           v-model="profileForm.age"
@@ -168,7 +168,7 @@
       </div>
 
       <div>
-        <label for="address" class="font-semibold text-lg">Address</label>
+        <label for="address" class="font-semibold text-lg">Address <span class="text-red-600">*</span></label>
         <input
           id="address"
           v-model="profileForm.address"
@@ -180,7 +180,7 @@
       </div>
 
       <div>
-        <label for="city" class="font-semibold text-lg">City</label>
+        <label for="city" class="font-semibold text-lg">City <span class="text-red-600">*</span></label>
         <input
           id="city"
           v-model="profileForm.city"
@@ -192,7 +192,7 @@
       </div>
 
       <div class="md:col-span-2">
-        <label for="bio" class="font-semibold text-lg">Bio</label>
+        <label for="bio" class="font-semibold text-lg">Bio <span class="text-red-600">*</span></label>
         <textarea
           id="bio"
           v-model="profileForm.bio"
@@ -502,7 +502,7 @@ const handleVerifyOtp = async () => {
     await authUserStore.verifyEmailOTP(otpCode.value);
     showOtpPopup.value = false;
     otpCode.value = "";
-     // Asumsi store sudah menangani alert suksesnya dan update currentUser
+      // Asumsi store sudah menangani alert suksesnya dan update currentUser
   } catch (error) {
     console.error("Failed to verify OTP:", error);
     // Asumsi store sudah menangani alert errornya

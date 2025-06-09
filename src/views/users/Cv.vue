@@ -6,7 +6,7 @@
       </h1>
       <h1
         v-if="!isMobile"
-        class="font-bold text-xl md:text-2xl mb-3  lg:pr-46 xl:pr-64 2xl:pr-[570px] md:hidden lg:block"
+        class="font-bold text-xl md:text-2xl mb-3 lg:pr-46 xl:pr-64 2xl:pr-[570px] md:hidden lg:block"
       >
         Preview
       </h1>
@@ -53,7 +53,7 @@
             Back
           </button>
           <h2 class="font-semibold text-lg md:text-xl text-center grow">Certifications</h2>
-          </div>
+        </div>
 
         <div class="bg-[#F1F4FA] px-3 py-2 md:px-6 md:py-3" v-if="step === 'education'">
           <form @submit.prevent="saveEducation" class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-2">
@@ -66,7 +66,7 @@
               <input v-model="currentEducation.major" type="text" placeholder="e.g., Computer Science" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base">GPA</label>
+              <label class="font-normal text-black text-sm md:text-base">GPA <span class="text-red-600">*</span></label>
               <input v-model="currentEducation.gpa" type="text" placeholder="e.g., 3.8 or N/A" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
@@ -74,11 +74,11 @@
               <input v-model="currentEducation.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base">End Date</label>
+              <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
               <input v-model="currentEducation.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base">Description</label>
+              <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
               <textarea v-model="currentEducation.description" placeholder="e.g., Relevant coursework, achievements..." class="bg-slate-100 rounded-sm outline outline-blue-800 h-16 text-sm md:h-24 px-2"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
@@ -95,7 +95,7 @@
               <input v-model="currentProject.title" type="text" placeholder="e.g., Personal Portfolio Website" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base">Project Link</label>
+              <label class="font-normal text-black text-sm md:text-base">Project Link <span class="text-red-600">*</span></label>
               <input v-model="currentProject.link" type="text" placeholder="e.g., https://my-project.com" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
@@ -103,7 +103,7 @@
               <input v-model="currentProject.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col">
-              <label class="font-normal text-black text-sm md:text-base">End Date</label>
+              <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
               <input v-model="currentProject.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
@@ -132,7 +132,7 @@
                     <input v-model="currentExperience.start_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
                 </div>
                 <div class="flex flex-col">
-                    <label class="font-normal text-black text-sm md:text-base">End Date</label>
+                    <label class="font-normal text-black text-sm md:text-base">End Date <span class="text-red-600">*</span></label>
                     <input v-model="currentExperience.end_date" type="date" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
                 </div>
                 <div class="flex flex-col col-span-2">
@@ -178,11 +178,11 @@
               <input v-model="currentCertification.issueBy" type="text" placeholder="e.g., Amazon Web Services" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base">ID Credential / URL</label>
+              <label class="font-normal text-black text-sm md:text-base">ID Credential / URL <span class="text-red-600">*</span></label>
               <input v-model="currentCertification.credentialId" type="text" placeholder="Credential ID or verification URL" class="bg-slate-100 rounded-sm outline outline-blue-800 h-7 px-2 text-sm md:h-8 md:px-3" />
             </div>
             <div class="flex flex-col col-span-2">
-              <label class="font-normal text-black text-sm md:text-base">Description</label>
+              <label class="font-normal text-black text-sm md:text-base">Description <span class="text-red-600">*</span></label>
               <textarea v-model="currentCertification.description" placeholder="Brief description of the certification." class="bg-slate-100 rounded-sm outline outline-blue-800 px-2 h-16 text-sm md:h-24"></textarea>
             </div>
             <div class="col-span-2 flex justify-end gap-x-2">
@@ -199,7 +199,7 @@
           <p v-else-if="educationStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
             Please fill out the profile first.
           </p>
-          <div v-else-if="educationStore.educations.length > 0" v-for="edu in educationStore.educations" :key="edu.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
+          <div v-else-if="educationStore.educations.length > 0" v-for="edu in educationStore.educations" :key="edu.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ edu.name_school }}</p>
             <p>{{ edu.major }}</p>
             <p>{{ formatDate(edu.start_date) }} - {{ formatDate(edu.end_date) }}</p>
@@ -222,7 +222,7 @@
           <p v-else-if="projectStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
             Please fill out the profile first.
           </p>
-          <div v-else-if="projectStore.projects.length > 0" v-for="project in projectStore.projects" :key="project.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
+          <div v-else-if="projectStore.projects.length > 0" v-for="project in projectStore.projects" :key="project.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ project.title }}</p>
             <p class="text-blue-700 text-xs" v-if="project.link_url">
               <a :href="project.link_url" target="_blank">Project Link</a>
@@ -246,7 +246,7 @@
           <p v-else-if="experienceStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
             Please fill out the profile first.
           </p>
-          <div v-else-if="experienceStore.experiences.length > 0" v-for="exp in experienceStore.experiences" :key="exp.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
+          <div v-else-if="experienceStore.experiences.length > 0" v-for="exp in experienceStore.experiences" :key="exp.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ exp.title }}</p>
             <p>{{ exp.company_name }}</p>
             <p>{{ formatDate(exp.start_date) }} - {{ formatDate(exp.end_date) }}</p>
@@ -261,14 +261,14 @@
           </div>
         </div>
 
-        <div class="pt-3 grid grid-cols-1  md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'skills'">
+        <div class="pt-3 grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 md:pt-6 md:gap-x-4" v-if="step === 'skills'">
           <p v-if="skillStore.isLoading" class="m-auto col-span-2 text-center text-gray-500 py-1 text-sm md:py-2">
             <Icon icon="eos-icons:loading" width="24" height="24" style="color: #5152ce" />
           </p>
           <p v-else-if="skillStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
             Please fill out the profile first.
           </p>
-          <div v-else-if="skillStore.skills.length > 0" v-for="skill in skillStore.skills" :key="skill.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
+          <div v-else-if="skillStore.skills.length > 0" v-for="skill in skillStore.skills" :key="skill.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ skill.name }}</p>
             <p>Level: {{ skill.level }}</p>
             <div class="flex gap-x-2 justify-end mt-1 md:gap-x-4">
@@ -288,7 +288,7 @@
           <p v-else-if="certificationStore.error" class="col-span-2 text-center text-red-500 py-1 text-sm md:py-2">
             Please fill out the profile first.
           </p>
-          <div v-else-if="displayedCertifications.length > 0" v-for="cert in displayedCertifications" :key="cert.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md  px-3 py-2 text-sm md:px-4 md:py-3">
+          <div v-else-if="displayedCertifications.length > 0" v-for="cert in displayedCertifications" :key="cert.id" class="bg-[#F1F4FA] outline outline-blue-900 rounded-md px-3 py-2 text-sm md:px-4 md:py-3">
             <p class="font-medium">{{ cert.name }}</p>
             <p>Year: {{ cert.year }}</p>
             <p>Issued By: {{ cert.issueBy }}</p>
@@ -308,7 +308,7 @@
       </div>
       
       <h1
-        class="font-bold text-xl md:text-2xl  lg:hidden md:block sm:hidden mt-10 md:mt-0  text-center"
+        class="font-bold text-xl md:text-2xl lg:hidden md:block sm:hidden mt-10 md:mt-0 text-center"
       >
         Preview
       </h1>
@@ -657,23 +657,23 @@ const saveEducation = async () => {
     if (currentEducation.value.id) {
       await educationStore.updateEducation(currentEducation.value.id, payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Educatin Updating Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Educatin Updating Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } else {
       await educationStore.createEducation(payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Education Adding Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Education Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
     resetEducationForm();
   } catch (error) {
@@ -710,13 +710,13 @@ const deleteEducation = async (id) => {
         await educationStore.deleteEducation(id);
         if (currentEducation.value.id === id) resetEducationForm();
         Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Edducation Delete Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Edducation Delete Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } catch (error) {
         console.error("Failed to delete education:", error);
         Swal.fire({
@@ -768,23 +768,23 @@ const saveProject = async () => {
     if (currentProject.value.id) {
       await projectStore.updateProject(currentProject.value.id, payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Project Updating Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Project Updating Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } else {
       await projectStore.createProject(payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Project Adding Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Project Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
     resetProjectForm();
   } catch (error) {
@@ -824,13 +824,13 @@ const deleteProjectFromStore = async (id) => {
         await projectStore.deleteProject(id);
         if (currentProject.value.id === id) resetProjectForm();
         Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Project Deleting Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Project Deleting Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } catch (error) {
         console.error("Failed to delete project:", error);
         Swal.fire({
@@ -889,23 +889,23 @@ const saveExperience = async () => {
         payload
       );
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Experience Updating Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Experience Updating Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } else {
       await experienceStore.createExperience(payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Experience Adding Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Experience Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
     resetExperienceForm();
   } catch (error) {
@@ -942,13 +942,13 @@ const deleteExperience = async (id) => {
         await experienceStore.deleteExperience(id);
         if (currentExperience.value.id === id) resetExperienceForm();
         Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Experience Deleting Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Experience Deleting Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } catch (error) {
         console.error("Failed to delete experience:", error);
         Swal.fire({
@@ -992,23 +992,23 @@ const saveSkill = async () => {
     if (currentSkill.value.id) {
       await skillStore.updateSkill(currentSkill.value.id, payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Skill Updating Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Skill Updating Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } else {
       await skillStore.createSkill(payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Skill Adding Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Skill Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
     resetSkillForm();
   } catch (error) {
@@ -1039,13 +1039,13 @@ const deleteSkillFromStore = async (id) => {
         await skillStore.deleteSkill(id);
         if (currentSkill.value.id === id) resetSkillForm();
         Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Skill Deletin Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Skill Deletin Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } catch (error) {
         console.error("Failed to delete skill:", error);
         Swal.fire({
@@ -1103,23 +1103,23 @@ const saveCertification = async () => {
         updateData
       );
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Certifation Upadting Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Certifation Upadting Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } else {
       await certificationStore.createCertification(payload);
       Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Certification Adding Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Certification Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
     resetCertificationForm();
   } catch (error) {
@@ -1161,13 +1161,13 @@ const deleteCertificationFromStore = async (id) => {
           resetCertificationForm();
         }
         Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title:"Certification Deleting Successfully",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Certification Deleting Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } catch (error) {
         console.error("Failed to delete certification:", error);
         Swal.fire({
@@ -1226,18 +1226,6 @@ const displayedCertifications = computed(() => {
   }));
 });
 </script>
-
-<style scoped>
-.text-xxs {
-  font-size: 0.7rem;
-}
-
-@media print {
-  .md\:pl-18 {
-    padding-left: 0 !important;
-  }
-}
-</style>
 
 <style scoped>
 .text-xxs {
