@@ -16,7 +16,7 @@
       <div class="w-full">
         <div class="flex justify-between pb-2 px-2 md:pb-4 md:px-4" v-if="step === 'education'">
           <div></div>
-          <h2 class="font-semibold text-lg md:text-xl text-center grow">Education</h2>
+          <h2 class="font-semibold text-lg md:text-xl text-center grow ml-22">Education</h2>
           <button class="bg-blue-950/90 text-white px-4 py-1 rounded-md text-sm md:px-6 cursor-pointer" @click="nextStep">
             Next
           </button>
