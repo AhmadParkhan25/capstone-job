@@ -1255,4 +1255,17 @@ const displayedCertifications = computed(() => {
     padding-right: 410px !important;
   }
 }
+@media (min-width: 2560px) {
+  .cv-title {
+    /* Atur margin kiri sesuai kebutuhan untuk layar 1920px */
+    /* Nilai 650px ini adalah contoh, silakan disesuaikan */
+    margin-left: 533px !important; 
+  }
+
+  .cv-preview-title {
+    /* Atur padding kanan sesuai kebutuhan untuk layar 1920px */
+    /* Nilai 680px ini adalah contoh, silakan disesuaikan */
+    padding-right: 590px !important;
+  }
+}
 </style>
