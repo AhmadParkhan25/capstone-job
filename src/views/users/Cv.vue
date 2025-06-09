@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 py-2 md:px-10 md:py-4">
     <div class="flex flex-col md:flex-row justify-between items-center mb-3">
-      <h1 class="font-bold text-xl md:text-2xl md:pl-62 lg:pl-34 xl:pl-58 2xl:pl-[500px]">
+      <h1 class="font-bold text-xl text-center ml-6 md:ml-68 lg:ml-38 xl:ml-64 2xl:ml-[540px]">
         Curriculum Vitae
       </h1>
       <h1
