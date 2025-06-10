@@ -75,7 +75,7 @@
       </div>
 
       <div class="">
-        <div class="flex flex-col md:flex-row justify-around bg-blue-200/40 w-full text-center my-4 md:my-10 rounded-md overflow-hidden">
+        <div class="flex flex-col md:flex-row justify-around bg-[#F0F3FA] w-full text-center my-4 md:my-10 rounded-md overflow-hidden">
           <div class="px-4 py-3 md:px-10 md:py-8 w-full border-b border-l border-t border-r border-slate-300">
             <p class="font-semibold text-xl md:text-3xl">Salary</p>
             <p class="text-green-500 font-medium text-xs md:text-base">

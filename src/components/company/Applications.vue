@@ -220,11 +220,11 @@
             <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-200 pb-1 mb-3">
               SKILLS
             </h2>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="skill in cv.skills" :key="skill.id" class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full">
+            <div class="flex justify-between " v-for="skill in cv.skills" :key="skill.id">
+              <span  class="text-md font-semibold text-gray-900">
                 {{ skill.name }}
-                <span v-if="skill.level" class="font-normal opacity-75"> ({{ skill.level }})</span>
               </span>
+              <span v-if="skill.level" class="font-normal opacity-75"> ({{ skill.level }})</span>
             </div>
           </section>
           
