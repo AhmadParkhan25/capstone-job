@@ -659,11 +659,11 @@ const saveEducation = async () => {
     payload.start_date = new Date(payload.start_date).toISOString();
   }
 
-  // **FIX: Set end_date to null if it's empty, otherwise format it**
   if (payload.end_date) {
     payload.end_date = new Date(payload.end_date).toISOString();
   } else {
-    payload.end_date = null;
+    // MODIFIED: If end_date is empty, set it to the current date and time
+    payload.end_date = new Date().toISOString(); 
   }
   
   try {
@@ -770,14 +770,14 @@ const saveProject = async () => {
     return;
   }
 
-  // **FIX: Handle optional end_date correctly**
   const payload = {
     title: currentProject.value.title,
     link: currentProject.value.link,
     startDate: new Date(currentProject.value.start_date).toISOString(),
+    // MODIFIED: If end_date is empty, use the current date; otherwise, use the provided date.
     endDate: currentProject.value.end_date 
       ? new Date(currentProject.value.end_date).toISOString() 
-      : null,
+      : new Date().toISOString(),
     description: currentProject.value.description,
   };
   try {
@@ -893,9 +893,10 @@ const saveExperience = async () => {
     start_date: currentExperience.value.start_date
       ? new Date(currentExperience.value.start_date).toISOString()
       : null,
+    // MODIFIED: If end_date is empty, use the current date; otherwise, use the provided date.
     end_date: currentExperience.value.end_date
       ? new Date(currentExperience.value.end_date).toISOString()
-      : null,
+      : new Date().toISOString(),
     description: currentExperience.value.description,
   };
   try {

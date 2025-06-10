@@ -10,7 +10,7 @@
         class="bg-blue-950/80 text-white px-2 py-1 md:px-5 md:py-2 rounded-md shadow-md hover:bg-red-800 transition-colors duration-300"
       >
         {{
-          companyAppStore.isDeletingApplications ? "Deleting..." : "Delete Job"
+          companyAppStore.isDeletingApplications ? "Deleting..." : "Delete All Applications"
         }}
       </button>
     </div>
