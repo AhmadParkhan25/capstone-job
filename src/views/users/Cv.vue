@@ -475,742 +475,744 @@ const skillStore = useSkillStore();
 const certificationStore = useCertificationStore();
 
 const downloadCv = () => {
-  const element = document.getElementById("cv-preview-content");
-  if (element) {
-    html2pdf(element, {
-      margin: 10,
-      filename: `${cvUserName.value}_CV.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    })
-      .then(() => {})
-      .catch((error) => {
-        console.error("Error generating PDF:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Membuat PDF",
-          text: "Terjadi kesalahan saat membuat PDF. Silakan coba lagi.",
-        });
-      });
-  } else {
-    console.error("CV preview content not found!");
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Konten preview CV tidak ditemukan untuk membuat PDF.",
-    });
-  }
+  const element = document.getElementById("cv-preview-content");
+  if (element) {
+    html2pdf(element, {
+      margin: 10,
+      filename: `${cvUserName.value}_CV.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    })
+      .then(() => {})
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Membuat PDF",
+          text: "Terjadi kesalahan saat membuat PDF. Silakan coba lagi.",
+        });
+      });
+  } else {
+    console.error("CV preview content not found!");
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Konten preview CV tidak ditemukan untuk membuat PDF.",
+    });
+  }
 };
 
 const currentEducation = ref({
-  id: null,
-  name_school: "",
-  major: "",
-  gpa: "",
-  start_date: "",
-  end_date: "",
-  description: "",
+  id: null,
+  name_school: "",
+  major: "",
+  gpa: "",
+  start_date: "",
+  end_date: "",
+  description: "",
 });
 
 const currentProject = ref({
-  id: null,
-  title: "",
-  link: "",
-  start_date: "",
-  end_date: "",
-  description: "",
+  id: null,
+  title: "",
+  link: "",
+  start_date: "",
+  end_date: "",
+  description: "",
 });
 
 const currentExperience = ref({
-  id: null,
-  title: "",
-  company: "",
-  start_date: "",
-  end_date: "",
-  description: "",
+  id: null,
+  title: "",
+  company: "",
+  start_date: "",
+  end_date: "",
+  description: "",
 });
 
 const currentSkill = ref({ id: null, name: "", level: "" });
 
 const currentCertification = ref({
-  id: null,
-  name: "",
-  year: "",
-  issueBy: "",
-  credentialId: "",
-  description: "",
+  id: null,
+  name: "",
+  year: "",
+  issueBy: "",
+  credentialId: "",
+  description: "",
 });
 
 onMounted(async () => {
-  isMobile.value = window.innerWidth < 768;
-  window.addEventListener("resize", () => {
-    isMobile.value = window.innerWidth < 768;
-    if (!isMobile.value) showPreview.value = false;
-  });
+  isMobile.value = window.innerWidth < 768;
+  window.addEventListener("resize", () => {
+    isMobile.value = window.innerWidth < 768;
+    if (!isMobile.value) showPreview.value = false;
+  });
 
-  educationStore.fetchEducations();
-  experienceStore.fetchExperiences();
-  projectStore.fetchProjects();
-  skillStore.fetchSkills();
-  certificationStore.fetchCertifications();
+  educationStore.fetchEducations();
+  experienceStore.fetchExperiences();
+  projectStore.fetchProjects();
+  skillStore.fetchSkills();
+  certificationStore.fetchCertifications();
 
-  if (authStore.tokenUser && !authStore.user) {
-    try {
-      await authStore.getUserByAuth();
-    } catch (error) {
-      console.error(
-        "CV Page: Failed to retrieve user data (currentUser) during onMounted:",
-        error
-      );
-    }
-  }
-  if (
-    authStore.tokenUser &&
-    (authStore.userProfile === null || authStore.userProfile === undefined)
-  ) {
-    try {
-      await authStore.fetchUserProfile();
-    } catch (error) {
-      console.warn(
-        "CV Page: Failed to fetch detailed profile data (userProfile) during onMounted. The profile may not have been created yet.",
-        error.response?.data?.message || error.message
-      );
-    }
-  }
+  if (authStore.tokenUser && !authStore.user) {
+    try {
+      await authStore.getUserByAuth();
+    } catch (error) {
+      console.error(
+        "CV Page: Failed to retrieve user data (currentUser) during onMounted:",
+        error
+      );
+    }
+  }
+  if (
+    authStore.tokenUser &&
+    (authStore.userProfile === null || authStore.userProfile === undefined)
+  ) {
+    try {
+      await authStore.fetchUserProfile();
+    } catch (error) {
+      console.warn(
+        "CV Page: Failed to fetch detailed profile data (userProfile) during onMounted. The profile may not have been created yet.",
+        error.response?.data?.message || error.message
+      );
+    }
+  }
 });
 
 const cvUserName = computed(() => {
-  return (
-    authStore.userProfile?.full_name ||
-    authStore.userProfile?.name ||
-    authStore.currentUser?.name ||
-    "Your name"
-  );
+  return (
+    authStore.userProfile?.full_name ||
+    authStore.userProfile?.name ||
+    authStore.currentUser?.name ||
+    "Your name"
+  );
 });
 
 const cvUserEmail = computed(() => {
-  return authStore.userProfile?.email || authStore.currentUser?.email || "";
+  return authStore.userProfile?.email || authStore.currentUser?.email || "";
 });
 
 const cvUserPhone = computed(() => {
-  return authStore.userProfile?.phone || "";
+  return authStore.userProfile?.phone || "";
 });
 
 const cvUserBio = computed(() => {
-  return authStore.userProfile?.bio || "";
+  return authStore.userProfile?.bio || "";
 });
 
 const cvLinkedin = computed(() => {
-  return authStore.userProfile?.linkedin || "";
+  return authStore.userProfile?.linkedin || "";
 });
 
 const cvLinkedinDisplayText = computed(() => {
-  const fullUrl = cvLinkedin.value;
-  if (!fullUrl) {
-    return "";
-  }
+  const fullUrl = cvLinkedin.value;
+  if (!fullUrl) {
+    return "";
+  }
 
-  const maxLength = 20;
-  let displayableUrl = fullUrl.replace(/^https?:\/\/(www\.)?/, "");
+  const maxLength = 20;
+  let displayableUrl = fullUrl.replace(/^https?:\/\/(www\.)?/, "");
 
-  if (displayableUrl.length > maxLength) {
-    return displayableUrl.substring(0, maxLength - 3) + "...";
-  }
+  if (displayableUrl.length > maxLength) {
+    return displayableUrl.substring(0, maxLength - 3) + "...";
+  }
 
-  return displayableUrl;
+  return displayableUrl;
 });
 
 const formatDate = (dateString) => {
-  if (!dateString) return "Present";
-  try {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      console.warn("Invalid date string for formatting:", dateString);
-      return dateString;
-    }
-    return format(date, "MMM yyyy");
-  } catch (error) {
-    console.error("Error formatting date:", dateString, error);
-    return dateString;
-  }
+  if (!dateString) return "Present";
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      console.warn("Invalid date string for formatting:", dateString);
+      return dateString;
+    }
+    return format(date, "MMM yyyy");
+  } catch (error) {
+    console.error("Error formatting date:", dateString, error);
+    return dateString;
+  }
 };
 
 // --- Education Functions ---
 const saveEducation = async () => {
-  // Validate required fields
-  if (
-    !currentEducation.value.name_school ||
-    !currentEducation.value.major ||
-    !currentEducation.value.start_date
-  ) {
-    Swal.fire({
-      icon: "warning",
-      title: "Empty Input",
-      text: "Please fill in all mandatory inputs (School/University, Major, Start Date).",
-    });
-    return;
-  }
+  // Validate required fields
+  if (
+    !currentEducation.value.name_school ||
+    !currentEducation.value.major ||
+    !currentEducation.value.start_date
+  ) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Input",
+      text: "Please fill in all mandatory inputs (School/University, Major, Start Date).",
+    });
+    return;
+  }
 
-  const payload = { ...currentEducation.value };
-  if (payload.start_date)
-    payload.start_date = new Date(payload.start_date).toISOString();
-  if (payload.end_date)
-    payload.end_date = new Date(payload.end_date).toISOString();
-  try {
-    if (currentEducation.value.id) {
-      await educationStore.updateEducation(currentEducation.value.id, payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Educatin Updating Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await educationStore.createEducation(payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Education Adding Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    resetEducationForm();
-  } catch (error) {
-    console.error("Failed to save education:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Failed to Save",
-      text: "Please Complete All Data Education. Please try again.",
-    });
-  }
+  const payload = { ...currentEducation.value };
+  
+  // Ensure start_date is in the correct format
+  if (payload.start_date) {
+    payload.start_date = new Date(payload.start_date).toISOString();
+  }
+
+  // **FIX: Set end_date to null if it's empty, otherwise format it**
+  if (payload.end_date) {
+    payload.end_date = new Date(payload.end_date).toISOString();
+  } else {
+    payload.end_date = null;
+  }
+  
+  try {
+    if (currentEducation.value.id) {
+      await educationStore.updateEducation(currentEducation.value.id, payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Education Updating Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      await educationStore.createEducation(payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Education Adding Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    resetEducationForm();
+  } catch (error) {
+    console.error("Failed to save education:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Failed to Save",
+      text: "An error occurred while saving. Please check the data and try again.",
+    });
+  }
 };
 const editEducation = (edu) => {
-  currentEducation.value = { ...edu };
-  currentEducation.value.start_date = edu.start_date
-    ? format(new Date(edu.start_date), "yyyy-MM-dd")
-    : "";
-  currentEducation.value.end_date = edu.end_date
-    ? format(new Date(edu.end_date), "yyyy-MM-dd")
-    : "";
+  currentEducation.value = { ...edu };
+  currentEducation.value.start_date = edu.start_date
+    ? format(new Date(edu.start_date), "yyyy-MM-dd")
+    : "";
+  currentEducation.value.end_date = edu.end_date
+    ? format(new Date(edu.end_date), "yyyy-MM-dd")
+    : "";
 };
 const deleteEducation = async (id) => {
-  Swal.fire({
-    title: "Are Your Sure?",
-    text: "This Data Will Deleting Permanent!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deleting!",
-    cancelButtonText: "Cancel",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await educationStore.deleteEducation(id);
-        if (currentEducation.value.id === id) resetEducationForm();
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title:"Edducation Delete Successfully",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } catch (error) {
-        console.error("Failed to delete education:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Failed Deleting",
-          text: "Try Again",
-        });
-      }
-    }
-  });
+  Swal.fire({
+    title: "Are You Sure?",
+    text: "This Data Will Be Permanently Deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await educationStore.deleteEducation(id);
+        if (currentEducation.value.id === id) resetEducationForm();
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Education Deleted Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } catch (error) {
+        console.error("Failed to delete education:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Deletion Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+  });
 };
 const resetEducationForm = () => {
-  currentEducation.value = {
-    id: null,
-    name_school: "",
-    major: "",
-    gpa: "",
-    start_date: "",
-    end_date: "",
-    description: "",
-  };
+  currentEducation.value = {
+    id: null,
+    name_school: "",
+    major: "",
+    gpa: "",
+    start_date: "",
+    end_date: "",
+    description: "",
+  };
 };
 const cancelEdit = () => resetEducationForm();
 
 // --- Project Functions ---
 const saveProject = async () => {
-  // Validate required fields
-  if (
-    !currentProject.value.title ||
-    !currentProject.value.start_date ||
-    !currentProject.value.description
-  ) {
-    Swal.fire({
-      icon: "warning",
-      title: "Input Null",
-      text: "You Shoul Adding (Title, Start Date, Description).",
-    });
-    return;
-  }
+  // Validate required fields
+  if (
+    !currentProject.value.title ||
+    !currentProject.value.start_date ||
+    !currentProject.value.description
+  ) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Input",
+      text: "Please fill in all mandatory inputs (Title, Start Date, Description).",
+    });
+    return;
+  }
 
-  const payload = {
-    title: currentProject.value.title,
-    link: currentProject.value.link,
-    startDate: currentProject.value.start_date,
-    endDate: currentProject.value.end_date,
-    description: currentProject.value.description,
-  };
-  try {
-    if (currentProject.value.id) {
-      await projectStore.updateProject(currentProject.value.id, payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Project Updating Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await projectStore.createProject(payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Project Adding Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    resetProjectForm();
-  } catch (error) {
-    console.error("Failed to save project:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Try Again",
-      text: "Pliss Try Again",
-    });
-  }
+  // **FIX: Handle optional end_date correctly**
+  const payload = {
+    title: currentProject.value.title,
+    link: currentProject.value.link,
+    startDate: new Date(currentProject.value.start_date).toISOString(),
+    endDate: currentProject.value.end_date 
+      ? new Date(currentProject.value.end_date).toISOString() 
+      : null,
+    description: currentProject.value.description,
+  };
+  try {
+    if (currentProject.value.id) {
+      await projectStore.updateProject(currentProject.value.id, payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Project Updated Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      await projectStore.createProject(payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Project Added Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    resetProjectForm();
+  } catch (error) {
+    console.error("Failed to save project:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Save Failed",
+      text: "Please try again.",
+    });
+  }
 };
 const editProject = (project) => {
-  currentProject.value = {
-    ...project,
-    link: project.link_url || project.link || "",
-  };
-  currentProject.value.start_date = project.start_date
-    ? format(new Date(project.start_date), "yyyy-MM-dd")
-    : "";
-  currentProject.value.end_date = project.end_date
-    ? format(new Date(project.end_date), "yyyy-MM-dd")
-    : "";
+  currentProject.value = {
+    ...project,
+    link: project.link_url || project.link || "",
+  };
+  currentProject.value.start_date = project.start_date
+    ? format(new Date(project.start_date), "yyyy-MM-dd")
+    : "";
+  currentProject.value.end_date = project.end_date
+    ? format(new Date(project.end_date), "yyyy-MM-dd")
+    : "";
 };
 const deleteProjectFromStore = async (id) => {
-  Swal.fire({
-    title: "Are You Sure?",
-    text: "This Data Will Deleting Permanent",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deleting!",
-    cancelButtonText: "Cancel",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await projectStore.deleteProject(id);
-        if (currentProject.value.id === id) resetProjectForm();
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title:"Project Deleting Successfully",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } catch (error) {
-        console.error("Failed to delete project:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Failed Deleting",
-          text: "Pliss Try Again",
-        });
-      }
-    }
-  });
+  Swal.fire({
+    title: "Are You Sure?",
+    text: "This Data Will Be Permanently Deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await projectStore.deleteProject(id);
+        if (currentProject.value.id === id) resetProjectForm();
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Project Deleted Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } catch (error) {
+        console.error("Failed to delete project:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Deletion Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+  });
 };
 const resetProjectForm = () => {
-  currentProject.value = {
-    id: null,
-    title: "",
-    link: "",
-    start_date: "",
-    end_date: "",
-    description: "",
-  };
+  currentProject.value = {
+    id: null,
+    title: "",
+    link: "",
+    start_date: "",
+    end_date: "",
+    description: "",
+  };
 };
 const cancelProjectEdit = () => resetProjectForm();
 
 // --- Experience Functions ---
 const saveExperience = async () => {
-  // Validate required fields
-  if (
-    !currentExperience.value.title ||
-    !currentExperience.value.company ||
-    !currentExperience.value.start_date ||
-    !currentExperience.value.description
-  ) {
-    Swal.fire({
-      icon: "warning",
-      title: "Input Null",
-      text: "Pliss Complete Input (title, Company, Start Date, Description).",
-    });
-    return;
-  }
+  // Validate required fields
+  if (
+    !currentExperience.value.title ||
+    !currentExperience.value.company ||
+    !currentExperience.value.start_date ||
+    !currentExperience.value.description
+  ) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Input",
+      text: "Please fill in all mandatory inputs (Title, Company, Start Date, Description).",
+    });
+    return;
+  }
 
-  const payload = {
-    title: currentExperience.value.title,
-    company_name: currentExperience.value.company,
-    start_date: currentExperience.value.start_date
-      ? new Date(currentExperience.value.start_date).toISOString()
-      : null,
-    end_date: currentExperience.value.end_date
-      ? new Date(currentExperience.value.end_date).toISOString()
-      : null,
-    description: currentExperience.value.description,
-  };
-  try {
-    if (currentExperience.value.id) {
-      await experienceStore.updateExperience(
-        currentExperience.value.id,
-        payload
-      );
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Experience Updating Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await experienceStore.createExperience(payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Experience Adding Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    resetExperienceForm();
-  } catch (error) {
-    console.error("Failed to save experience:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Failed Saving",
-      text: "Pliss Try Again",
-    });
-  }
+  const payload = {
+    title: currentExperience.value.title,
+    company_name: currentExperience.value.company,
+    start_date: currentExperience.value.start_date
+      ? new Date(currentExperience.value.start_date).toISOString()
+      : null,
+    end_date: currentExperience.value.end_date
+      ? new Date(currentExperience.value.end_date).toISOString()
+      : null,
+    description: currentExperience.value.description,
+  };
+  try {
+    if (currentExperience.value.id) {
+      await experienceStore.updateExperience(
+        currentExperience.value.id,
+        payload
+      );
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Experience Updated Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      await experienceStore.createExperience(payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Experience Added Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    resetExperienceForm();
+  } catch (error) {
+    console.error("Failed to save experience:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Save Failed",
+      text: "Please try again.",
+    });
+  }
 };
 const editExperience = (exp) => {
-  currentExperience.value = { ...exp, company: exp.company_name };
-  currentExperience.value.start_date = exp.start_date
-    ? format(new Date(exp.start_date), "yyyy-MM-dd")
-    : "";
-  currentExperience.value.end_date = exp.end_date
-    ? format(new Date(exp.end_date), "yyyy-MM-dd")
-    : "";
+  currentExperience.value = { ...exp, company: exp.company_name };
+  currentExperience.value.start_date = exp.start_date
+    ? format(new Date(exp.start_date), "yyyy-MM-dd")
+    : "";
+  currentExperience.value.end_date = exp.end_date
+    ? format(new Date(exp.end_date), "yyyy-MM-dd")
+    : "";
 };
 const deleteExperience = async (id) => {
-  Swal.fire({
-    title: "Are You Sure?",
-    text: "This Data Will Deleting Permanent!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deleting!",
-    cancelButtonText: "Cancel",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await experienceStore.deleteExperience(id);
-        if (currentExperience.value.id === id) resetExperienceForm();
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title:"Experience Deleting Successfully",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } catch (error) {
-        console.error("Failed to delete experience:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Failed Deleting",
-          text: "Pliss Try Again",
-        });
-      }
-    }
-  });
+  Swal.fire({
+    title: "Are You Sure?",
+    text: "This Data Will Be Permanently Deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await experienceStore.deleteExperience(id);
+        if (currentExperience.value.id === id) resetExperienceForm();
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Experience Deleted Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } catch (error) {
+        console.error("Failed to delete experience:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Deletion Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+  });
 };
 const resetExperienceForm = () => {
-  currentExperience.value = {
-    id: null,
-    title: "",
-    company: "",
-    start_date: "",
-    end_date: "",
-    description: "",
-  };
+  currentExperience.value = {
+    id: null,
+    title: "",
+    company: "",
+    start_date: "",
+    end_date: "",
+    description: "",
+  };
 };
 const cancelExperienceEdit = () => resetExperienceForm();
 
 // --- Skill Functions ---
 const saveSkill = async () => {
-  // Validate required fields
-  if (!currentSkill.value.name || !currentSkill.value.level) {
-    Swal.fire({
-      icon: "warning",
-      title: "Input Null",
-      text: "Pliis Input (Name Skill, Level).",
-    });
-    return;
-  }
+  // Validate required fields
+  if (!currentSkill.value.name || !currentSkill.value.level) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Input",
+      text: "Please provide both Skill Name and Level.",
+    });
+    return;
+  }
 
-  const payload = {
-    name: currentSkill.value.name,
-    level: currentSkill.value.level,
-  };
-  try {
-    if (currentSkill.value.id) {
-      await skillStore.updateSkill(currentSkill.value.id, payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Skill Updating Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await skillStore.createSkill(payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Skill Adding Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    resetSkillForm();
-  } catch (error) {
-    console.error("Failed to save skill:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Failed Save",
-      text: "Pliss Try Again",
-    });
-  }
+  const payload = {
+    name: currentSkill.value.name,
+    level: currentSkill.value.level,
+  };
+  try {
+    if (currentSkill.value.id) {
+      await skillStore.updateSkill(currentSkill.value.id, payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Skill Updated Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      await skillStore.createSkill(payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Skill Added Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    resetSkillForm();
+  } catch (error) {
+    console.error("Failed to save skill:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Save Failed",
+      text: "Please try again.",
+    });
+  }
 };
 const editSkill = (skill) => {
-  currentSkill.value = { ...skill };
+  currentSkill.value = { ...skill };
 };
 const deleteSkillFromStore = async (id) => {
-  Swal.fire({
-    title: "Are You Sure?",
-    text: "This Data Deleting Permanent!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deleting!",
-    cancelButtonText: "Cancel",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await skillStore.deleteSkill(id);
-        if (currentSkill.value.id === id) resetSkillForm();
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title:"Skill Deletin Successfully",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } catch (error) {
-        console.error("Failed to delete skill:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Failed Deleting",
-          text: "Pliss Try Again",
-        });
-      }
-    }
-  });
+  Swal.fire({
+    title: "Are You Sure?",
+    text: "This Data Will Be Permanently Deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await skillStore.deleteSkill(id);
+        if (currentSkill.value.id === id) resetSkillForm();
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Skill Deleted Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } catch (error) {
+        console.error("Failed to delete skill:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Deletion Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+  });
 };
 const resetSkillForm = () => {
-  currentSkill.value = { id: null, name: "", level: "" };
+  currentSkill.value = { id: null, name: "", level: "" };
 };
 const cancelSkillEdit = () => resetSkillForm();
 
 // --- Certification Functions ---
 const saveCertification = async () => {
-  // Validate required fields
-  if (
-    !currentCertification.value.name ||
-    !currentCertification.value.year ||
-    !currentCertification.value.issueBy
-  ) {
-    Swal.fire({
-      icon: "warning",
-      title: "Input Null",
-      text: "Pliss Input (Name Certification, Year, Issued By).",
-    });
-    return;
-  }
+  // Validate required fields
+  if (
+    !currentCertification.value.name ||
+    !currentCertification.value.year ||
+    !currentCertification.value.issueBy
+  ) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Input",
+      text: "Please provide Certification Name, Year, and Issued By.",
+    });
+    return;
+  }
 
-  const payload = {
-    name: currentCertification.value.name,
-    issued_by: currentCertification.value.issueBy,
-    year: currentCertification.value.year,
-    description: currentCertification.value.description,
-    id_credential_url: currentCertification.value.credentialId,
-  };
+  const payload = {
+    name: currentCertification.value.name,
+    issued_by: currentCertification.value.issueBy,
+    year: currentCertification.value.year,
+    description: currentCertification.value.description,
+    id_credential_url: currentCertification.value.credentialId,
+  };
 
-  try {
-    if (currentCertification.value.id) {
-      // For update, ensure the payload matches backend's expected structure if it differs
-      const updateData = {
-        name: currentCertification.value.name,
-        issued_by: currentCertification.value.issueBy,
-        year: currentCertification.value.year,
-        // Assuming the backend has a typo for update: id_credetial_url
-        // If not, use id_credential_url consistently.
-        id_credetial_url: currentCertification.value.credentialId,
-        description: currentCertification.value.description,
-      };
-      await certificationStore.updateCertification(
-        currentCertification.value.id,
-        updateData
-      );
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Certifation Upadting Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      await certificationStore.createCertification(payload);
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title:"Certification Adding Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    resetCertificationForm();
-  } catch (error) {
-    console.error("Failed to save certification:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Failed Save",
-      text: "Pliss Try Again",
-    });
-  }
+  try {
+    if (currentCertification.value.id) {
+      await certificationStore.updateCertification(
+        currentCertification.value.id,
+        payload 
+      );
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Certification Updated Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      await certificationStore.createCertification(payload);
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title:"Certification Added Successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    resetCertificationForm();
+  } catch (error) {
+    console.error("Failed to save certification:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Save Failed",
+      text: "Please try again.",
+    });
+  }
 };
 
 const editCertification = (cert) => {
-  currentCertification.value = {
-    id: cert.id,
-    name: cert.name,
-    year: cert.year,
-    issueBy: cert.issued_by,
-    credentialId: cert.id_credential_url || cert.id_credetial_url || "", // Handle both spellings
-    description: cert.description,
-  };
+  currentCertification.value = {
+    id: cert.id,
+    name: cert.name,
+    year: cert.year,
+    issueBy: cert.issueBy || cert.issued_by, 
+    credentialId: cert.credentialId || cert.id_credential_url || cert.id_credetial_url || "",
+    description: cert.description,
+  };
 };
 
 const deleteCertificationFromStore = async (id) => {
-  Swal.fire({
-    title: "Are You Sure?",
-    text: "This Data will Deleting Permanent!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deleting!",
-    cancelButtonText: "Cancel",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await certificationStore.deleteCertification(id);
-        if (currentCertification.value.id === id) {
-          resetCertificationForm();
-        }
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "success",
-          title:"Certification Deleting Successfully",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } catch (error) {
-        console.error("Failed to delete certification:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Failde Delete",
-          text: "Pliss Try Again",
-        });
-      }
-    }
-  });
+  Swal.fire({
+    title: "Are You Sure?",
+    text: "This Data will Be Permanently Deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await certificationStore.deleteCertification(id);
+        if (currentCertification.value.id === id) {
+          resetCertificationForm();
+        }
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title:"Certification Deleted Successfully",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } catch (error) {
+        console.error("Failed to delete certification:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Deletion Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+  });
 };
 
 const resetCertificationForm = () => {
-  currentCertification.value = {
-    id: null,
-    name: "",
-    year: "",
-    issueBy: "",
-    credentialId: "",
-    description: "",
-  };
+  currentCertification.value = {
+    id: null,
+    name: "",
+    year: "",
+    issueBy: "",
+    credentialId: "",
+    description: "",
+  };
 };
 
 const cancelCertificationEdit = () => {
-  resetCertificationForm();
+  resetCertificationForm();
 };
 
 // --- Step Navigation ---
 const nextStep = () => {
-  if (step.value === "education") step.value = "project";
-  else if (step.value === "project") step.value = "experience";
-  else if (step.value === "experience") step.value = "skills";
-  else if (step.value === "skills") step.value = "certifications";
+  if (step.value === "education") step.value = "project";
+  else if (step.value === "project") step.value = "experience";
+  else if (step.value === "experience") step.value = "skills";
+  else if (step.value === "skills") step.value = "certifications";
 };
 const prevStep = () => {
-  if (step.value === "project") step.value = "education";
-  else if (step.value === "experience") step.value = "project";
-  else if (step.value === "skills") step.value = "experience";
-  else if (step.value === "certifications") step.value = "skills";
+  if (step.value === "project") step.value = "education";
+  else if (step.value === "experience") step.value = "project";
+  else if (step.value === "skills") step.value = "experience";
+  else if (step.value === "certifications") step.value = "skills";
 };
 
 // --- Computed Properties for Preview and Lists ---
@@ -1220,14 +1222,14 @@ const displayedExperiences = computed(() => experienceStore.experiences);
 const displayedSkills = computed(() => skillStore.skills);
 
 const displayedCertifications = computed(() => {
-  return certificationStore.certifications.map((cert) => ({
-    id: cert.id,
-    name: cert.name,
-    year: cert.year,
-    issueBy: cert.issued_by,
-    credentialId: cert.id_credential_url || cert.id_credetial_url, // Handle both spellings for display
-    description: cert.description,
-  }));
+  return certificationStore.certifications.map((cert) => ({
+    id: cert.id,
+    name: cert.name,
+    year: cert.year,
+    issueBy: cert.issued_by,
+    credentialId: cert.id_credential_url || cert.id_credetial_url,
+    description: cert.description,
+  }));
 });
 </script>
 
