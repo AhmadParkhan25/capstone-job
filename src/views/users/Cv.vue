@@ -1518,13 +1518,11 @@ const saveExperience = async () => {
   const payload = {
     title: currentExperience.value.title,
     company_name: currentExperience.value.company,
-    start_date: currentExperience.value.start_date
-      ? new Date(currentExperience.value.start_date).toISOString()
-      : null,
+    start_date: new Date(currentExperience.value.start_date).toISOString(),
     // MODIFIED: If end_date is empty, use the current date; otherwise, use the provided date.
     end_date: currentExperience.value.end_date
       ? new Date(currentExperience.value.end_date).toISOString()
-      : new Date().toISOString(),
+      : null,
     description: currentExperience.value.description,
   };
   try {

@@ -10,7 +10,9 @@
         class="bg-blue-950/80 text-white px-2 py-1 md:px-5 md:py-2 rounded-md shadow-md hover:bg-red-800 transition-colors duration-300"
       >
         {{
-          companyAppStore.isDeletingApplications ? "Deleting..." : "Delete All Applications"
+          companyAppStore.isDeletingApplications
+            ? "Deleting..."
+            : "Delete All Applications"
         }}
       </button>
     </div>
@@ -161,6 +163,7 @@
             class="p-6 md:p-8"
             v-if="cv"
           >
+            {{ console.log("datacv", cv) }}
             <header class="text-center mb-8">
               <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
                 {{ cv.full_name }}
@@ -247,9 +250,7 @@
                       </h3>
                       <p class="text-sm text-gray-500">
                         {{ formatDate(exp.start_date) }} -
-                        {{
-                          exp.end_date ? formatDate(exp.end_date) : "Present"
-                        }}
+                        {{ formatDate(exp.end_date) || "Present" }}
                       </p>
                     </div>
                     <p class="text-md text-gray-600">{{ exp.company_name }}</p>
@@ -272,9 +273,7 @@
                       </h3>
                       <p class="text-sm text-gray-500">
                         {{ formatDate(edu.start_date) }} -
-                        {{
-                          edu.end_date ? formatDate(edu.end_date) : "Present"
-                        }}
+                        {{ formatDate(edu.end_date) || "Present" }}
                       </p>
                     </div>
                     <p class="text-md text-gray-600">{{ edu.major }}</p>
@@ -329,11 +328,7 @@
                       </h3>
                       <p class="text-sm text-gray-500">
                         {{ formatDate(project.start_date) }} -
-                        {{
-                          project.end_date
-                            ? formatDate(project.end_date)
-                            : "Ongoing"
-                        }}
+                        {{ formatDate(project.end_date) || "Present" }}
                       </p>
                     </div>
                     <p v-if="project.description" class="mt-2 text-gray-700">
@@ -455,12 +450,18 @@ const loadJobApplications = async () => {
 };
 
 const formatDate = (dateString) => {
-  if (!dateString) return null;
+  // Jika input tidak ada (null, undefined, ""), langsung kembalikan null
+  if (!dateString) {
+    return null;
+  }
   const date = new Date(dateString);
+  // Periksa apakah hasil konversi tanggal valid. getTime() akan menghasilkan NaN untuk tanggal yang tidak valid.
+  if (isNaN(date.getTime())) {
+    return null;
+  }
   const options = { year: "numeric", month: "short" };
   return date.toLocaleDateString("en-US", options);
 };
-
 const formatDisplayDate = (dateString) => {
   if (!dateString) return "N/A";
   const options = {
