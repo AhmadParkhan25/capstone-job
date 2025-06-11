@@ -61,7 +61,7 @@
                 class="w-8 h-8 rounded-full bg-gray-300 mr-2 overflow-hidden"
               >
                 <img
-                  src="https://plus.unsplash.com/premium_vector-1744196876793-01fdcc4cb850?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGFkbWlufGVufDB8fDB8fHww"
+                  src="https://plus.unsplash.com/premium_vector-1732191809273-a4827e61d3a3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhpcmluZ3xlbnwwfHwwfHx8MA%3D%3D"
                   alt="Admin Avatar"
                   class="w-full h-full object-cover"
                 />
@@ -360,7 +360,7 @@ const sendMessage = async () => {
 
   try {
     const response = await axios.post(
-      "https://machine-learning-production.up.railway.app/predict",
+      "https://jobrise-chatbot-ml-production.up.railway.app/predict",
       {
         text: newMessage.value,
       }
