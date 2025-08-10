@@ -303,14 +303,17 @@ const isEditing = ref(false);
 const showOtpPopup = ref(false);
 const otpCode = ref("");
 
-const BASE_IMAGE_URL = "https://jobrise.hotelmarisrangkas.com/public/";
+import { baseImageUrl } from '@/config/axios';
 
 const fullImageUrl = computed(() => {
   if (imagePreview.value) {
     if (imagePreview.value.startsWith("blob:")) {
       return imagePreview.value;
     }
-    return `${BASE_IMAGE_URL}${imagePreview.value}`;
+    if (imagePreview.value.startsWith("http")) {
+      return imagePreview.value;
+    }
+    return `${baseImageUrl}${imagePreview.value}`;
   }
   return "";
 });

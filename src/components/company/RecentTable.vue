@@ -65,7 +65,11 @@
             <td class="py-4 pl-4 text-left">
               <div class="flex items-center">
                 <img
-                  :src="job.company_logo ? `https://jobrise.hotelmarisrangkas.com/public/${job.company_logo}` : 'https://placehold.co/48x48/cccccc/000000?text=Logo'"
+                  :src="job.company_logo
+                    ? (job.company_logo.startsWith('http')
+                        ? job.company_logo
+                        : `${baseImageUrl}${job.company_logo}`)
+                    : 'https://placehold.co/48x48/cccccc/000000?text=Logo'"
                   :alt="job.company_name || 'Logo Perusahaan'"
                   class="object-cover w-10 h-10 rounded mr-2 md:w-12 md:h-12 md:mr-4"
                 />
@@ -153,6 +157,7 @@
 import { ref, computed, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { JobsCompany } from "@/stores/jobs/companyjob";
+import { baseImageUrl } from '@/config/axios';
 
 const jobsStore = JobsCompany();
 const isLoadingInitialData = ref(true);
@@ -187,9 +192,7 @@ onMounted(async () => {
   try {
     console.log(1231213);
     console.log(jobsStore);
-    
-    // SELALU panggil fetchAllCompanyJobsOnce untuk mendapatkan data terbaru.
-    // Ini adalah kunci perbaikannya.
+
     await jobsStore.fetchAllCompanyJobsOnce();
   } catch (e) {
     console.error("Gagal mengambil data pekerjaan untuk dashboard:", e);
@@ -197,4 +200,5 @@ onMounted(async () => {
     isLoadingInitialData.value = false;
   }
 });
+
 </script>

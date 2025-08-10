@@ -184,7 +184,7 @@ const emojis = [
 
 const userAvatar = computed(() => {
   // PENTING: Ganti 'photo_profile' dengan nama field dari API Anda untuk gambar.
-  const baseUrl = "https://jobrise.hotelmarisrangkas.com/public/"; // Jika API mengembalikan path relatif
+  const baseUrl = "https://jobrise-be-production.up.railway.app/public/"; // Jika API mengembalikan path relatif
   const imagePath = authStore.userProfile?.image;
 
   if (imagePath) {

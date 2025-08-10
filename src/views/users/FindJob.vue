@@ -390,17 +390,15 @@ import { Icon } from "@iconify/vue";
 import { ref, computed, watch, onMounted, nextTick } from "vue"; 
 import { AuthUserStorage } from "@/stores/auth/userAuth"; 
 import { useActiveJobRecommendationsStore } from "@/stores/jobs/userjob"; 
-import Swal from "sweetalert2"; 
 
 const authStore = AuthUserStorage();
-const jobStore = useActiveJobRecommendationsStore(); 
-const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/");
+const jobStore = useActiveJobRecommendationsStore();
+
+const processingFavoriteJobId = ref(null);
 
 const allJobsFromStore = computed(() => jobStore.activeJobRecommendations);
 const isErrorJobs = computed(() => jobStore.errorJobs); 
 const isLoadingInitialData = ref(true); 
-const processingFavoriteJobId = ref(null);
-const isFilterPopupOpen = ref(false);
 const filters = ref({
   position: "",
   type: "",

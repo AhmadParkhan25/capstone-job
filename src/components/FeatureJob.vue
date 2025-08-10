@@ -94,17 +94,16 @@
 <script setup>
 import { onMounted } from 'vue';
 import { Icon } from "@iconify/vue";
+
 import { jobNoAuth } from '@/stores/jobNoAuth'; // Import store pekerjaan
 import { storeToRefs } from 'pinia'; // Import storeToRefs untuk menjaga reaktivitas
+import { baseImageUrl } from '@/config/axios'; // Import baseImageUrl dari config
 
 // Inisialisasi store
 const jobStore = jobNoAuth();
 
 // Gunakan storeToRefs agar state (featuredJobs, dll.) bisa digunakan di template dan tetap reaktif
 const { featuredJobs, isLoadingFeatured, errorFeatured } = storeToRefs(jobStore);
-
-// Base URL untuk gambar (sesuaikan dengan alamat backend Anda)
-const baseImageUrl = 'https://jobrise.hotelmarisrangkas.com/public/'; 
 
 const formatTitle = (title) => {
   return title

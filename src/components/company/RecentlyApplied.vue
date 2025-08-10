@@ -22,7 +22,9 @@
 </template>
 
 <script setup>
+
 import { Icon } from "@iconify/vue";
 import RecentTable from "@/components/company/RecentTable.vue"
+// import { baseImageUrl } from '@/config/axios'; // Uncomment jika ingin dipakai langsung di sini
 
 </script>

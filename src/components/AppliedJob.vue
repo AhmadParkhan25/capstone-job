@@ -205,10 +205,11 @@ import { Icon } from "@iconify/vue";
 import { useActiveJobRecommendationsStore } from "@/stores/jobs/userjob"; // Sesuaikan path jika perlu
 import { AuthUserStorage } from "@/stores/auth/userAuth"; // Sesuaikan path jika perlu
 
+import { baseImageUrl } from '@/config/axios';
+
 const jobStore = useActiveJobRecommendationsStore();
 const authStore = AuthUserStorage();
 
-const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/"); // Sesuaikan jika URL API Anda berbeda
 
 
 const formatTitle = (title) => {

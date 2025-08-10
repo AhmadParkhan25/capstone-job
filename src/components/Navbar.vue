@@ -116,13 +116,17 @@
       <div class="flex items-center cursor-pointer" @click="toggleAvatar">
         <img
           v-if="isLoggedIn && isUser && userProfile?.image"
-          :src="`https://jobrise.hotelmarisrangkas.com/public/${userProfile.image}`"
+          :src="userProfile.image && userProfile.image.startsWith('http')
+            ? userProfile.image
+            : `${baseImageUrl}${userProfile.image}`"
           alt="User Avatar"
           class="w-10 h-10 rounded-full object-cover"
         />
         <img
           v-else-if="isLoggedIn && isCompany && companyProfile?.logo"
-          :src= "`https://jobrise.hotelmarisrangkas.com/public/${companyProfile.logo}`"
+          :src="companyProfile.logo && companyProfile.logo.startsWith('http')
+            ? companyProfile.logo
+            : `${baseImageUrl}${companyProfile.logo}`"
           alt="Company Logo"
           class="w-10 h-10 rounded-full object-cover"
         />
@@ -285,6 +289,7 @@ const isCompany = computed(() => {
 // Ambil data profil dari store
 const userProfile = computed(() => userStore.userProfile);
 const companyProfile = computed(() => companyStore.companyProfile);
+import { baseImageUrl } from '@/config/axios';
 
 // Logout function yang diperbaiki
 const logout = async () => {

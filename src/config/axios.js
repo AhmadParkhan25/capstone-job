@@ -1,7 +1,9 @@
 import axios from "axios";
 
+
 export const apiClient = axios.create({
-  baseURL: "https://jobrise.hotelmarisrangkas.com/api",
+  baseURL: "https://jobrise-be-production.up.railway.app/api", // Mengarah ke backend lokal Anda
 });
 
-// export const API_IMAGE = "http://localhost:3888";
+// Base URL untuk gambar/logo perusahaan
+export const baseImageUrl = "https://jobrise-be-production.up.railway.app/public/";

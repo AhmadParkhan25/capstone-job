@@ -229,12 +229,12 @@ import { Icon } from "@iconify/vue";
 import { useActiveJobRecommendationsStore } from "@/stores/jobs/userjob";
 import { AuthUserStorage } from "@/stores/auth/userAuth";
 import Swal from "sweetalert2";
+import { baseImageUrl } from '@/config/axios';
 
 const route = useRoute();
 const jobStore = useActiveJobRecommendationsStore();
 const authStore = AuthUserStorage();
 
-const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/");
 const isLogoError = ref(false);
 
 // Mengambil ID LAMARAN dari parameter route

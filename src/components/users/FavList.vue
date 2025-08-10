@@ -209,11 +209,11 @@ import { Icon } from "@iconify/vue";
 import { useActiveJobRecommendationsStore } from "@/stores/jobs/userjob"; // Sesuaikan path
 import { AuthUserStorage } from "@/stores/auth/userAuth"; // Sesuaikan path
 import Swal from "sweetalert2";
+import { baseImageUrl } from '@/config/axios';
 
 const jobStore = useActiveJobRecommendationsStore();
 const authStore = AuthUserStorage();
 
-const baseImageUrl = ref("https://jobrise.hotelmarisrangkas.com/public/");
 const logoErrors = ref({});
 
 const formatTitle = (title) => {

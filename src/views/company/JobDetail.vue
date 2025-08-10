@@ -28,7 +28,11 @@
             class="w-20 h-20 md:w-28 md:h-28 bg-amber-300 rounded-sm overflow-hidden flex-shrink-0"
           >
             <img
-              :src="jobsStore.jobDetail.company_logo ? `https://jobrise.hotelmarisrangkas.com/public/${jobsStore.jobDetail.company_logo}` : 'https://placehold.co/112x112/e2e8f0/64748b?text=Logo'"
+              :src="jobsStore.jobDetail.company_logo
+                ? (jobsStore.jobDetail.company_logo.startsWith('http')
+                    ? jobsStore.jobDetail.company_logo
+                    : `${baseImageUrl}${jobsStore.jobDetail.company_logo}`)
+                : 'https://placehold.co/112x112/e2e8f0/64748b?text=Logo'"
               :alt="jobsStore.jobDetail.company_name"
               class="object-cover w-full h-full"
             />
@@ -118,6 +122,7 @@
 <script setup>
 import Applications from "@/components/company/Applications.vue";
 import { JobsCompany } from '@/stores/jobs/companyjob'; // Pastikan path ini benar
+import { baseImageUrl } from '@/config/axios';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Icon } from "@iconify/vue";

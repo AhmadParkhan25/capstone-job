@@ -112,7 +112,9 @@
                   <img
                     :src="
                       job.company_logo
-                        ? `https://jobrise.hotelmarisrangkas.com/public/${job.company_logo}`
+                        ? (job.company_logo.startsWith('http')
+                            ? job.company_logo
+                            : `${baseImageUrl}${job.company_logo}`)
                         : 'https://images.unsplash.com/photo-1728577740843-5f29c7586afe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D'
                     "
                     :alt="job.company_name || 'Company Logo'"
@@ -315,6 +317,7 @@ import { Icon } from "@iconify/vue";
 import { JobsCompany } from "@/stores/jobs/companyjob"; // Sesuaikan path ini jika perlu
 
 const jobsStore = JobsCompany();
+import { baseImageUrl } from '@/config/axios';
 const searchQuery = ref("");
 
 const currentPageForPagination = ref(1);

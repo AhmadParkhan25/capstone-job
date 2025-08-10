@@ -238,12 +238,14 @@
 </template>
 
 <script setup>
+
 import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import { useAuthCompanyStore } from "@/stores/auth/companyAuth";
 import { storeToRefs } from "pinia";
+import { baseImageUrl } from '@/config/axios';
 
 const authCompanyStore = useAuthCompanyStore();
 const router = useRouter();
@@ -261,9 +263,13 @@ const logoPreview = computed(() => {
   if (logoFile.value) {
     return URL.createObjectURL(logoFile.value);
   }
-  if (companyProfile.value?.logo) {
-    const baseURL = "https://jobrise.hotelmarisrangkas.com/public/";
-    return new URL(companyProfile.value.logo, baseURL).href;
+  const logo = companyProfile.value?.logo;
+  if (logo && typeof logo === 'string' && logo.trim() !== '') {
+    if (logo.startsWith('http')) {
+      return logo;
+    } else {
+      return `${baseImageUrl}${logo}`;
+    }
   }
   return null;
 });
